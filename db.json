@@ -1,0 +1,60 @@
+{
+  "usuarios": [
+    {
+      "nombre": "dasdsa",
+      "apellido": "adsas",
+      "correo": "dsadsa",
+      "contraseña": "dsasad",
+      "id": 1
+    },
+    {
+      "nombre": "dasdsa2",
+      "apellido": "adsas",
+      "correo": "dsadsa",
+      "contraseña": "dsasad",
+      "id": 2
+    },
+    {
+      "nombre": "dasdsa3",
+      "apellido": "adsas",
+      "correo": "dsadsa",
+      "contraseña": "dsasad",
+      "id": 3
+    },
+    {
+      "nombre": "enzi",
+      "apellido": "gabriel",
+      "correo": "benja@seider.com",
+      "contraseña": "benajkill",
+      "id": 4
+    },
+    {
+      "nombre": "",
+      "apellido": "",
+      "correo": "",
+      "contraseña": "",
+      "id": 5
+    },
+    {
+      "nombre": "",
+      "apellido": "",
+      "correo": "",
+      "contraseña": "",
+      "id": 6
+    },
+    {
+      "nombre": "",
+      "apellido": "",
+      "correo": "",
+      "contraseña": "",
+      "id": 7
+    },
+    {
+      "nombre": "",
+      "apellido": "",
+      "correo": "",
+      "contraseña": "",
+      "id": 8
+    }
+  ]
+}
