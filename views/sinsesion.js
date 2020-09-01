@@ -114,8 +114,7 @@ const sinsesion = ({navigation,route}) =>{
    }
    
     return (
-        <View style={[globalStyles.contenedor,{marginTop:100}]}>
-            <Headline style={globalStyles.titulo}>INICIAR SESIÓN</Headline>
+        <View style={[globalStyles.contenedor,{marginTop:150}]}>
             <TextInput
                 label="Correo"
                 onChangeText={(texto) => guardarEmail(texto)}
@@ -176,7 +175,8 @@ const styles=StyleSheet.create({
         marginHorizontal: 5,
         fontSize: 17,
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Inter-Light',
     },
     botonS:{
         height: 40,

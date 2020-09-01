@@ -6,6 +6,7 @@ import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const buscarsicologo = ({navigation,route}) => {
 
@@ -74,8 +75,8 @@ const buscarsicologo = ({navigation,route}) => {
         navigation.navigate('CodigoSicologo');
     }
     return (
-        <View style={globalStyles.contenedor} >
-            <Headline style={globalStyles.titulo}>Bienvenido</Headline>       
+        <ScrollView style={globalStyles.contenedor} >
+            <Text style={globalStyles.titulo}>Bienvenido</Text>       
             <View style={styles.container}>
                     <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => funcion() }>
                         <View style={{flexDirection:'row'}}>
@@ -84,7 +85,6 @@ const buscarsicologo = ({navigation,route}) => {
                         </View>
                     </TouchableHighlight>
             </View>
-
             <View style={[styles.container,{marginTop:5}]}>
                     <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => funcion2() }>
                         <View style={{flexDirection:'row'}}>
@@ -93,7 +93,30 @@ const buscarsicologo = ({navigation,route}) => {
                         </View>
                     </TouchableHighlight>
             </View>
-
+            <View style={[styles.container,{marginTop:5}]}>
+                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Perfil')}>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="account-details" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>Mi perfil</Text>
+                    </View>
+                </TouchableHighlight >
+            </View>
+            <View style={[styles.container,{marginTop:5}]}>
+                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Cuestionario')}>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="book-outline" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>Cuestionario de Sintomatología</Text>
+                    </View>
+                </TouchableHighlight >
+            </View>
+            <View style={[styles.container,{marginTop:5}]}>
+                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Preferencias')}>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="account-question-outline" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>Preferencias</Text>
+                    </View>
+                </TouchableHighlight >
+            </View>
             <View style={[styles.container,{marginTop:5}]}>
                     <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => funcion3() }>
                         <View style={{flexDirection:'row'}}>
@@ -101,14 +124,6 @@ const buscarsicologo = ({navigation,route}) => {
                             <Text style={styles.textoC}>Ingresar Código</Text>
                         </View>
                     </TouchableHighlight>
-            </View>
-            <View style={[styles.container,{marginTop:5}]}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Perfil')}>
-                            <View style={{flexDirection:'row'}}>
-                                <Icon name="account-details" color="white" size={25}></Icon>
-                                <Text style={styles.textoC}>Mi perfil</Text>
-                            </View>
-                        </TouchableHighlight >
             </View>
             <Portal>
                 <Dialog visible={SicologoListo} >
@@ -123,7 +138,7 @@ const buscarsicologo = ({navigation,route}) => {
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
-        </View>
+        </ScrollView>
     );
 }
 
@@ -145,13 +160,14 @@ const styles=StyleSheet.create({
         marginBottom: 10,
         marginHorizontal: 10,
         fontSize: 19,
-        color: 'black'
+        color: 'black',
     },
     textoC: {
         marginBottom: 10,
-        marginHorizontal: 10,
-        fontSize: 20,
-        color: 'white'
+        marginHorizontal: 7,
+        fontSize: 18,
+        color: 'white',
+        fontFamily: 'Inter-Light'
     }
 })
 

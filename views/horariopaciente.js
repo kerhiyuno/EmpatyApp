@@ -5,7 +5,7 @@ import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HorarioDia from '../components/horariodia'
 
-const registro8 = ({navigation,route}) =>{
+const HorarioPaciente = ({navigation}) =>{
     const [disponibles,guardarDisponibles] = useState([]);
 
     const [l1,guardarl1] = useState('no');
@@ -106,48 +106,20 @@ const registro8 = ({navigation,route}) =>{
     const [d12,guardard12] = useState('no');
     const [d13,guardard13] = useState('no');
 
-    const fullname = (route.params.usuario.fullname);
-    const rut = (route.params.usuario.rut);
-    const genero = (route.params.usuario.genero);
-    const email = (route.params.usuario.email);
-    const password = (route.params.usuario.password);
-    const gender_description = (route.params.usuario.gender_description);
-    const telefono = (route.params.usuario.telefono);
-    const hobbies = (route.params.usuario.hobbies);
-    const psico_prev = (route.params.usuario.psico_prev);
-    const psiquia_prev = (route.params.usuario.psiquia_prev);
-    const tratamiento_vigente = (route.params.usuario.tratamiento_vigente);
-    const fcp = (route.params.usuario.fcp);
-    const shd = (route.params.usuario.shd);
-    const ga = (route.params.usuario.ga);
-    const gd = (route.params.usuario.gd);
-    const fa = (route.params.usuario.fa);
-    const ap = (route.params.usuario.ap);
-    const motivos_terapia = (route.params.usuario.motivos_terapia);
-    const terapia_grupal = (route.params.usuario.terapia_grupal);
-    const genero_psicologo = (route.params.usuario.genero_psicologo);
-    const fecha_nacimiento = (route.params.usuario.fecha_nacimiento);
-
     const registrar = async () => {
         console.log(disponibles);
         //validar
-        const usuario = {email,password,fullname,genero,rut,gender_description,telefono,psico_prev,psiquia_prev,
-            tratamiento_vigente,fcp,shd,ga,gd,fa,ap,terapia_grupal,genero_psicologo,hobbies,motivos_terapia,disponibles,fecha_nacimiento}
+        const usuario = {disponibles}
         //guardar en api
-        try {
-            console.log(usuario);
-            await axios.post('http://10.0.2.2:8000/usuarios/paciente/registro/',usuario);
-        } catch (error){
-        console.log(error.response)
-        }
+        
         //limpiar formulario
-        navigation.navigate('Iniciar Sesion');
+        navigation.goBack();
     }
 
     return (
         <ScrollView style= {globalStyles.contenedor}>
             <Text style={globalStyles.titulo}> Horario </Text>
-            <Text style={[styles.texto,{fontWeight: "bold"}]}> Escoge el horario que mas te acomode:</Text>
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}> Escoge el horario que mas te acomode:</Text>
             
             <HorarioDia numeroDia={1} dia={'Lunes'} d1={l1} d2={l2} d3={l3} d4={l4} d5={l5} d6={l6} d7={l7} d8={l8} d9={l9} d10={l10} d11={l11} d12={l12} d13={l13} 
             guardard1={guardarl1} guardard2={guardarl2} guardard3={guardarl3} guardard4={guardarl4} guardard5={guardarl5} guardard6={guardarl6} guardard7={guardarl7}
@@ -188,7 +160,7 @@ const registro8 = ({navigation,route}) =>{
                 <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>registrar()}>
                     <View style={{flexDirection:'row'}}>
                         <Icon name="greater-than" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Siguiente</Text>
+                        <Text style={styles.textoC}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
             </View>
@@ -201,7 +173,8 @@ const styles=StyleSheet.create({
         marginTop:0,
         fontSize: 17,
         marginLeft:5,
-        marginRight:5
+        marginRight:5,
+        fontFamily:'Inter-Regular'
     },
     fila:{
         flex: 1,
@@ -238,7 +211,8 @@ const styles=StyleSheet.create({
         marginHorizontal: 5,
         fontSize: 17,
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily:'Inter-Light'
     },
     botonS:{
         height: 40,
@@ -252,4 +226,4 @@ const styles=StyleSheet.create({
     }
 })
 
-export default registro8;
+export default HorarioPaciente;

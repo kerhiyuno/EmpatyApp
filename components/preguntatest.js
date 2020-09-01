@@ -11,7 +11,7 @@ const PreguntaTest = (props) =>{
             <Text style={styles.texto}>{texto}</Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
-                    <Text>0</Text>
+                    <Text style={styles.numero}>0</Text>
                     <RadioButton
                         value="zero"
                         status={ pregunta === '0' ? 'checked' : 'unchecked' }
@@ -20,7 +20,7 @@ const PreguntaTest = (props) =>{
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text>1</Text>
+                    <Text style={styles.numero}>1</Text>
                     <RadioButton
                         value="first"
                         status={ pregunta === '1' ? 'checked' : 'unchecked' }
@@ -29,7 +29,7 @@ const PreguntaTest = (props) =>{
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text>2</Text>
+                    <Text style={styles.numero}>2</Text>
                     <RadioButton
                         value="second"
                         status={ pregunta === '2' ? 'checked' : 'unchecked' }
@@ -38,7 +38,7 @@ const PreguntaTest = (props) =>{
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text>3</Text>
+                    <Text style={styles.numero}>3</Text>
                     <RadioButton
                         value="third"
                         status={ pregunta === '3' ? 'checked' : 'unchecked' }
@@ -47,7 +47,7 @@ const PreguntaTest = (props) =>{
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text>4</Text>
+                    <Text style={styles.numero}>4</Text>
                     <RadioButton
                         value="fourth"
                         status={ pregunta === '4' ? 'checked' : 'unchecked' }
@@ -61,12 +61,15 @@ const PreguntaTest = (props) =>{
 }
 
 const styles=StyleSheet.create({
-
+    numero:{
+        fontFamily: 'Inter-Regular'
+    },
     texto: {
         marginTop:25,
         fontSize: 17,
         marginLeft:5,
-        marginRight:5
+        marginRight:5,
+        fontFamily: 'Inter-Regular'
     },
     pregunta:{
         flex: 1,

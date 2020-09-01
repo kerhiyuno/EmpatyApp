@@ -68,7 +68,8 @@ const styles=StyleSheet.create({
         marginHorizontal: 5,
         fontSize: 17,
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily:'Inter-Light'
     },
     botonS:{
         height: 40,

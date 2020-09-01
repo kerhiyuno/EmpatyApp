@@ -41,22 +41,27 @@ const registro4 = ({navigation,route}) =>{
         if(tratamiento_vigenteS==='no'){
             tratamiento_vigente=false;
         }
-        //generar
+        console.log(disponibles);
+        //validar
         const usuario={fullname,rut,email,password,telefono,genero,gender_description,hobbies,psico_prev,psiquia_prev,tratamiento_vigente,fecha_nacimiento};
-        console.log(usuario);
-    
-        //redireccionar
-        navigation.navigate('Registro 5/7',{usuario});
+        //guardar en api
+        try {
+            console.log(usuario);
+            await axios.post('http://10.0.2.2:8000/usuarios/paciente/registro/',usuario);
+        } catch (error){
+        console.log(error.response)
+        }
         //limpiar formulario
-
+        navigation.navigate('Iniciar Sesion');
     }
+
     return (
         <ScrollView style= {globalStyles.contenedor}>
-            <Text style={[styles.texto,{fontWeight: "bold"}]}>Para dar información preliminar de utilidad a su psicólogo o psicóloga, responda las siguientes preguntas:</Text>
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Para dar información preliminar de utilidad a su psicólogo o psicóloga, responda las siguientes preguntas:</Text>
             <Text style={styles.texto}>¿Haz recibido tratamiento psicológico con anterioridad?</Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
-                    <Text>Si</Text>
+                    <Text style={styles.sino}>Si</Text>
                     <RadioButton
                         value="first"
                         status={ psico_prevS === 'Si' ? 'checked' : 'unchecked' }
@@ -65,7 +70,7 @@ const registro4 = ({navigation,route}) =>{
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text>No</Text>
+                    <Text style={styles.sino}>No</Text>
                     <RadioButton
                         value="second"
                         status={ psico_prevS === 'No' ? 'checked' : 'unchecked' }
@@ -77,7 +82,7 @@ const registro4 = ({navigation,route}) =>{
             <Text style={styles.texto}>¿Haz recibido tratamiento psiquiátrico con anterioridad?</Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
-                    <Text>Si</Text>
+                    <Text style={styles.sino}>Si</Text>
                     <RadioButton
                         value="first"
                         status={ psiquia_prevS === 'Si' ? 'checked' : 'unchecked' }
@@ -86,7 +91,7 @@ const registro4 = ({navigation,route}) =>{
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text>No</Text>
+                    <Text style={styles.sino}>No</Text>
                     <RadioButton
                         value="second"
                         status={ psiquia_prevS === 'No' ? 'checked' : 'unchecked' }
@@ -98,7 +103,7 @@ const registro4 = ({navigation,route}) =>{
             <Text style={styles.texto}>¿Estás bajo tratamiento farmacológico/psiquiátrico actualmente?</Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
-                    <Text>Si</Text>
+                    <Text style={styles.sino}>Si</Text>
                     <RadioButton
                         value="first"
                         status={ tratamiento_vigenteS === 'Si' ? 'checked' : 'unchecked' }
@@ -107,7 +112,7 @@ const registro4 = ({navigation,route}) =>{
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text>No</Text>
+                    <Text style={styles.sino}>No</Text>
                     <RadioButton
                         value="second"
                         status={ tratamiento_vigenteS === 'No' ? 'checked' : 'unchecked' }
@@ -120,7 +125,7 @@ const registro4 = ({navigation,route}) =>{
                 <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>registrar()}>
                     <View style={{flexDirection:'row'}}>
                         <Icon name="greater-than" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Siguiente</Text>
+                        <Text style={styles.textoC}>Finalizar</Text>
                     </View>
                 </TouchableHighlight >
             </View>
@@ -140,12 +145,15 @@ const registro4 = ({navigation,route}) =>{
 }
 
 const styles=StyleSheet.create({
-
+    sino:{
+        fontFamily:'Inter-Regular'
+    },
     texto: {
         marginTop:25,
         fontSize: 17,
         marginLeft:5,
-        marginRight:5
+        marginRight:5,
+        fontFamily:'Inter-Regular'
     },
     pregunta:{
         flex: 1,
@@ -155,14 +163,15 @@ const styles=StyleSheet.create({
     },
     opciones:{
         flex: 0.5,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
         fontSize: 17,
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Inter-Light'
     },
     botonS:{
         height: 40,

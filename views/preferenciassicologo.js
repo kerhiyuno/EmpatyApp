@@ -4,7 +4,7 @@ import { Button, Paragraph, Dialog, Portal, RadioButton,Checkbox} from 'react-na
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const registro7 = ({navigation,route}) =>{
+const PreferenciasSicologo = ({navigation,route}) =>{
 
     const [terapia_grupal,guardarTerapia_grupal] = useState('');
     const [grupoapoyo,guardarGrupoapoyo] = useState('no');
@@ -20,27 +20,8 @@ const registro7 = ({navigation,route}) =>{
     const [alertasigrupal,guardarAlertasigrupal] = useState(false);
     const [alertagenerosicologo,guardarAlertagenerosicologo] = useState(false);
 
-    const fullname = (route.params.usuario.fullname);
-    const rut = (route.params.usuario.rut);
-    const genero = (route.params.usuario.genero);
-    const email = (route.params.usuario.email);
-    const password = (route.params.usuario.password);
-    const gender_description = (route.params.usuario.gender_description);
-    const telefono = (route.params.usuario.telefono);
-    const hobbies = (route.params.usuario.hobbies);
-    const psico_prev = (route.params.usuario.psico_prev);
-    const psiquia_prev = (route.params.usuario.psiquia_prev);
-    const tratamiento_vigente = (route.params.usuario.tratamiento_vigente);
-    const fcp = (route.params.usuario.fcp);
-    const shd = (route.params.usuario.shd);
-    const ga = (route.params.usuario.ga);
-    const gd = (route.params.usuario.gd);
-    const fa = (route.params.usuario.fa);
-    const ap = (route.params.usuario.ap);
-    const fecha_nacimiento = (route.params.usuario.fecha_nacimiento);
 
-    const registrar = async () => {
-
+    const enviarPreferencias = async () => {
         //validar
         if(terapia_grupal===''){
             guardarAlertasigrupal(true);
@@ -89,20 +70,21 @@ const registro7 = ({navigation,route}) =>{
         if(nodecir==='si'){
             motivos_terapia=[7];
         }
-
-
-        const usuario={email,password,fullname,genero,rut,gender_description,telefono,psico_prev,psiquia_prev,
-            tratamiento_vigente,fcp,shd,ga,gd,fa,ap,terapia_grupal,genero_psicologo,hobbies,motivos_terapia,fecha_nacimiento};
+        const usuario={terapia_grupal,genero_psicologo,motivos_terapia};
         
-        //limpiar formulario
-    navigation.navigate('Registro 8/7',{usuario});
+        //Enviar
+
+
+
+        //Volver
+        navigation.goBack();
     }
     return (
         <ScrollView style= {globalStyles.contenedor}>
-            <Text style={[styles.texto,{fontWeight: "bold"}]}>Si no tienes un código para conectarte con un psicólogo/psicóloga, por favor responde las siguientes
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Responde las siguientes
 preguntas para brindarte opciones que se acomoden a lo que buscas:
             </Text>
-            <Text style={[styles.texto,{fontWeight: "bold"}]}> ¿Te interesa participar en terapia grupal?</Text>
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}> ¿Te interesa participar en terapia grupal?</Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
                     <Text>Si</Text>
@@ -132,7 +114,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     />
                 </View>
             </View>
-            <Text style={[styles.texto,{fontWeight: "bold"}]}>Selecciona los motivos por los que te interesa participar en terapia grupal:
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Selecciona los motivos por los que te interesa participar en terapia grupal:
 (Si respondiste “No” o “Me da igual” a la pregunta anterior, puedes dejar esto en blanco):</Text>
 
             <View style={styles.pregunta}>
@@ -253,7 +235,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                 />
                 <Text style={styles.texto}>Prefiero no decir</Text>
             </View>
-            <Text style={[styles.texto,{fontWeight: "bold"}]}>Me gustaría que me atienda un/una profesional: </Text>
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Me gustaría que me atienda un/una profesional: </Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
                     <Text style={styles.texto,styles.texto2}>Masculino</Text>
@@ -284,10 +266,10 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                 </View>
             </View>
             <View style={[styles.container,{marginTop:5}]}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>registrar()}>
+                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>enviarPreferencias()}>
                     <View style={{flexDirection:'row'}}>
                         <Icon name="greater-than" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Siguiente</Text>
+                        <Text style={styles.textoC}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
             </View>
@@ -334,12 +316,15 @@ const styles=StyleSheet.create({
         fontSize: 17,
         marginLeft:5,
         marginRight:10,
-        marginVertical:7
+        marginVertical:7,
+        fontFamily: 'Inter-Regular',
+        textAlign:'justify'
     },
     textopregunta: {
         fontSize: 17,
         marginLeft:5,
         marginRight:10,
+        fontFamily: 'Inter-Regular'
     },
     pregunta:{
         flex: 1,
@@ -364,7 +349,8 @@ const styles=StyleSheet.create({
         marginHorizontal: 5,
         fontSize: 17,
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily:'Inter-Light'
     },
     botonS:{
         height: 40,
@@ -379,4 +365,4 @@ const styles=StyleSheet.create({
 })
 
 
-export default registro7;
+export default PreferenciasSicologo;

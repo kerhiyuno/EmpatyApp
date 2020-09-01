@@ -107,7 +107,7 @@ const registro = ({navigation}) =>{
     }
 
     const validateEmail = email => {
-        var re = /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
+        var re = /^[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)*@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
         return re.test(email);
         };
 
@@ -291,7 +291,7 @@ const registro = ({navigation}) =>{
     }
     return (
         <ScrollView style= {globalStyles.contenedor}>
-            <Headline style={globalStyles.titulo}>Ingresar datos</Headline>
+            <Text style={globalStyles.titulo}>Ingresar datos</Text>
             <TextInput
                 label="Nombre Completo"
                 onChangeText={(texto) => guardarFullname(texto)}
@@ -314,7 +314,7 @@ const registro = ({navigation}) =>{
                 date={new Date(año+"-"+mes+"-"+dia)}
             />
             </View>
-            <Text style={{marginBottom:10,marginLeft:10,fontSize:16,marginLeft:15}}>Fecha seleccionada: {fechaformateo(fecha_nacimiento)}</Text>
+            <Text style={{marginBottom:10,marginLeft:10,fontSize:16,marginLeft:15,fontFamily:'Inter-Regular'}}>Fecha seleccionada: {fechaformateo(fecha_nacimiento)}</Text>
             <TextInput
                 label="rut (Ej:12345678-9)"
                 onChangeText={(texto) => {guardarRut(texto);verificarRut(texto);}}
@@ -425,7 +425,6 @@ const registro = ({navigation}) =>{
 const styles=StyleSheet.create({
    
     botonC: {
-        marginTop: 5,
         height: 40,
         marginBottom: 0,
         marginHorizontal: 10,
@@ -438,7 +437,8 @@ const styles=StyleSheet.create({
         marginHorizontal: 5,
         fontSize: 17,
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Inter-Regular'
     },
     botonS:{
         height: 40,

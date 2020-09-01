@@ -10,7 +10,7 @@ const calendario = ({navigation,route}) =>{
 
     const prueba = [{id: '1',grupo: '1',bloque:'1', fecha_sesion: '2002-07-11',linkmeet:'google.com',ha_terminado:true},{id: '2',grupo: '1',bloque:'3', fecha_sesion: '2002-07-15',linkmeet:'google.com',ha_terminado:true}]
     const [sesiones,guardarSesiones] = useState([]);
-    
+
   useEffect( () => {
     agenda();
 }
@@ -158,7 +158,7 @@ const traductorhora = (bloque) =>{
     }
     return (
         <View style={globalStyles.contenedor}>
-            <Headline style={globalStyles.titulo}> Agenda de sesiones</Headline>
+            <Text style={globalStyles.titulo}> Agenda de sesiones</Text>
             {sesiones.length>0 ? <Text></Text> : <View style={{alignItems:'center'}}><Text style={{fontSize:19}}> No tienes sesiones agendadas </Text></View>}
             <FlatList
                 data={sesiones}
@@ -207,7 +207,8 @@ const styles=StyleSheet.create({
         marginBottom: 10,
         marginHorizontal: 25,
         fontSize: 18,
-        color: 'white'
+        color: 'white',
+        fontFamily: "Inter-Light"
     }
 })
 

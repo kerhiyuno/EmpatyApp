@@ -77,15 +77,15 @@ const perfil = ({navigation,route}) => {
     const avatarimagen = () => {
         return (<View style={{alignItems: 'center'}}>
                     <Avatar.Image size={100} source={{uri: imagenperfil}} />
-                    <Text style={styles.textoS}>{nombre}</Text>
+                    <Text style={[styles.textoS,{marginTop:5,fontSize:19}]}>{nombre}</Text>
                 </View>)
     }
 
     return (
         <View style={[globalStyles.contenedor]}>
-            <Headline style={globalStyles.titulo}>Mi perfil</Headline>
+            <Text style={globalStyles.titulo}>Mi perfil</Text>
             {imagenperfil !== '' ? avatarimagen(): nombre !== '' ? avatar() : console.log('')}
-            <View style={{marginTop: 25}}>
+            <View style={{marginTop: 25,marginHorizontal:7}}>
                 <View style={{flexDirection: 'row'}}>
                     <Icon name="email" color="#777777" size={20}></Icon>
                     <Text style={styles.textoS}>Correo: {email}</Text>
@@ -125,8 +125,9 @@ const styles=StyleSheet.create({
     textoS:{
         marginBottom: 10,
         marginHorizontal: 10,
-        fontSize: 19,
-        color: 'black'
+        fontSize: 17,
+        color: 'black',
+        fontFamily: 'Inter-Regular'
     },
     container:{
         justifyContent: "center",
@@ -143,9 +144,10 @@ const styles=StyleSheet.create({
     },
     textoC:{
         marginBottom: 2,
-        fontSize: 19,
+        fontSize: 18,
         color: 'white',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        fontFamily: 'Inter-Regular'
     }
 })
 

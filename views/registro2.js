@@ -115,10 +115,12 @@ const styles=StyleSheet.create({
         marginTop:0,
         fontSize: 17,
         marginLeft:5,
-        marginRight:5
+        marginRight:5,
+        fontFamily: 'Inter-Regular'
     },
     texto2: {
         fontSize: 16,
+        fontFamily: 'Inter-Regular'
     },
     pregunta:{
         flex: 1,
@@ -129,7 +131,7 @@ const styles=StyleSheet.create({
     },
     minTitulo:{
         marginTop:15,
-        fontWeight: "bold",
+        fontFamily: "Inter-Bold",
         fontSize:20
     },
     textoC: {
@@ -137,7 +139,8 @@ const styles=StyleSheet.create({
         marginHorizontal: 5,
         fontSize: 17,
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Inter-Light'
     },
     botonS:{
         height: 40,

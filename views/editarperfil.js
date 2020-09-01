@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {StyleSheet,Text,ScrollView } from 'react-native';
+import {View, StyleSheet,Text,ScrollView,TouchableHighlight } from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import globalStyles from '../styles/global';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const editarperfil = ({navigation,route}) =>{
 
@@ -43,24 +44,44 @@ const editarperfil = ({navigation,route}) =>{
                 theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
                 defaultValue = {genero}
             />
-            <Button  style={[globalStyles.botonG,{marginBottom:25,marginTop:15}]} icon="pencil-circle" mode="contained" onPress={()=>enviar()}>
-                Guardar Cambios
-            </Button>
+            <TouchableHighlight style={styles.botonS} onPress={() => enviar() }>
+                <View style={{flexDirection:'row'}}>
+                    <Icon name="pencil-outline" color="white" size={30}></Icon>
+                    <Text style={[styles.textoC]}> Guardar Cambios</Text>
+                </View>
+            </TouchableHighlight>
         </ScrollView>
     );
 }
 
 const styles=StyleSheet.create({
     texto: {
-        marginTop:15,
-        fontSize: 19,
-        marginLeft:0,
-        marginRight:5,
+        marginTop:10,
+        fontSize: 18,
+        marginLeft:8,
+        marginRight:0,
+        fontFamily: 'Inter-Regular'
     },
     opciones:{
         flex: 0.25,
         alignItems: 'center'
-    }
+    },
+    textoC:{
+        marginBottom: 2,
+        fontSize: 18,
+        color: 'white',
+        alignSelf: 'center',
+        fontFamily: 'Inter-Regular'
+    },
+    botonS:{
+        height: 40,
+        marginTop: 5,
+        marginHorizontal: 4,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#1e524c",
+        borderRadius: 8
+    },
 })
 
 export default editarperfil;

@@ -124,7 +124,7 @@ const cita = ({navigation,route}) =>{
 
     return (
         <View style={globalStyles.contenedor}>
-            <Headline style={globalStyles.titulo}> Datos de la sesión </Headline>
+            <Text style={globalStyles.titulo}> Datos de la sesión </Text>
             <View style={{marginBottom:20}}>
                 <Text style={styles.texto}>Dia: {route.params.dia} de {route.params.mes}  </Text>
                 <Text style={styles.texto}>Hora: {route.params.hora}</Text>
@@ -165,11 +165,13 @@ const styles=StyleSheet.create({
         marginBottom: 2,
         marginHorizontal: 10,
         fontSize: 18,
-        color: 'white'
+        color: 'white',
+        fontFamily: 'Inter-Light'
     },
     texto:{
         fontSize: 19,
-        marginHorizontal:20
+        marginHorizontal:20,
+        fontFamily:'Inter-Regular'
     }
 })
 

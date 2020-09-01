@@ -42,7 +42,8 @@ const styles=StyleSheet.create({
     texto: {
         fontSize: 17,
         marginLeft:5,
-        marginRight:5
+        marginRight:5,
+        fontFamily: 'Inter-Regular'
     },
     pregunta:{
         flex: 1,

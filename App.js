@@ -19,16 +19,20 @@ import cita from './views/cita';
 import registro2 from './views/registro2';
 import registro3 from './views/registro3';
 import registro4 from './views/registro4';
-import registro5 from './views/registro5';
+import Cuestionario from './views/cuestionario';
 import registro6 from './views/registro6';
-import registro7 from './views/registro7';
-import registro8 from './views/registro8';
+import PreferenciasSicologo from './views/preferenciassicologo';
+import HorarioPaciente from './views/horariopaciente';
 import buscarsicologo from './views/buscarsicologo';
 import elegirsicologo from './views/elegirsicologo';
 import horariosicologo from './views/horariosicologo';
 import solicitudes from './views/solicitudes';
 import codigosicologo from './views/codigosicologo';
 import editarperfil from './views/editarperfil';
+import Informacion from './views/informacion';
+import Preferencias from './views/preferencias';
+import Chat from './views/chat';
+import Conflictos from './views/conflictos';
 
 import BotonLogout from './components/botonlogout';
 import BotonSalir from './components/botonsalir';
@@ -38,6 +42,7 @@ import {DefaultTheme, Provider as ProviderPaper} from 'react-native-paper';
 
 import {NavigationContainer, ThemeProvider} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import BotonInfo from './components/botoninfo';
 
 
 const Stack= createStackNavigator();
@@ -69,7 +74,7 @@ const App = () => {
             },
             headerTintColor: theme.colors.surface,
             headerTitleStyle:{
-              fontWeight: 'bold'
+              fontFamily: "Inter-SemiBold"
             }
           }}
         >
@@ -78,7 +83,10 @@ const App = () => {
             component={home}
             options={ ({navigation,route}) => ({
                 headerRight: (props)=>
-                  <BotonLogout {...props} navigation={navigation} route={route}/>,
+                  <View style={{flexDirection:'row'}}>
+                      <BotonInfo {...props} navigation={navigation} route={route}/>
+                    <BotonLogout {...props} navigation={navigation} route={route}/>
+                  </View>,
                   headerLeft:null 
               })}
           >
@@ -88,7 +96,10 @@ const App = () => {
             component={perfil}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonLogout {...props} navigation={navigation} route={route}/>
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>
             })}
           >
           </Stack.Screen>
@@ -97,7 +108,10 @@ const App = () => {
             component={sesion}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonLogout {...props} navigation={navigation} route={route}/>,
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>,
                 headerTitle: 'Mi grupo'
             })}
           >
@@ -113,8 +127,11 @@ const App = () => {
             component={registro}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonSalir {...props} navigation={navigation} route={route}/>,
-                headerTitle: 'Registro 1/8'
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonSalir {...props} navigation={navigation} route={route}/>
+                </View>,
+                headerTitle: 'Registro 1/4'
             })}
           >
           </Stack.Screen>
@@ -123,7 +140,10 @@ const App = () => {
             component={calendario}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonLogout {...props} navigation={navigation} route={route}/>,headerTitle: 'Agenda' 
+              <View style={{flexDirection:'row'}}>
+              <BotonInfo {...props} navigation={navigation} route={route}/>
+              <BotonLogout {...props} navigation={navigation} route={route}/>
+            </View>,headerTitle: 'Agenda' 
             })}
           >
           </Stack.Screen>
@@ -132,7 +152,10 @@ const App = () => {
             component={cita}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonLogout {...props} navigation={navigation} route={route}/>
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>
             })}
           >
           </Stack.Screen>
@@ -141,8 +164,11 @@ const App = () => {
             component={registro2}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonSalir {...props} navigation={navigation} route={route}/>,
-                headerTitle: 'Registro 2/8'
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonSalir {...props} navigation={navigation} route={route}/>
+                </View>,
+                headerTitle: 'Registro 2/4'
             })}
           >
           </Stack.Screen>
@@ -151,8 +177,11 @@ const App = () => {
             component={registro3}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonSalir {...props} navigation={navigation} route={route}/>,
-                headerTitle: 'Registro 3/8'
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonSalir {...props} navigation={navigation} route={route}/>
+                </View>,
+                headerTitle: 'Registro 3/4'
             })}
           >
           </Stack.Screen>
@@ -161,48 +190,50 @@ const App = () => {
             component={registro4}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonSalir {...props} navigation={navigation} route={route}/>,
-                headerTitle: 'Registro 4/8'
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonSalir {...props} navigation={navigation} route={route}/>
+                </View>,
+                headerTitle: 'Registro 4/4'
             })}
           >
           </Stack.Screen>
           <Stack.Screen
-            name= 'Registro 5/7'
-            component={registro5}
+            name= 'Cuestionario'
+            component={Cuestionario}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonSalir {...props} navigation={navigation} route={route}/>,
-                headerTitle: 'Registro 5/8'
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>,
+                headerTitle: 'Cuestionario'
             })}
           >
           </Stack.Screen>
           <Stack.Screen
-            name= 'Registro 6/7'
-            component={registro6}
+            name= 'PreferenciasSicologo'
+            component={PreferenciasSicologo}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonSalir {...props} navigation={navigation} route={route}/>,
-                headerTitle: 'Registro 6/8'
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+               </View>,
+                headerTitle: 'Preferencias'
             })}
           >
           </Stack.Screen>
           <Stack.Screen
-            name= 'Registro 7/7'
-            component={registro7}
+            name= 'ElegirHorario'
+            component={HorarioPaciente}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonSalir {...props} navigation={navigation} route={route}/>,
-                headerTitle: 'Registro 7/8'
-            })}
-          >
-          </Stack.Screen>
-          <Stack.Screen
-            name= 'Registro 8/7'
-            component={registro8}
-            options={ ({navigation,route}) => ({
-              headerRight: (props)=>
-                <BotonSalir {...props} navigation={navigation} route={route}/>,
-                headerTitle: 'Registro 8/8'
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonSalir {...props} navigation={navigation} route={route}/>
+                </View>,
+                headerTitle: 'Elegir Horario'
             })}
           >
           </Stack.Screen>
@@ -211,7 +242,10 @@ const App = () => {
             component={buscarsicologo}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonLogout {...props} navigation={navigation} route={route}/>,
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>,
                 headerLeft:null,
                 headerTitle: 'Inicio'
             })}
@@ -222,7 +256,10 @@ const App = () => {
             component={elegirsicologo}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonLogout {...props} navigation={navigation} route={route}/>,
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>,
                 headerTitle: 'Elegir Psicólogo'
             })}
           >
@@ -232,7 +269,10 @@ const App = () => {
             component={horariosicologo}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonLogout {...props} navigation={navigation} route={route}/>,
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>,
                 headerTitle: 'Selección de horario'
             })}
           >
@@ -242,7 +282,10 @@ const App = () => {
             component={solicitudes}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonLogout {...props} navigation={navigation} route={route}/>,
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>,
                 headerTitle: 'Solicitudes'
             })}
           >
@@ -252,7 +295,10 @@ const App = () => {
             component={codigosicologo}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonLogout {...props} navigation={navigation} route={route}/>,
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>,
                 headerTitle: 'Ingresar Código'
             })}
           >
@@ -262,11 +308,57 @@ const App = () => {
             component={editarperfil}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
-                <BotonLogout {...props} navigation={navigation} route={route}/>,
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>,
                 headerTitle: 'Editar Perfil'
             })}
           >
           </Stack.Screen>
+          <Stack.Screen
+            name= 'Preferencias'
+            component={Preferencias}
+            options={ ({navigation,route}) => ({
+              headerRight: (props)=>
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>,
+                headerTitle: 'Preferencias'
+            })}
+          >
+          </Stack.Screen>
+          <Stack.Screen
+            name= 'Chat'
+            component={Chat}
+            options={ ({navigation,route}) => ({
+              headerRight: (props)=>
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>,
+                headerTitle: 'Chat'
+            })}
+          >
+          </Stack.Screen>
+          <Stack.Screen
+            name= 'Conflictos'
+            component={Conflictos}
+            options={ ({navigation,route}) => ({
+              headerRight: (props)=>
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>,
+                headerTitle: 'Conflictos'
+            })}
+          >
+          </Stack.Screen>
+          <Stack.Screen
+            name= 'Informacion'
+            component={Informacion}
+          ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </ProviderPaper>

@@ -76,7 +76,7 @@ const elegirsicologo = ({navigation,route}) =>{
 
     return (
         <ScrollView style={globalStyles.contenedor}>
-            <Headline style={globalStyles.titulo}>Elige un psicólogo</Headline>
+            <Text style={globalStyles.titulo}>Elige un psicólogo</Text>
             <Text style={{fontSize:19,marginHorizontal:15}}>{cerosicologos==true ? 'No se han encontrado psicólogos que coincidan con tu horario':''}</Text>
             <FlatList
                 data={sicologos}
@@ -87,7 +87,7 @@ const elegirsicologo = ({navigation,route}) =>{
                             <View style={{flex:1,flexDirection: 'column'}}>
                                 {imagenperfil !== '' ? avatarimagen(imagenperfil) : item.fullname !== '' ? avatar(item.fullname) : console.log('')}
                             </View>
-                            <View style={{flex:1,flexDirection: 'column',marginVertical:10,marginLeft:10}}>
+                            <View style={{flex:1,flexDirection: 'column',marginVertical:10,marginLeft:0}}>
                                 <View style={{flex:0.5}}>
                                     <Text style={[styles.textoC]}>Nombre:</Text>
                                 </View>
@@ -128,7 +128,8 @@ const styles=StyleSheet.create({
         marginTop:5,
         marginHorizontal: 0,
         fontSize: 17,
-        color: 'white'
+        color: 'white',
+        fontFamily: 'Inter-Light'
     }
 })
 

@@ -239,7 +239,7 @@ const sesion = ({navigation,route}) =>{
                 </TouchableHighlight >
             </View>
             <View style={{marginTop:20,flexDirection:'row'}}>
-                <Text style={[styles.textoS,{fontWeight: 'bold'}]}>Mi Psicólogo: </Text>
+                <Text style={[styles.textoS,{fontFamily: 'Inter-Bold'}]}>Mi Psicólogo: </Text>
                 <Text style={styles.textoS}>{nombresicologo}</Text>
             </View>
             <Portal>
@@ -277,13 +277,15 @@ const styles=StyleSheet.create({
         marginBottom: 10,
         marginHorizontal: 10,
         fontSize: 19,
-        color: 'black'
+        color: 'black',
+        fontFamily: 'Inter-Regular'
     },
     textoC: {
         marginBottom: 0,
         marginHorizontal: 10,
         fontSize: 19,
         color: 'white',
+        fontFamily: 'Inter-Light'
     }
 })
 

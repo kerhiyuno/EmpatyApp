@@ -69,7 +69,8 @@ const styles=StyleSheet.create({
         alignItems: 'center'
     },
     textboton:{
-        color: 'white'
+        color: 'white',
+        fontFamily:'Inter-Light'
     },
 })
 

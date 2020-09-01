@@ -55,7 +55,7 @@ const home = ({navigation,route}) =>{
 
     return (
         <View style={globalStyles.contenedor}>
-            <Headline style={globalStyles.titulo}>Empaty</Headline>
+            <Text style={globalStyles.titulo}>Empaty</Text>
             <View style={styles.container}>
                 <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Sesion') }>
                     <View style={{flexDirection:'row'}}>
@@ -69,17 +69,39 @@ const home = ({navigation,route}) =>{
                         <Text style={styles.textoC}>Mi perfil</Text>
                     </View>
                 </TouchableHighlight >
+                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Cuestionario')}>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="book-outline" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>Cuestionario de Sintomatología</Text>
+                    </View>
+                </TouchableHighlight >
+                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Chat')}>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="chat" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>Chat</Text>
+                    </View>
+                </TouchableHighlight >
+                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Conflictos')}>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="exclamation" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>Conflictos</Text>
+                    </View>
+                </TouchableHighlight >
             </View>
         </View>
     );
 }
 
 const styles=StyleSheet.create({
+    container: {
+        justifyContent:"center"
+    },
     textoC: {
         marginBottom: 10,
         marginHorizontal: 10,
         fontSize: 19,
-        color: 'white'
+        color: 'white',
+        fontFamily: 'Inter-Light'
     },
     botonS:{
         height: 70,

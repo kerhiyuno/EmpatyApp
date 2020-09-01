@@ -60,10 +60,12 @@ const styles=StyleSheet.create({
 
     texto: {
         marginTop:150,
-        fontSize: 19,
+        fontSize: 18,
         marginLeft:5,
         marginRight:5,
         marginBottom:15,
+        fontFamily: 'Inter-Regular',
+        textAlign:'justify'
     },
 
     opciones:{
@@ -83,7 +85,8 @@ const styles=StyleSheet.create({
         marginBottom: 0,
         marginHorizontal: 10,
         fontSize: 20,
-        color: 'white'
+        color: 'white',
+        fontFamily: 'Inter-Light'
     }
 })
 

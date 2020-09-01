@@ -5,7 +5,7 @@ import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PreguntaTest from '../components/preguntatest';
 
-const registro5 = ({navigation,route}) =>{
+const Cuestionario = ({navigation,route}) =>{
 
     const [pregunta1,guardarPregunta1] = useState('');
     const [pregunta2,guardarPregunta2] = useState('');
@@ -29,20 +29,8 @@ const registro5 = ({navigation,route}) =>{
 
     const [alerta,guardarAlerta] = useState(false);
 
-    const fullname = (route.params.usuario.fullname);
-    const rut = (route.params.usuario.rut);
-    const genero = (route.params.usuario.genero);
-    const email = (route.params.usuario.email);
-    const password = (route.params.usuario.password);
-    const gender_description = (route.params.usuario.gender_description);
-    const telefono = (route.params.usuario.telefono);
-    const hobbies = (route.params.usuario.hobbies);
-    const psico_prev = (route.params.usuario.psico_prev);
-    const psiquia_prev = (route.params.usuario.psiquia_prev);
-    const tratamiento_vigente = (route.params.usuario.tratamiento_vigente);
-    const fecha_nacimiento = (route.params.usuario.fecha_nacimiento);
 
-    const registrar = async () => {
+    const enviarCuestionario = async () => {
 
         //validar
         //validar
@@ -63,17 +51,18 @@ const registro5 = ({navigation,route}) =>{
         console.log(pregunta8);
         console.log(pregunta14);
         //generar
-        const usuario={fullname,rut,email,password,telefono,genero,gender_description,hobbies,psico_prev,psiquia_prev,tratamiento_vigente,fcp,shd,ga,gd,fa,ap,fecha_nacimiento};
+        const usuario={fcp,shd,ga,gd,fa,ap};
         console.log(usuario);
-    
+        //Enviar Resultado
+
+
         //redireccionar
-        navigation.navigate('Registro 6/7',{usuario});
-        //limpiar formulario
+        navigation.goBack();
 
     }
     return (
         <ScrollView style= {globalStyles.contenedor}>
-            <Text style={[styles.texto,{fontWeight: "bold"}]}>El siguiente cuestionario aborda temas que pueden haberle 
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>El siguiente cuestionario aborda temas que pueden haberle 
             afectado en las últimas dos semanas. Debe responder según la escala asignada.
             </Text>
 
@@ -92,7 +81,7 @@ const registro5 = ({navigation,route}) =>{
             <Text style={styles.escala}>
             4 - Extremadamente
             </Text>
-            <Text style={[styles.texto,{fontWeight: "bold"}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
             <PreguntaTest pregunta={pregunta1} setpregunta={guardarPregunta1} texto={'Tener que esforzarme para recordar las cosas:'} />
             <PreguntaTest pregunta={pregunta2} setpregunta={guardarPregunta2} texto={'Pensar en quitarme la vida:'} />
             <PreguntaTest pregunta={pregunta3} setpregunta={guardarPregunta3} texto={'Sentirme ansioso o nervioso:'} />
@@ -114,10 +103,10 @@ const registro5 = ({navigation,route}) =>{
             <PreguntaTest pregunta={pregunta19} setpregunta={guardarPregunta19} texto={'Tener dificultad para tomar decisiones:'} />
 
             <View style={[styles.container,{marginTop:5}]}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>registrar()}>
+                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>enviarCuestionario()}>
                     <View style={{flexDirection:'row'}}>
                         <Icon name="greater-than" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Siguiente</Text>
+                        <Text style={styles.textoC}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
             </View>
@@ -142,20 +131,23 @@ const styles=StyleSheet.create({
         marginTop:25,
         fontSize: 17,
         marginLeft:5,
-        marginRight:5
+        marginRight:5,
+        fontFamily:'Inter-Regular'
     },
     escala: {
         marginTop:7,
         fontSize: 17,
         marginLeft:5,
-        marginRight:5
+        marginRight:5,
+        fontFamily:'Inter-Regular'
     },
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
         fontSize: 17,
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily:'Inter-Light'
     },
     botonS:{
         height: 40,
@@ -170,4 +162,4 @@ const styles=StyleSheet.create({
 })
 
 
-export default registro5;
+export default Cuestionario;

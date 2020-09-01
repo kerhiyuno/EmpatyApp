@@ -12,7 +12,8 @@ const globalStyles = StyleSheet.create({
         marginTop: 5,
         marginBottom: 20,
         fontSize: 25,
-        fontWeight: 'bold'
+        fontFamily: "Inter-Bold",
+        color: '#0a0a0a'
     },
     botonG:{
         backgroundColor: '#1e524c',
@@ -24,12 +25,12 @@ const globalStyles = StyleSheet.create({
         fontSize: 50,
     },
     input:{
-        marginBottom: 21,
+        marginBottom: 24,
         backgroundColor: 'transparent',
         borderStyle: 'solid',
         borderColor: '#357870',
         borderWidth: 1,
-        height: 40,
+        height: 45,
         marginHorizontal: 8
     }
 });

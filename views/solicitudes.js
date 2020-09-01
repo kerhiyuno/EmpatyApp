@@ -4,6 +4,7 @@ import {Headline,Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const solicitudes = ({navigation,route}) =>{
@@ -11,13 +12,10 @@ const solicitudes = ({navigation,route}) =>{
 
     useEffect( () => {
         buscar();
-        //console.log(sicologos);
-    },[]
-  )
+    },[])
 
     const buscar = async() =>{
         try {
-            console.log("df");
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.get('http://10.0.2.2:8000/solicitudes/manage/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
@@ -25,8 +23,6 @@ const solicitudes = ({navigation,route}) =>{
             console.log(respuesta.data);
     
         } catch (error) {
-            console.log("error");
-            console.log(error);
             console.log(error.response);
             if(error.response.data.code==='token_not_valid'){
                 console.log('token_not_valid');
@@ -45,11 +41,8 @@ const solicitudes = ({navigation,route}) =>{
                         guardarSolicitudes(respuesta.data);          
                     } catch (error) {
                         console.log(error.response);
-                        console.log("error acaa");
-                        //navigation.navigate('Home');
                     }  
                 } catch (error) {
-                    console.log("error aqui");
                     console.log(error.response);
                 }
             }
@@ -65,11 +58,10 @@ const solicitudes = ({navigation,route}) =>{
             console.log(respuesta);
             buscar();
         } catch (error) {
-            console.log("error");
             console.log(error);
             console.log(error.response);
             if(error.response.data.code==='token_not_valid'){
-                console.log('yes');
+                console.log('token_not_valid');
                 try {
                     const refresh0 = await AsyncStorage.getItem('datosSesion')
                     var refresh = JSON.parse(refresh0).refresh;
@@ -98,7 +90,7 @@ const solicitudes = ({navigation,route}) =>{
 
     return (
         <View style={globalStyles.contenedor}>
-            <Headline style={globalStyles.titulo}>Solicitudes pendientes</Headline>
+            <Text style={globalStyles.titulo}>Solicitudes pendientes</Text>
             {solicitudes.length>0 ? <Text></Text> : <View style={{alignItems:'center'}}><Text style={{fontSize:19}}>No tienes solicitudes pendientes</Text></View>}
             <FlatList
                 data={solicitudes}
@@ -132,9 +124,10 @@ const solicitudes = ({navigation,route}) =>{
                                 </View>
                         </View>
                         <TouchableHighlight onPress={ () => eliminarCita(item.id) } style={styles.botonC}>
-                        <View style={{alignSelf: 'center'}}>
-                            <Text style={styles.textoB}>Eliminar</Text>
-                        </View>
+                            <View style={{flexDirection:'row',justifyContent:'center'}}>
+                                <Icon name="delete-outline" color="white" size={22}></Icon>
+                                <Text style={styles.textoB}>Eliminar</Text>
+                            </View>
                         </TouchableHighlight>
                     </View>
                 )
@@ -148,7 +141,7 @@ const solicitudes = ({navigation,route}) =>{
 const styles=StyleSheet.create({
     botonC:{
         marginTop: 10,
-        height: 30,
+        height: 32,
         marginBottom: 26,
         marginHorizontal: 25,
         justifyContent: 'center',
@@ -160,14 +153,16 @@ const styles=StyleSheet.create({
         marginBottom: 0,
         marginHorizontal: 25,
         fontSize: 18,
-        color: 'black'
+        color: 'black',
+        fontFamily: 'Inter-Regular'
     },
     textoB:{
         marginTop:0,
-        marginBottom: 2,
-        marginHorizontal: 25,
-        fontSize: 18,
-        color: 'white'
+        marginBottom: 0,
+        marginHorizontal: 0,
+        fontSize: 17,
+        color: 'white',
+        fontFamily:'Inter-Light'
     }
 })
 
