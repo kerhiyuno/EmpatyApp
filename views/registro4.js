@@ -4,6 +4,9 @@ import {Button, Paragraph, Dialog, Portal, RadioButton} from 'react-native-paper
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
+import {ipHost} from '../components/hosts.js';
+
+const host = ipHost();
 
 const registro4 = ({navigation,route}) =>{
 
@@ -48,7 +51,7 @@ const registro4 = ({navigation,route}) =>{
         //guardar en api
         try {
             console.log(usuario);
-            await axios.post('http://10.0.2.2:8000/usuarios/paciente/registro/',usuario);
+            await axios.post(host+'/usuarios/paciente/registro/',usuario);
         } catch (error){
         console.log(error)
         }

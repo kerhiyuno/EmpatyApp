@@ -6,6 +6,9 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {ipHost} from '../components/hosts.js';
+
+const host = ipHost();
 
 const horariosicologo = ({navigation,route}) => {
     const [elegido,guardarElegido] = useState({});
@@ -64,7 +67,7 @@ const horariosicologo = ({navigation,route}) => {
         console.log(solicitud);
         var name = await AsyncStorage.getItem('datosSesion');
         try {
-            var respuesta = await axios.post('http://10.0.2.2:8000/horarios/horarioaldia/',solicitud,
+            var respuesta = await axios.post(host+'/horarios/horarioaldia/',solicitud,
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
             console.log(respuesta.data.length)
             guardarHorario(respuesta.data);
@@ -78,12 +81,12 @@ const horariosicologo = ({navigation,route}) => {
                     const refresh0 = await AsyncStorage.getItem('datosSesion')
                     var refresh = JSON.parse(refresh0).refresh;
                     refresh = {refresh}
-                    var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
                     refresh = JSON.parse(refresh0).refresh;
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name = await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.post('http://10.0.2.2:8000/horarios/horarioaldia/',solicitud,
+                        const respuesta = await axios.post(host+'/horarios/horarioaldia/',solicitud,
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
                         if(respuesta.data.length>0){
@@ -108,7 +111,7 @@ const horariosicologo = ({navigation,route}) => {
     try {
         console.log("df");
         const nombre = await AsyncStorage.getItem('datosSesion');
-        const respuesta = await axios.get('http://10.0.2.2:8000/usuarios/afinidad/',
+        const respuesta = await axios.get(host+'/usuarios/afinidad/',
         {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
         guardarSicologos(respuesta.data);
         console.log(respuesta.data[0]);
@@ -123,12 +126,12 @@ const horariosicologo = ({navigation,route}) => {
                 const refresh0 = await AsyncStorage.getItem('datosSesion')
                 var refresh = JSON.parse(refresh0).refresh;
                 refresh = {refresh}
-                var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
                 refresh = JSON.parse(refresh0).refresh;
                 await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                 try {
                     var name = await AsyncStorage.getItem('datosSesion');
-                    const respuesta = await axios.get('http://10.0.2.2:8000/usuarios/afinidad/',
+                    const respuesta = await axios.get(host+'/usuarios/afinidad/',
                     {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(hola);          
                 } catch (error) {
@@ -218,7 +221,7 @@ const horariosicologo = ({navigation,route}) => {
         //Enviar eleccion y ir a Home
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
-            const respuesta = await axios.post('http://10.0.2.2:8000/solicitudes/manage/',elegido,
+            const respuesta = await axios.post(host+'/solicitudes/manage/',elegido,
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta.data);
             console.log("----------");
@@ -237,12 +240,12 @@ const horariosicologo = ({navigation,route}) => {
                     const refresh0 = await AsyncStorage.getItem('datosSesion')
                     var refresh = JSON.parse(refresh0).refresh;
                     refresh = {refresh}
-                    var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
                     refresh=JSON.parse(refresh0).refresh;
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.post('http://10.0.2.2:8000/solicitudes/manage/',elegido,
+                        const respuesta = await axios.post(host+'/solicitudes/manage/',elegido,
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
                     } catch (error) {

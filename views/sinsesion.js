@@ -5,7 +5,9 @@ import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {ipHost} from '../components/hosts.js';
 
+const host = ipHost();
 
 const sinsesion = ({navigation,route}) =>{
 
@@ -38,7 +40,7 @@ const sinsesion = ({navigation,route}) =>{
                     const nombre = await AsyncStorage.getItem('datosSesion');
                     console.log(nombre);
                     console.log(JSON.parse(nombre).access);
-                    const respuesta = await axios.post('http://10.0.2.2:8000/usuarios/paciente/perfil/',{},
+                    const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
                     {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
                     console.log(respuesta);
                     if(respuesta.data.id_psicologo== null){
@@ -55,12 +57,12 @@ const sinsesion = ({navigation,route}) =>{
                                 const refresh0 = await AsyncStorage.getItem('datosSesion')
                                 var refresh = JSON.parse(refresh0).refresh;
                                 refresh = {refresh}
-                                var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                                var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
                                 refresh=JSON.parse(refresh0).refresh;
                                 await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                                 try {
                                     var name= await AsyncStorage.getItem('datosSesion');
-                                    const respuesta = await axios.post('http://10.0.2.2:8000/usuarios/paciente/perfil/',{},
+                                    const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
                                     {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                                         console.log(hola);          
                                 } catch (error) {
@@ -95,7 +97,7 @@ const sinsesion = ({navigation,route}) =>{
         }
         try {
             const credenciales = {email,password};
-            var respuesta = await axios.post('http://10.0.2.2:8000/account/login/', credenciales);
+            var respuesta = await axios.post(host+'/account/login/', credenciales);
             console.log(credenciales);
             console.log(respuesta.status);
             console.log(respuesta.data.access);
@@ -114,7 +116,8 @@ const sinsesion = ({navigation,route}) =>{
    }
    
     return (
-        <View style={[globalStyles.contenedor,{marginTop:150}]}>
+        <View style={[globalStyles.contenedor,{marginTop:100}]}>
+            <Text style={globalStyles.titulo}>Buen día</Text>
             <TextInput
                 label="Correo"
                 onChangeText={(texto) => guardarEmail(texto)}
@@ -136,7 +139,7 @@ const sinsesion = ({navigation,route}) =>{
                     </View>
                 </TouchableHighlight >
             </View>
-            <View style={[styles.container,{marginTop:100}]}>
+            <View style={[styles.container,{marginTop:70}]}>
                 <TouchableHighlight  style={[styles.botonS,{marginHorizontal:100}]} underlayColor = {'transparent'} onPress={ () => navigation.navigate('Registro 1/7')}>
                     <View style={{flexDirection:'row'}}>
                         <Text style={styles.textoC}>Regístrate</Text>

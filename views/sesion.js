@@ -5,6 +5,9 @@ import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {ipHost} from '../components/hosts.js';
+
+const host = ipHost();
 
 const sesion = ({navigation,route}) =>{
  
@@ -32,7 +35,7 @@ const sesion = ({navigation,route}) =>{
     const datospsicologo = async () => {
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
-            const respuesta = await axios.get('http://10.0.2.2:8000/usuarios/psicologo/perfil/',
+            const respuesta = await axios.get(host+'/usuarios/psicologo/perfil/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             guardarNombreSicologo(respuesta.data.fullname);
         } catch (error) {
@@ -43,12 +46,12 @@ const sesion = ({navigation,route}) =>{
                     const refresh0 = await AsyncStorage.getItem('datosSesion')
                     var refresh = JSON.parse(refresh0).refresh;
                     refresh = {refresh}
-                    var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
                     refresh = JSON.parse(refresh0).refresh;
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name = await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.get('http://10.0.2.2:8000/usuarios/psicologo/perfil/',
+                        const respuesta = await axios.get(host+'/usuarios/psicologo/perfil/',
                          {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
                         guardarNombreSicologo(respuesta.data.fullname);
                         console.log(respuesta);

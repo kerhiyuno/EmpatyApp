@@ -4,6 +4,9 @@ import {Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PreguntaTest from '../components/preguntatest';
+import {ipHost} from '../components/hosts.js';
+
+const host = ipHost();
 
 const Cuestionario = ({navigation,route}) =>{
 
@@ -57,7 +60,7 @@ const Cuestionario = ({navigation,route}) =>{
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             console.log(nombre);
-            const respuesta = await axios.post('http://10.0.2.2:8000/evaluacion/evaluar/',usuario,
+            const respuesta = await axios.post(host+'/evaluacion/evaluar/',usuario,
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
         } catch (error) {
             console.log(error);
@@ -68,13 +71,13 @@ const Cuestionario = ({navigation,route}) =>{
                     const refresh0 = await AsyncStorage.getItem('datosSesion')
                     var refresh = JSON.parse(refresh0).refresh;
                     refresh = {refresh}
-                    var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
                     refresh=JSON.parse(refresh0).refresh;
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.post('http://10.0.2.2:8000/usuarios/evaluacion/evaluar/',usuario,
-                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+                        const respuesta = await axios.post(host+'/usuarios/evaluacion/evaluar/',usuario,
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
                     } catch (error) {
                         console.log(error.response);

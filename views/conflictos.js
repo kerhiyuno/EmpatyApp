@@ -28,14 +28,6 @@ const Conflictos = ({navigation,route}) => {
                         </View>
                     </TouchableHighlight>
             </View>
-            <View style={[styles.container,{marginTop:5}]}>
-                    <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate("ElegirHorario") }>
-                        <View style={{flexDirection:'row'}}>
-                            <Icon name="alert-outline" color="white" size={25}></Icon>
-                            <Text style={styles.textoC}>Otros Problemas</Text>
-                        </View>
-                    </TouchableHighlight>
-            </View>
         </ScrollView>
     );
 }
@@ -43,8 +35,7 @@ const Conflictos = ({navigation,route}) => {
 const styles=StyleSheet.create({
     container: {
         justifyContent: "center",
-        paddingHorizontal: 10,
-      },
+        paddingHorizontal: 10      },
     botonS:{
         height: 60,
         marginBottom: 20,

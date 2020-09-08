@@ -5,7 +5,9 @@ import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {ipHost} from '../components/hosts.js';
 
+const host = ipHost();
 
 const home = ({navigation,route}) =>{
 
@@ -17,7 +19,7 @@ const home = ({navigation,route}) =>{
     const verificarSicologo = async() => {
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
-            const respuesta = await axios.get('http://10.0.2.2:8000/usuarios/paciente/35/',
+            const respuesta = await axios.get(host+'/usuarios/paciente/35/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta);
             if(respuesta.data.id_sicologo== null){
@@ -32,12 +34,12 @@ const home = ({navigation,route}) =>{
                     const refresh0 = await AsyncStorage.getItem('datosSesion')
                     var refresh = JSON.parse(refresh0).refresh;
                     refresh = {refresh}
-                    var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
                     refresh = SON.parse(refresh0).refresh;
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name = await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.get('http://10.0.2.2:8000/usuarios/paciente/35/',
+                        const respuesta = await axios.get(host+'/usuarios/paciente/35/',
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                             console.log(hola);          
                     } catch (error) {
@@ -81,12 +83,18 @@ const home = ({navigation,route}) =>{
                         <Text style={styles.textoC}>Chat</Text>
                     </View>
                 </TouchableHighlight >
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Conflictos')}>
+                <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate("ElegirHorario") }>
                     <View style={{flexDirection:'row'}}>
-                        <Icon name="exclamation" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Conflictos</Text>
+                        <Icon name="account-alert-outline" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>Disconformidad con el grupo</Text>
                     </View>
-                </TouchableHighlight >
+                </TouchableHighlight>
+                <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate("PreferenciasSicologo") }>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="close" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>Desvincularse de Psicólogo</Text>
+                    </View>
+                </TouchableHighlight>
             </View>
         </View>
     );

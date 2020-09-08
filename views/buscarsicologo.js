@@ -1,12 +1,14 @@
 import React,{ useEffect,useState } from 'react';
 import {View,Text,TouchableHighlight,StyleSheet} from 'react-native';
-import {Headline, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
-
+import {Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ScrollView } from 'react-native-gesture-handler';
+import {ipHost} from '../components/hosts.js';
+
+const host = ipHost();
 
 const buscarsicologo = ({navigation,route}) => {
 
@@ -16,7 +18,7 @@ const buscarsicologo = ({navigation,route}) => {
     var timer;
 
     useEffect(() => {
-        timer = setInterval(async() => consultar(), 5000);
+        timer = setInterval(async() => consultar(), 20000);
         console.log(timer);
         return () => clearInterval(timer);
       });
@@ -25,7 +27,7 @@ const buscarsicologo = ({navigation,route}) => {
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             console.log(nombre);
-            const respuesta = await axios.post('http://10.0.2.2:8000/usuarios/paciente/perfil/',{},
+            const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta.data.id_psicologo);
             if(respuesta.data.id_psicologo !== null){
@@ -41,12 +43,12 @@ const buscarsicologo = ({navigation,route}) => {
                     const refresh0 = await AsyncStorage.getItem('datosSesion')
                     var refresh = JSON.parse(refresh0).refresh;
                     refresh = {refresh}
-                    var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
                     refresh=JSON.parse(refresh0).refresh;
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.post('http://10.0.2.2:8000/usuarios/paciente/perfil/',{},
+                        const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
                         if(respuesta.data.id_psicologo !== null){
@@ -125,6 +127,7 @@ const buscarsicologo = ({navigation,route}) => {
                         </View>
                     </TouchableHighlight>
             </View>
+
             <Portal>
                 <Dialog visible={SicologoListo} >
                     <Dialog.Title>Psicologo vinculado</Dialog.Title>

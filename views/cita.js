@@ -1,11 +1,13 @@
 import React,{useState} from 'react';
 import {Text,View,StyleSheet,TouchableHighlight,Linking,Alert} from 'react-native';
-import {Headline,Paragraph, Dialog, Portal,Button} from 'react-native-paper';
+import {Paragraph, Dialog, Portal,Button} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import InAppBrowser from 'react-native-inappbrowser-reborn'
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import {ipHost} from '../components/hosts.js';
 
+const host = ipHost();
 
 const cita = ({navigation,route}) =>{
 
@@ -66,7 +68,7 @@ const cita = ({navigation,route}) =>{
           const Bearer=JSON.parse(name).refresh;
           var sesion=id;
           const postdata={sesion}
-          var respuesta =await axios.post('http://10.0.2.2:8000/videoconf/urlMeet/',postdata,
+          var respuesta =await axios.post(host+'/videoconf/urlMeet/',postdata,
           {
               headers: {
                   'Authorization': 'Bearer ' +(JSON.parse(name).access),
@@ -89,7 +91,7 @@ const cita = ({navigation,route}) =>{
                   const refresh0 = await AsyncStorage.getItem('datosSesion')
                   var refresh = JSON.parse(refresh0).refresh;
                   refresh = {refresh}
-                  var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                  var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
                   refresh=JSON.parse(refresh0).refresh;
                   await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                   try {
@@ -97,7 +99,7 @@ const cita = ({navigation,route}) =>{
                       const postdata={
                           Bearer: refresh
                       }
-                      var respuesta =await axios.post('http://10.0.2.2:8000/videoconf/urlMeet/',postdata,
+                      var respuesta =await axios.post(host+'/videoconf/urlMeet/',postdata,
                       {
                           headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),},
                       });

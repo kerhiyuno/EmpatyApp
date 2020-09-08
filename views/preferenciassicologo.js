@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
-import {View,StyleSheet,Text,ScrollView,TouchableHighlight } from 'react-native';
+import React, {useState,useEffect} from 'react';
+import {View,StyleSheet,Text,ScrollView,TouchableHighlight,ActivityIndicator} from 'react-native';
 import { Button, Paragraph, Dialog, Portal, RadioButton,Checkbox} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import {ipHost} from '../components/hosts.js';
+
+const host = ipHost();
 
 const PreferenciasSicologo = ({navigation,route}) =>{
 
@@ -22,9 +25,110 @@ const PreferenciasSicologo = ({navigation,route}) =>{
     const [alertasigrupal,guardarAlertasigrupal] = useState(false);
     const [alertagenerosicologo,guardarAlertagenerosicologo] = useState(false);
 
+    const [cargando,guardarCargando] = useState(false);
 
+
+    useEffect(() => {
+        consultar();
+    },[]);
     
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+
+    const consultar = async () => {
+        guardarCargando(true);
+        await delay(2000);
+        try {
+            console.log("df");
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            console.log(nombre);
+            const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            guardarTerapia_grupal(respuesta.data.terapia_grupal);
+            console.log(respuesta);
+            var motivos=respuesta.data.motivos_terapia;
+            for(let i=0;i<motivos.length;i++){
+                if (motivos[i]===1){
+                    guardarGrupoapoyo('si');
+                }
+                else if(motivos[i]===2){
+                    guardarHabcomunicacion('si');
+                }
+                else if(motivos[i]===3){
+                    guardarMismosproblemas('si');
+                }
+                else if(motivos[i]===4){
+                    guardarOtrosproblemas('si');
+                }
+                else if(motivos[i]===5){
+                    guardarIndividualincomodo('si');
+                }
+                else if(motivos[i]===6){
+                    guardarOtro('si');
+                }
+                else if(motivos[i]===7){
+                    guardarNodecir('si');
+                }
+            }
+            guardarCargando(false);
+        } catch (error) {
+            console.log("error");
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                console.log('token_not_valid');
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh = JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name = await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        console.log(respuesta);
+                        guardarTerapia_grupal(respuesta.data.terapia_grupal);
+                        var motivos=respuesta.data.motivos_terapia;
+                        for(let i=0;i<motivos.length;i++){
+                            if (motivos[i]===1){
+                                guardarGrupoapoyo('si');
+                            }
+                            else if(motivos[i]===2){
+                                guardarHabcomunicacion('si');
+                            }
+                            else if(motivos[i]===3){
+                                guardarMismosproblemas('si');
+                            }
+                            else if(motivos[i]===4){
+                                guardarOtrosproblemas('si');
+                            }
+                            else if(motivos[i]===5){
+                                guardarIndividualincomodo('si');
+                            }
+                            else if(motivos[i]===6){
+                                guardarOtro('si');
+                            }
+                            else if(motivos[i]===7){
+                                guardarNodecir('si');
+                            }
+                        }
+                        guardarCargando(false);
+                    } catch (error) {
+                        console.log(error.response);
+                        console.log("error acaa");
+                    }  
+                } catch (error) {
+                    console.log("error aqui");
+                    console.log(error.response);
+                }
+            }
+        }
+    }
     
+
+
+
     const enviarPreferencias = async () => {
         //validar
         if(terapia_grupal===''){
@@ -80,7 +184,7 @@ const PreferenciasSicologo = ({navigation,route}) =>{
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             console.log(nombre);
-            const respuesta = await axios.put('http://10.0.2.2:8000/usuarios/paciente/preferencias/',usuario,
+            const respuesta = await axios.put(host+'/usuarios/paciente/preferencias/',usuario,
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
         } catch (error) {
             console.log(error);
@@ -91,12 +195,12 @@ const PreferenciasSicologo = ({navigation,route}) =>{
                     const refresh0 = await AsyncStorage.getItem('datosSesion')
                     var refresh = JSON.parse(refresh0).refresh;
                     refresh = {refresh}
-                    var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
                     refresh=JSON.parse(refresh0).refresh;
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.put('http://10.0.2.2:8000/usuarios/paciente/preferencias/',usuario,
+                        const respuesta = await axios.put(host+'/usuarios/paciente/preferencias/',usuario,
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
                     } catch (error) {
@@ -114,6 +218,9 @@ const PreferenciasSicologo = ({navigation,route}) =>{
     }
     return (
         <ScrollView style= {globalStyles.contenedor}>
+            {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
+            {cargando===false ?
+            <View>
             <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Responde las siguientes
 preguntas para brindarte opciones que se acomoden a lo que buscas:
             </Text>
@@ -306,6 +413,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     </View>
                 </TouchableHighlight >
             </View>
+            </View> : null}
             <Portal>
                 <Dialog visible={alertasigrupal} onDismiss={() => guardarAlertasigrupal(false)}>
                     <Dialog.Title>Error</Dialog.Title>

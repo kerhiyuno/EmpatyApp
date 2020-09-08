@@ -1,13 +1,11 @@
 import React from 'react';
-import {Checkbox} from 'react-native-paper';
 import {View,StyleSheet,Text,TouchableHighlight} from 'react-native';
-import globalStyles from '../styles/global';
 
 const BloqueHorario = (props) => {
 
     var {numeroBloque,numeroDia,bloque,d,guardard,disponibles,guardarDisponibles} = props;
 
-    const eliminar = (obj) => {
+    const eliminar = async (obj) => {
         var lista=disponibles;
         for(var i = lista.length - 1; i >= 0; i--) {
             if(JSON.stringify(obj) === JSON.stringify(lista[i])) {
@@ -15,19 +13,18 @@ const BloqueHorario = (props) => {
                 console.log("hola");
             }
         }
-        guardarDisponibles(lista);
+        await guardarDisponibles(lista);
     }
     
-    const eleccion = () => {
-        console.log(d);
+    const eleccion = async () => {
         if(d === 'no'){
             console.log("es no");
-            guardard('si');
-            guardarDisponibles([...disponibles,{"bloque":numeroBloque,"dia":numeroDia}])
+            await guardard('si');
+            await guardarDisponibles([...disponibles,{"bloque":numeroBloque,"dia":numeroDia}]);
         }else{
             console.log("es si");
-            guardard('no');
-            eliminar({"bloque":numeroBloque,"dia":numeroDia})
+            await guardard('no');
+            await eliminar({"bloque":numeroBloque,"dia":numeroDia});
         }
     }
 

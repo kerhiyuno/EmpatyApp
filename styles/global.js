@@ -3,13 +3,13 @@ import {StyleSheet} from 'react-native';
 const globalStyles = StyleSheet.create({
     contenedor: {
         flex: 1,
-        marginTop: 15,
+        marginTop: 5,
         marginHorizontal: '2.5%',
-        marginBottom: 10
+        marginBottom: 5
     },
     titulo: {
         textAlign: 'center',
-        marginTop: 5,
+        marginTop: 10,
         marginBottom: 25,
         fontSize: 22,
         fontFamily: "Inter-Bold",
@@ -36,6 +36,14 @@ const globalStyles = StyleSheet.create({
     textoAlerta:{
         fontSize:17,
         fontFamily:'Inter-Regular'
-    }
+    },
+    cargando: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 80,
+        alignContent: 'center',
+        alignSelf:'center',
+        marginVertical: 200
+     }
 });
 export default globalStyles;

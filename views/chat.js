@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text,View,StyleSheet,TouchableHighlight} from 'react-native';
+import {Text} from 'react-native';
 
 const Chat = () => {
     return(

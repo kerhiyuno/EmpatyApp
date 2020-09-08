@@ -95,7 +95,7 @@ const App = () => {
             headerTintColor: theme.colors.surface,
             headerTitleStyle:{
               fontFamily: "Inter-SemiBold",
-              fontSize:18
+              fontSize:17
             }
           }}
         >
