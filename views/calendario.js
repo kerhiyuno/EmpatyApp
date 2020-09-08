@@ -167,18 +167,18 @@ const traductorhora = (bloque) =>{
                     <TouchableHighlight underlayColor = {'transparent'} onPress={ () => irCita(item.id,item.fecha_sesion,item.bloque.id) } style={styles.botonC}>
                     <View style={{flex:1,flexDirection: 'column'}}>
                             <View style={{flex:1,flexDirection: 'row',marginTop:5}}>
-                                <View style={{flex:0.5}}>
+                                <View style={{flex:0.3}}>
                                     <Text style={[styles.textoC]}>Día:  </Text>
                                 </View>
-                                <View style={{flex:0.5}}>
+                                <View style={{flex:0.7}}>
                                     <Text style={[styles.textoC]}>{extraerdia(item.fecha_sesion)} de {mespalabra(item.fecha_sesion)}</Text>
                                 </View>
                             </View>
                             <View style={{flex:1,flexDirection: 'row'}}>
-                                <View style={{flex:0.5}}>
+                                <View style={{flex:0.3}}>
                                     <Text style={[styles.textoC]}>Hora:  </Text>
                                 </View>
-                                <View style={{flex:0.5}}>
+                                <View style={{flex:0.7}}>
                                     <Text style={[styles.textoC]}>{traductorhora(item.bloque.id)}</Text>
                                 </View>
                             </View>
@@ -197,7 +197,7 @@ const styles=StyleSheet.create({
         marginTop: 10,
         height: 80,
         marginBottom: 20,
-        marginHorizontal: 10,
+        marginHorizontal: 20,
         justifyContent: 'center',
         backgroundColor: '#1e524c',
         borderRadius: 8
@@ -206,7 +206,7 @@ const styles=StyleSheet.create({
         marginTop:2,
         marginBottom: 10,
         marginHorizontal: 25,
-        fontSize: 18,
+        fontSize: 17,
         color: 'white',
         fontFamily: "Inter-Light"
     }

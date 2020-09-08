@@ -246,7 +246,7 @@ const sesion = ({navigation,route}) =>{
                 <Dialog visible={sinsesiones} onDismiss={() => guardarSinsesiones(false)} >
                     <Dialog.Title>Sin sesiones agendadas</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph>No tienes ninguna sesión agendada</Paragraph>
+                        <Paragraph styles={globalStyles.textoAlerta}>No tienes ninguna sesión agendada</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>
@@ -265,7 +265,7 @@ const styles=StyleSheet.create({
         paddingHorizontal: 10
       },
     botonS:{
-        height: 70,
+        height: 60,
         marginBottom: 20,
         marginHorizontal: 10,
         justifyContent: "center",
@@ -276,14 +276,14 @@ const styles=StyleSheet.create({
     textoS:{
         marginBottom: 10,
         marginHorizontal: 10,
-        fontSize: 19,
+        fontSize: 18,
         color: 'black',
         fontFamily: 'Inter-Regular'
     },
     textoC: {
         marginBottom: 0,
         marginHorizontal: 10,
-        fontSize: 19,
+        fontSize: 17,
         color: 'white',
         fontFamily: 'Inter-Light'
     }

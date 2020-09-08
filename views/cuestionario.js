@@ -54,7 +54,38 @@ const Cuestionario = ({navigation,route}) =>{
         const usuario={fcp,shd,ga,gd,fa,ap};
         console.log(usuario);
         //Enviar Resultado
-
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            console.log(nombre);
+            const respuesta = await axios.post('http://10.0.2.2:8000/evaluacion/evaluar/',usuario,
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+        } catch (error) {
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                console.log('token_not_valid');
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                    refresh=JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name= await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.post('http://10.0.2.2:8000/usuarios/evaluacion/evaluar/',usuario,
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+                        console.log(respuesta);
+                    } catch (error) {
+                        console.log(error.response);
+                        console.log("error acaa");
+                    }  
+                } catch (error) {
+                    console.log("error aqui");
+                    console.log(error.response);
+                }
+            }
+        }
 
         //redireccionar
         navigation.goBack();
@@ -65,7 +96,6 @@ const Cuestionario = ({navigation,route}) =>{
             <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>El siguiente cuestionario aborda temas que pueden haberle 
             afectado en las últimas dos semanas. Debe responder según la escala asignada.
             </Text>
-
             <Text style={styles.escala}>
             0 - Nada
             </Text>
@@ -114,7 +144,7 @@ const Cuestionario = ({navigation,route}) =>{
                 <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)}>
                     <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={{fontSize:17}}>Todos los campos son obligatorios</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlerta(false)} color='#3c2c18'>Ok</Button>
@@ -132,7 +162,8 @@ const styles=StyleSheet.create({
         fontSize: 17,
         marginLeft:5,
         marginRight:5,
-        fontFamily:'Inter-Regular'
+        fontFamily:'Inter-Regular',
+        textAlign:'justify'
     },
     escala: {
         marginTop:7,

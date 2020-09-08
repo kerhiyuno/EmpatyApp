@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React,{useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,7 +7,10 @@ import {
   View,
   Text,
   StatusBar,
+  Alert
 } from 'react-native';
+import messaging from '@react-native-firebase/messaging';
+import firebase from '@react-native-firebase/app';
 
 import home from './views/home';
 import sinsesion from './views/sinsesion';
@@ -62,6 +65,23 @@ console.log(theme.colors.primary);
 
 const App = () => {
 
+
+  useEffect( () => {
+    gettoken();
+    console.log("dasdsa");
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log("hola");
+      console.log("Push notificacion recibida",remoteMessage);
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+    return unsubscribe;
+  }, []);
+  
+  const gettoken = async () => {
+    var fcmToken = await firebase.messaging().getToken();
+    console.log(fcmToken);
+
+  }
   return (
     <>
     <ProviderPaper>
@@ -74,7 +94,8 @@ const App = () => {
             },
             headerTintColor: theme.colors.surface,
             headerTitleStyle:{
-              fontFamily: "Inter-SemiBold"
+              fontFamily: "Inter-SemiBold",
+              fontSize:18
             }
           }}
         >

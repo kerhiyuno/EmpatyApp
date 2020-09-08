@@ -77,29 +77,29 @@ const elegirsicologo = ({navigation,route}) =>{
     return (
         <ScrollView style={globalStyles.contenedor}>
             <Text style={globalStyles.titulo}>Elige un psicólogo</Text>
-            <Text style={{fontSize:19,marginHorizontal:15}}>{cerosicologos==true ? 'No se han encontrado psicólogos que coincidan con tu horario':''}</Text>
+            <Text style={{fontSize:18,marginHorizontal:15}}>{cerosicologos==true ? 'No se han encontrado psicólogos que coincidan con tu horario':''}</Text>
             <FlatList
                 data={sicologos}
                 style={{marginBottom: 10}}
                 renderItem={({item,index}) => (
                     <TouchableHighlight underlayColor = {'transparent'} onPress={  () => irHorarios(item.email)} style={styles.botonC} >
                         <View style={{flex:1,flexDirection: 'row'}}>
-                            <View style={{flex:1,flexDirection: 'column'}}>
+                            <View style={{flex:0.3,flexDirection: 'column'}}>
                                 {imagenperfil !== '' ? avatarimagen(imagenperfil) : item.fullname !== '' ? avatar(item.fullname) : console.log('')}
                             </View>
-                            <View style={{flex:1,flexDirection: 'column',marginVertical:10,marginLeft:0}}>
-                                <View style={{flex:0.5}}>
+                            <View style={{flex:0.3,flexDirection: 'column',marginVertical:10,marginLeft:0}}>
+                                <View style={{flex:0.6}}>
                                     <Text style={[styles.textoC]}>Nombre:</Text>
                                 </View>
-                                <View style={{flex:0.5}}>
+                                <View style={{flex:0.4}}>
                                     <Text style={[styles.textoC]}>Género:</Text>
                                 </View>
                             </View>
-                            <View style={{flex:1,flexDirection: 'column',marginVertical:10,marginRight:10}}>
-                                <View style={{flex:0.5}}>
+                            <View style={{flex:0.4,flexDirection: 'column',marginVertical:10,marginRight:10}}>
+                                <View style={{flex:0.6}}>
                                     <Text style={[styles.textoC]}>{item.fullname}</Text>
                                 </View>
-                                <View style={{flex:0.5}}>
+                                <View style={{flex:0.4}}>
                                     <Text style={[styles.textoC]}>{item.genero}</Text>
                                 </View>
                             </View>
@@ -125,9 +125,9 @@ const styles=StyleSheet.create({
         borderRadius: 8
     },
     textoC:{
-        marginTop:5,
+        marginTop:0,
         marginHorizontal: 0,
-        fontSize: 17,
+        fontSize: 16,
         color: 'white',
         fontFamily: 'Inter-Light'
     }

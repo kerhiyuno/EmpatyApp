@@ -98,7 +98,7 @@ const registro2 = ({navigation,route}) =>{
                 <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)}>
                     <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={{fontSize:17}}>Todos los campos son obligatorios</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlerta(false)} color='#3c2c18'>Ok</Button>

@@ -46,7 +46,7 @@ const editarperfil = ({navigation,route}) =>{
             />
             <TouchableHighlight style={styles.botonS} onPress={() => enviar() }>
                 <View style={{flexDirection:'row'}}>
-                    <Icon name="pencil-outline" color="white" size={30}></Icon>
+                    <Icon name="pencil-outline" color="white" size={25}></Icon>
                     <Text style={[styles.textoC]}> Guardar Cambios</Text>
                 </View>
             </TouchableHighlight>
@@ -68,7 +68,7 @@ const styles=StyleSheet.create({
     },
     textoC:{
         marginBottom: 2,
-        fontSize: 18,
+        fontSize: 17,
         color: 'white',
         alignSelf: 'center',
         fontFamily: 'Inter-Regular'

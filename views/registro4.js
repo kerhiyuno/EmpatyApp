@@ -3,6 +3,7 @@ import {View,StyleSheet,Text,ScrollView,TouchableHighlight } from 'react-native'
 import {Button, Paragraph, Dialog, Portal, RadioButton} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import axios from 'axios';
 
 const registro4 = ({navigation,route}) =>{
 
@@ -10,6 +11,7 @@ const registro4 = ({navigation,route}) =>{
     const [psiquia_prevS,guardarPsiquia_prev] = useState('');
     const [tratamiento_vigenteS,guardarTratamiento_vigente] = useState('');
     const [alerta,guardarAlerta] = useState(false);
+    const [registrolisto,guardarRegistrolisto] = useState(false);
     
     const fullname = (route.params.usuario.fullname);
     const rut = (route.params.usuario.rut);
@@ -41,7 +43,6 @@ const registro4 = ({navigation,route}) =>{
         if(tratamiento_vigenteS==='no'){
             tratamiento_vigente=false;
         }
-        console.log(disponibles);
         //validar
         const usuario={fullname,rut,email,password,telefono,genero,gender_description,hobbies,psico_prev,psiquia_prev,tratamiento_vigente,fecha_nacimiento};
         //guardar en api
@@ -49,10 +50,10 @@ const registro4 = ({navigation,route}) =>{
             console.log(usuario);
             await axios.post('http://10.0.2.2:8000/usuarios/paciente/registro/',usuario);
         } catch (error){
-        console.log(error.response)
+        console.log(error)
         }
         //limpiar formulario
-        navigation.navigate('Iniciar Sesion');
+        guardarRegistrolisto(true);
     }
 
     return (
@@ -133,10 +134,21 @@ const registro4 = ({navigation,route}) =>{
                 <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)}>
                     <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={{fontSize:17}}>Todos los campos son obligatorios</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlerta(false)} color='#3c2c18'>Ok</Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+            <Portal>
+                <Dialog visible={registrolisto} onDismiss={() => {guardarRegistrolisto(false);navigation.navigate('Iniciar Sesion')}}>
+                    <Dialog.Title>Registro completado</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={globalStyles.textoAlerta}>Se ha registrado exitosamente</Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={()=>{guardarRegistrolisto(false);navigation.navigate('Iniciar Sesion')}} color='#3c2c18'>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

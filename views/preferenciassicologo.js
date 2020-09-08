@@ -3,6 +3,8 @@ import {View,StyleSheet,Text,ScrollView,TouchableHighlight } from 'react-native'
 import { Button, Paragraph, Dialog, Portal, RadioButton,Checkbox} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const PreferenciasSicologo = ({navigation,route}) =>{
 
@@ -21,6 +23,8 @@ const PreferenciasSicologo = ({navigation,route}) =>{
     const [alertagenerosicologo,guardarAlertagenerosicologo] = useState(false);
 
 
+    
+    
     const enviarPreferencias = async () => {
         //validar
         if(terapia_grupal===''){
@@ -73,9 +77,38 @@ const PreferenciasSicologo = ({navigation,route}) =>{
         const usuario={terapia_grupal,genero_psicologo,motivos_terapia};
         
         //Enviar
-
-
-
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            console.log(nombre);
+            const respuesta = await axios.put('http://10.0.2.2:8000/usuarios/paciente/preferencias/',usuario,
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+        } catch (error) {
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                console.log('token_not_valid');
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                    refresh=JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name= await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.put('http://10.0.2.2:8000/usuarios/paciente/preferencias/',usuario,
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        console.log(respuesta);
+                    } catch (error) {
+                        console.log(error.response);
+                        console.log("error acaa");
+                    }  
+                } catch (error) {
+                    console.log("error aqui");
+                    console.log(error.response);
+                }
+            }
+        }
         //Volver
         navigation.goBack();
     }
@@ -277,7 +310,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                 <Dialog visible={alertasigrupal} onDismiss={() => guardarAlertasigrupal(false)}>
                     <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={styles.paragraph}>Debe indicar su interes sobre las terapias grupales</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Debe indicar su interes sobre las terapias grupales</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlertasigrupal(false)} color='#3c2c18'>Ok</Button>
@@ -288,7 +321,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                 <Dialog visible={alertainteres} onDismiss={() => guardarAlertainteres(false)}>
                     <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={styles.paragraph}>Debe seleccionar al menos un motivo</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Debe seleccionar al menos un motivo</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlertainteres(false)} color='#3c2c18'>Ok</Button>
@@ -299,7 +332,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                 <Dialog visible={alertagenerosicologo} onDismiss={() => guardarAlertagenerosicologo(false)}>
                     <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={styles.paragraph}>Debe seleccionar preferencia de psicólogo</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Debe seleccionar preferencia de psicólogo</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlertagenerosicologo(false)} color='#3c2c18'>Ok</Button>
@@ -340,9 +373,6 @@ const styles=StyleSheet.create({
     },
     casilla:{
         marginLeft:10
-    },
-    paragraph:{
-        fontSize: 17
     },
     textoC: {
         marginBottom: 2,

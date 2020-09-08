@@ -12,8 +12,8 @@ const Preferencias = ({navigation,route}) => {
     return (
         <ScrollView style={globalStyles.contenedor} >
             <Text style={globalStyles.titulo}>Preferencias de Búsqueda</Text>
-            <Text style={[styles.textoS,{marginBottom:20}]}>Para iniciar la búsqueda de psicólogo, selecciona tus preferencias.</Text>     
-            <View style={styles.container}>
+            <Text style={[styles.textoS,{marginBottom:20}]}>Para iniciar la búsqueda de psicólogo, selecciona tus preferencias:</Text>     
+            <View style={[styles.container,{marginTop:10}]}>
                     <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate("PreferenciasSicologo") }>
                         <View style={{flexDirection:'row'}}>
                             <Icon name="account-question-outline" color="white" size={25}></Icon>
@@ -51,7 +51,7 @@ const styles=StyleSheet.create({
     textoS:{
         marginBottom: 10,
         marginHorizontal: 10,
-        fontSize: 19,
+        fontSize: 18,
         color: 'black',
         fontFamily: 'Inter-Regular'
     },

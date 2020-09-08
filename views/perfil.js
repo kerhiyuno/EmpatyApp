@@ -48,10 +48,13 @@ const perfil = ({navigation,route}) => {
                         const respuesta = await axios.post('http://10.0.2.2:8000/usuarios/paciente/perfil/',{},
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
+                        guardarNombre(respuesta.data.fullname);
+                        guardarEmail(respuesta.data.email);
+                        guardarTelefono(respuesta.data.telefono);
+                        guardarGenero(respuesta.data.genero);
                     } catch (error) {
                         console.log(error.response);
                         console.log("error acaa");
-                        //navigation.navigate('Home');
                     }  
                 } catch (error) {
                     console.log("error aqui");
@@ -76,8 +79,10 @@ const perfil = ({navigation,route}) => {
 
     const avatarimagen = () => {
         return (<View style={{alignItems: 'center'}}>
-                    <Avatar.Image size={100} source={{uri: imagenperfil}} />
-                    <Text style={[styles.textoS,{marginTop:5,fontSize:19}]}>{nombre}</Text>
+                    <Avatar.Image size={100} source={{uri: imagenperfil}}/>
+                    <View style={{borderRadius:40,marginTop:10,alignSelf:"center",borderWidth:2, borderColor:"#828282"}}>
+                        <Text style={[styles.textoS,{fontSize:16,color:"black",marginTop:5,marginBottom:5,marginHorizontal:10}]}>{nombre}</Text>
+                    </View>
                 </View>)
     }
 
@@ -85,33 +90,42 @@ const perfil = ({navigation,route}) => {
         <View style={[globalStyles.contenedor]}>
             <Text style={globalStyles.titulo}>Mi perfil</Text>
             {imagenperfil !== '' ? avatarimagen(): nombre !== '' ? avatar() : console.log('')}
-            <View style={{marginTop: 25,marginHorizontal:7}}>
-                <View style={{flexDirection: 'row'}}>
-                    <Icon name="email" color="#777777" size={20}></Icon>
-                    <Text style={styles.textoS}>Correo: {email}</Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                    <Icon name="phone" color="#777777" size={20}></Icon>
-                    <Text style={styles.textoS}>Teléfono: {telefono}</Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                    <Icon name="rhombus-outline" color="#777777" size={20}></Icon>
-                    <Text style={styles.textoS}>Género: {genero}</Text>
+            <View style={styles.perfil}>
+                <View style={{marginVertical:5,marginTop:10}}>
+                    <View style={{flexDirection: 'row',marginHorizontal: 10}}>
+                        <Icon name="email" color="#515254" size={20}></Icon>
+                        <Text style={styles.textoS}>Correo: {email}</Text>
+                    </View>
+                    <View style={{flexDirection: 'row',marginHorizontal: 10}}>
+                        <Icon name="phone" color="#515254" size={20}></Icon>
+                        <Text style={styles.textoS}>Teléfono: {telefono}</Text>
+                    </View>
+                    <View style={{flexDirection: 'row',marginHorizontal: 10}}>
+                        <Icon name="rhombus-outline" color="#515254" size={20}></Icon>
+                        <Text style={styles.textoS}>Género: {genero}</Text>
+                    </View>
                 </View>
             </View>
-            <View style={[styles.container,{marginTop:5}]}>
-                    <TouchableHighlight style={styles.botonS} onPress={() => editarperfil() }>
-                        <View style={{flexDirection:'row'}}>
-                            <Icon name="pencil-outline" color="white" size={30}></Icon>
-                            <Text style={[styles.textoC,{marginLeft:10}]}> Editar Perfil </Text>
-                        </View>
-                    </TouchableHighlight>
-            </View>
+                <View style={[styles.container,{marginTop:40}]}>
+                        <TouchableHighlight style={styles.botonS} onPress={() => editarperfil() }>
+                            <View style={{flexDirection:'row'}}>
+                                <Icon name="pencil-outline" color="white" size={22}></Icon>
+                                <Text style={[styles.textoC,{marginLeft:10}]}> Editar Perfil </Text>
+                            </View>
+                        </TouchableHighlight>
+                </View>
         </View>
     );
 }
 
 const styles=StyleSheet.create({
+    perfil:{
+        borderWidth:2,
+        borderColor:"#828282",
+        marginTop: 25,
+        marginHorizontal:10,
+        borderRadius: 10
+    },
     botonC:{
         marginTop: 5,
         height: 40,
@@ -123,18 +137,17 @@ const styles=StyleSheet.create({
         borderRadius: 8,
     },
     textoS:{
-        marginBottom: 10,
-        marginHorizontal: 10,
-        fontSize: 17,
+        marginBottom: 8,
+        marginHorizontal: 0,
+        fontSize: 16,
         color: 'black',
         fontFamily: 'Inter-Regular'
     },
     container:{
-        justifyContent: "center",
         paddingHorizontal: 10,
     },
     botonS:{
-        height: 50,
+        height: 45,
         marginBottom: 20,
         marginHorizontal: 80,
         justifyContent: "center",
@@ -143,11 +156,10 @@ const styles=StyleSheet.create({
         borderRadius: 8
     },
     textoC:{
-        marginBottom: 2,
-        fontSize: 18,
+        fontSize: 17,
         color: 'white',
         alignSelf: 'center',
-        fontFamily: 'Inter-Regular'
+        fontFamily: 'Inter-Light'
     }
 })
 

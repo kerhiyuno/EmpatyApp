@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {Button,Paragraph,Dialog, Portal} from 'react-native-paper';
-import {TouchableHighlight, View} from 'react-native';
+import {TouchableHighlight, View,StyleSheet,Text} from 'react-native';
 import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const BotonLogout = ({navigation,route}) => {
     const [alertaseguro,guardarAlertaseguro] = useState(false);
@@ -62,12 +63,18 @@ const BotonLogout = ({navigation,route}) => {
 
     return(
         <View>
-            <Button onPress={()=> guardarAlertaseguro(true)}  style={{backgroundColor:'#1e524c',marginRight:5}}theme={{colors: {text: 'white', primary: 'white'}}}>Salir</Button>
+            <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=> guardarAlertaseguro(true)}>
+                <View style={{flexDirection:'row',justifyContent:'center',marginHorizontal:8}}>
+                    <Icon name="logout" color="white" size={25}></Icon>
+                    <Text style={styles.textoC}>Salir</Text>
+                </View>
+            </TouchableHighlight>
+            
             <Portal>
                 <Dialog visible={alertaseguro} onDismiss={() => guardarAlertaseguro(false)}>
                     <Dialog.Title>Salir</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={{fontSize:17}}>¿Está seguro que desea cerrar sesión?</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>¿Está seguro que desea cerrar sesión?</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:30}}>
@@ -82,5 +89,24 @@ const BotonLogout = ({navigation,route}) => {
         </View>
     );
 }
+
+const styles=StyleSheet.create({
+    botonS:{
+        height: 35,
+        marginHorizontal: 0,
+        marginRight:10,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#1e524c",
+        borderRadius: 8
+    },
+    textoC: {
+        marginHorizontal: 5,
+        fontSize: 17,
+        color: 'white',
+        fontFamily: 'Inter-Light'
+    }
+})
+
 
 export default BotonLogout;

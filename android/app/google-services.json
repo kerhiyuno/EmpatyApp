@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1038298264850",
+    "firebase_url": "https://empaty-push.firebaseio.com",
+    "project_id": "empaty-push",
+    "storage_bucket": "empaty-push.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038298264850:android:f14bfba300365f0581afcb",
+        "android_client_info": {
+          "package_name": "com.feria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038298264850-hcqehnq51o8curohj775l72djf1bd3qk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjsOC3bzBzb2J63vxMJ0ALaQBO7tJnkUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038298264850-hcqehnq51o8curohj775l72djf1bd3qk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

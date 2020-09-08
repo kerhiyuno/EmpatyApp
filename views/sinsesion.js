@@ -147,7 +147,7 @@ const sinsesion = ({navigation,route}) =>{
                 <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)} >
                     <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={{fontSize:17}}>Todos los campos son obligatorios</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlerta(false)} color='#3c2c18'>Ok</Button>
@@ -158,7 +158,7 @@ const sinsesion = ({navigation,route}) =>{
                 <Dialog visible={inicioFallido} onDismiss={() => guardarInicioFallido(false)} >
                     <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={{fontSize:17}}>Los datos son incorrectos</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Los datos son incorrectos</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarInicioFallido(false)} color='#3c2c18'>Ok</Button>

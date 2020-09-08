@@ -129,7 +129,7 @@ const buscarsicologo = ({navigation,route}) => {
                 <Dialog visible={SicologoListo} >
                     <Dialog.Title>Psicologo vinculado</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={{fontSize:17}}>Una de sus solicitudas de psicólogo ha sido aceptada</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Una de sus solicitudas de psicólogo ha sido aceptada</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>
@@ -148,7 +148,7 @@ const styles=StyleSheet.create({
         paddingHorizontal: 10,
       },
     botonS:{
-        height: 70,
+        height: 60,
         marginBottom: 20,
         marginHorizontal: 10,
         justifyContent: "center",
@@ -163,9 +163,8 @@ const styles=StyleSheet.create({
         color: 'black',
     },
     textoC: {
-        marginBottom: 10,
         marginHorizontal: 7,
-        fontSize: 18,
+        fontSize: 17,
         color: 'white',
         fontFamily: 'Inter-Light'
     }

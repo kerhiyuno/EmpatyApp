@@ -97,14 +97,14 @@ const styles=StyleSheet.create({
         justifyContent:"center"
     },
     textoC: {
-        marginBottom: 10,
+        marginBottom: 0,
         marginHorizontal: 10,
-        fontSize: 19,
+        fontSize: 17,
         color: 'white',
         fontFamily: 'Inter-Light'
     },
     botonS:{
-        height: 70,
+        height: 60,
         marginBottom: 20,
         marginHorizontal: 10,
         justifyContent: "center",

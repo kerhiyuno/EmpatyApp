@@ -358,7 +358,7 @@ const horariosicologo = ({navigation,route}) => {
                 <Dialog visible={alertaeleccion} onDismiss={() => guardarAlertaeleccion(false)}>
                     <Dialog.Title>Elegir horario</Dialog.Title>
                     <Dialog.Content>
-                <Paragraph style={{fontSize:16}}>¿Está seguro de elegir este horario?  {dia} de {fechapalabras} a las {hora}</Paragraph>
+                    <Paragraph style={[globalStyles.textoAlerta,{fontSize:16}]}>¿Está seguro de elegir este horario?  {dia} de {fechapalabras} a las {hora}</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:30}}>

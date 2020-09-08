@@ -4,6 +4,7 @@ import globalStyles from '../styles/global';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HorarioDia from '../components/horariodia'
+import AsyncStorage from '@react-native-community/async-storage';
 
 const HorarioPaciente = ({navigation}) =>{
     const [disponibles,guardarDisponibles] = useState([]);
@@ -111,8 +112,39 @@ const HorarioPaciente = ({navigation}) =>{
         //validar
         const usuario = {disponibles}
         //guardar en api
-        
-        //limpiar formulario
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            console.log(nombre);
+            const respuesta = await axios.put('http://10.0.2.2:8000/horarios/mihorario/',usuario,
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+        } catch (error) {
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                console.log('token_not_valid');
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
+                    refresh=JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name= await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.put('http://10.0.2.2:8000/horarios/mihorario/',usuario,
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        console.log(respuesta);
+                    } catch (error) {
+                        console.log(error.response);
+                        console.log("error acaa");
+                    }  
+                } catch (error) {
+                    console.log("error aqui");
+                    console.log(error.response);
+                }
+            }
+        }
+
         navigation.goBack();
     }
 

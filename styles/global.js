@@ -10,10 +10,10 @@ const globalStyles = StyleSheet.create({
     titulo: {
         textAlign: 'center',
         marginTop: 5,
-        marginBottom: 20,
-        fontSize: 25,
+        marginBottom: 25,
+        fontSize: 22,
         fontFamily: "Inter-Bold",
-        color: '#0a0a0a'
+        color: '#141414'
     },
     botonG:{
         backgroundColor: '#1e524c',
@@ -32,6 +32,10 @@ const globalStyles = StyleSheet.create({
         borderWidth: 1,
         height: 45,
         marginHorizontal: 8
+    },
+    textoAlerta:{
+        fontSize:17,
+        fontFamily:'Inter-Regular'
     }
 });
 export default globalStyles;

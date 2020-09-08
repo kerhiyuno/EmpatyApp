@@ -46,7 +46,7 @@ const styles=StyleSheet.create({
         paddingHorizontal: 10,
       },
     botonS:{
-        height: 70,
+        height: 60,
         marginBottom: 20,
         marginHorizontal: 10,
         justifyContent: "center",
@@ -62,9 +62,8 @@ const styles=StyleSheet.create({
         fontFamily: 'Inter-Regular'
     },
     textoC: {
-        marginBottom: 10,
         marginHorizontal: 7,
-        fontSize: 18,
+        fontSize: 17,
         color: 'white',
         fontFamily: 'Inter-Light'
     }

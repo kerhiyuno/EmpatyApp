@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 const cita = ({navigation,route}) =>{
 
     const [nolink,guardarNolink] = useState(false);
+    const [nosubgrupo,guardarNosubgrupo] = useState(false);
 
     const openLink=async(link) =>{
         try {
@@ -119,29 +120,49 @@ const cita = ({navigation,route}) =>{
 
 
       }
-      //  console.log("hola")
     }
-
+    const funcion2 = async (id) =>{
+        guardarNosubgrupo(true);
+    }
     return (
         <View style={globalStyles.contenedor}>
             <Text style={globalStyles.titulo}> Datos de la sesión </Text>
-            <View style={{marginBottom:20}}>
-                <Text style={styles.texto}>Dia: {route.params.dia} de {route.params.mes}  </Text>
-                <Text style={styles.texto}>Hora: {route.params.hora}</Text>
+            <View style={{marginTop: 20}}>
+                <View style={{marginBottom:20}}>
+                    <Text style={styles.texto}>Dia: {route.params.dia} de {route.params.mes}  </Text>
+                    <Text style={styles.texto}>Hora: {route.params.hora}</Text>
+                </View>
             </View>
             <TouchableHighlight onPress={  () => funcion(route.params.id)} style={styles.botonC} >
                         <View>
                         <Text style={styles.textoC}>Unirse a la sesión</Text>
                         </View>
             </TouchableHighlight>
+            <TouchableHighlight onPress={  () => funcion2(route.params.id)} style={styles.botonC} >
+                        <View>
+                        <Text style={styles.textoC}>Unirse al sub-grupo</Text>
+                        </View>
+            </TouchableHighlight>
+
             <Portal>
                 <Dialog visible={nolink} onDismiss={() => guardarNolink(false)} >
                     <Dialog.Title>Aviso</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={{fontSize:18}}>La sesión no se encuentra disponible</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>La sesión no se encuentra disponible</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarNolink(false)} color='#3c2c18'>Ok</Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+            <Portal>
+                <Dialog visible={nosubgrupo} onDismiss={() => guardarNosubgrupo(false)} >
+                    <Dialog.Title>Aviso</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={globalStyles.textoAlerta}>No has sido asignado a un sub-grupo</Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={()=>guardarNosubgrupo(false)} color='#3c2c18'>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
@@ -151,10 +172,10 @@ const cita = ({navigation,route}) =>{
 }
 const styles=StyleSheet.create({
     botonC: {
-        marginTop: 5,
+        marginTop: 10,
         height: 45,
         marginBottom: 5,
-        marginHorizontal: 30,
+        marginHorizontal: 24,
         justifyContent: 'center',
         backgroundColor: '#1e524c',
         alignItems: 'center',
@@ -164,13 +185,13 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 2,
         marginHorizontal: 10,
-        fontSize: 18,
+        fontSize: 17,
         color: 'white',
         fontFamily: 'Inter-Light'
     },
     texto:{
-        fontSize: 19,
-        marginHorizontal:20,
+        fontSize: 17,
+        marginHorizontal:25,
         fontFamily:'Inter-Regular'
     }
 })

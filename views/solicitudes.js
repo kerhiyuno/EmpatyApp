@@ -96,7 +96,7 @@ const solicitudes = ({navigation,route}) =>{
                 data={solicitudes}
                 style={{marginBottom: 20}}
                 renderItem={({item,index}) => (
-                    <View>
+                    <View style={styles.solicitud}>
                         <View style={{flex:1,flexDirection: 'column'}}>
                                 <View style={{flex:1,flexDirection: 'row',marginTop:5}}>
                                     <View style={{flex:0.5}}>
@@ -125,7 +125,7 @@ const solicitudes = ({navigation,route}) =>{
                         </View>
                         <TouchableHighlight onPress={ () => eliminarCita(item.id) } style={styles.botonC}>
                             <View style={{flexDirection:'row',justifyContent:'center'}}>
-                                <Icon name="delete-outline" color="white" size={22}></Icon>
+                                <Icon name="delete-outline" color="white" size={20}></Icon>
                                 <Text style={styles.textoB}>Eliminar</Text>
                             </View>
                         </TouchableHighlight>
@@ -139,10 +139,16 @@ const solicitudes = ({navigation,route}) =>{
 }
 
 const styles=StyleSheet.create({
+    solicitud:{
+        borderWidth:2,
+        borderColor:"#828282",
+        marginBottom: 10,
+        borderRadius: 10
+    },
     botonC:{
         marginTop: 10,
-        height: 32,
-        marginBottom: 26,
+        height: 30,
+        marginBottom: 5,
         marginHorizontal: 25,
         justifyContent: 'center',
         backgroundColor: '#942c2c',
@@ -152,7 +158,7 @@ const styles=StyleSheet.create({
         marginTop:2,
         marginBottom: 0,
         marginHorizontal: 25,
-        fontSize: 18,
+        fontSize: 17,
         color: 'black',
         fontFamily: 'Inter-Regular'
     },
@@ -160,7 +166,7 @@ const styles=StyleSheet.create({
         marginTop:0,
         marginBottom: 0,
         marginHorizontal: 0,
-        fontSize: 17,
+        fontSize: 16,
         color: 'white',
         fontFamily:'Inter-Light'
     }
