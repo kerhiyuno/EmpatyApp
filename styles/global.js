@@ -33,6 +33,16 @@ const globalStyles = StyleSheet.create({
         height: 45,
         marginHorizontal: 8
     },
+    entradaTexto:{
+        marginTop: 15,
+        marginBottom: 24,
+        backgroundColor: 'transparent',
+        borderStyle: 'solid',
+        borderColor: '#357870',
+        borderWidth: 1,
+        height: 200,
+        marginHorizontal: 8
+    },
     textoAlerta:{
         fontSize:17,
         fontFamily:'Inter-Regular'

@@ -23,7 +23,6 @@ import registro2 from './views/registro2';
 import registro3 from './views/registro3';
 import registro4 from './views/registro4';
 import Cuestionario from './views/cuestionario';
-import registro6 from './views/registro6';
 import PreferenciasSicologo from './views/preferenciassicologo';
 import HorarioPaciente from './views/horariopaciente';
 import buscarsicologo from './views/buscarsicologo';
@@ -35,7 +34,8 @@ import editarperfil from './views/editarperfil';
 import Informacion from './views/informacion';
 import Preferencias from './views/preferencias';
 import Chat from './views/chat';
-import Conflictos from './views/conflictos';
+import Disconformidad from './views/disconformidad';
+import Desvinculacion from './views/desvinculacion';
 
 import BotonLogout from './components/botonlogout';
 import BotonSalir from './components/botonsalir';
@@ -364,15 +364,28 @@ const App = () => {
           >
           </Stack.Screen>
           <Stack.Screen
-            name= 'Conflictos'
-            component={Conflictos}
+            name= 'Desvinculacion'
+            component={Desvinculacion}
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
                 <View style={{flexDirection:'row'}}>
                   <BotonInfo {...props} navigation={navigation} route={route}/>
                   <BotonLogout {...props} navigation={navigation} route={route}/>
                 </View>,
-                headerTitle: 'Conflictos'
+                headerTitle: 'Desvinculación'
+            })}
+          >
+          </Stack.Screen>
+          <Stack.Screen
+            name= 'Disconformidad'
+            component={Disconformidad}
+            options={ ({navigation,route}) => ({
+              headerRight: (props)=>
+                <View style={{flexDirection:'row'}}>
+                  <BotonInfo {...props} navigation={navigation} route={route}/>
+                  <BotonLogout {...props} navigation={navigation} route={route}/>
+                </View>,
+                headerTitle: 'Disconformidad'
             })}
           >
           </Stack.Screen>

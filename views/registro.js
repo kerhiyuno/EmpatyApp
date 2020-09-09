@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View,StyleSheet,Text,ScrollView,TouchableHighlight} from 'react-native';
-import {TextInput, Headline, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
+import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';

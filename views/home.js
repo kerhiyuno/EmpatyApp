@@ -83,13 +83,13 @@ const home = ({navigation,route}) =>{
                         <Text style={styles.textoC}>Chat</Text>
                     </View>
                 </TouchableHighlight >
-                <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate("ElegirHorario") }>
+                <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate("Disconformidad") }>
                     <View style={{flexDirection:'row'}}>
                         <Icon name="account-alert-outline" color="white" size={25}></Icon>
                         <Text style={styles.textoC}>Disconformidad con el grupo</Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate("PreferenciasSicologo") }>
+                <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate("Desvinculacion") }>
                     <View style={{flexDirection:'row'}}>
                         <Icon name="close" color="white" size={25}></Icon>
                         <Text style={styles.textoC}>Desvincularse de Psicólogo</Text>

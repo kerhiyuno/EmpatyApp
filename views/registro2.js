@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View,StyleSheet,Text,ScrollView ,TouchableHighlight} from 'react-native';
-import {TextInput, Headline, Button, Paragraph, Dialog, Portal, RadioButton} from 'react-native-paper';
+import {TextInput, Button, Paragraph, Dialog, Portal, RadioButton} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
