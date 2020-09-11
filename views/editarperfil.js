@@ -35,9 +35,9 @@ const editarperfil = ({navigation,route}) =>{
                     refresh=JSON.parse(refresh0).refresh;
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
-                        var name= await AsyncStorage.getItem('datosSesion');
+                        var name = await AsyncStorage.getItem('datosSesion');
                         const respuesta = await axios.post(host+'',{},
-                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        {headers: {'Authorization': 'Bearer ' + (JSON.parse(name).access),}});
                         console.log(respuesta);
                     } catch (error) {
                         console.log(error.response);

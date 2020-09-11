@@ -14,11 +14,11 @@ const Desvinculacion = () => {
     const [enviarsolicitud,guardarEnviarSolicitud] = useState(false);
     
     const enviar = () => {
-        if (desvinculacion==='no'){
+        if (desvinculacion === 'no'){
             guardarEnviarSolicitud(true);
             enviarDesvinculacion();
         }
-        else if(desvinculacion==='si'){
+        else if(desvinculacion === 'si'){
             guardarDesvinculacionautoenviada(true);
             console.log("iniciando desvinculacion automatica");
         }

@@ -48,13 +48,10 @@ const cita = ({navigation,route}) =>{
                 'my-custom-header': 'my custom header value'
               }
             })
-           // Alert.alert(JSON.stringify(result))
-           // console.log("holadasdasdas");
           }
           else Linking.openURL(url)
         } catch (error) {
-            console.log("holaXd");
-          Alert.alert(error.message)
+            console.log("error");
         }
       }
 
@@ -62,8 +59,6 @@ const cita = ({navigation,route}) =>{
 
     const funcion = async (id) =>{
         try {
-          console.log('---');
-          console.log(id);
           const name = await AsyncStorage.getItem('datosSesion');
           const Bearer=JSON.parse(name).refresh;
           var sesion=id;
@@ -169,7 +164,6 @@ const cita = ({navigation,route}) =>{
                 </Dialog>
             </Portal>
         </View>
-
     );
 }
 const styles=StyleSheet.create({

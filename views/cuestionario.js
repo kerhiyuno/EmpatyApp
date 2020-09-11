@@ -37,25 +37,24 @@ const Cuestionario = ({navigation,route}) =>{
 
         //validar
         //validar
-        if(pregunta1==='' || pregunta2==='' || pregunta3==='' || pregunta4==='' || pregunta5==='' || pregunta6==='' || pregunta7==='' || pregunta8==='' || pregunta9==='' || pregunta10==='' || pregunta11==='' || pregunta12==='' || pregunta13==='' || pregunta14==='' || pregunta15==='' || pregunta16==='' || pregunta17==='' || pregunta18==='' || pregunta19===''){
+        if(pregunta1==='' || pregunta2==='' || pregunta3==='' || pregunta4==='' || pregunta5==='' || pregunta6==='' || 
+        pregunta7==='' || pregunta8==='' || pregunta9==='' || pregunta10==='' || pregunta11==='' || pregunta12==='' || 
+        pregunta13==='' || pregunta14==='' || pregunta15==='' || pregunta16==='' || pregunta17==='' || pregunta18==='' ||
+         pregunta19===''){
             guardarAlerta(true);
             return
         }
 
         //puntajes
-        var fcp = parseInt (pregunta1) + parseInt(pregunta7) + parseInt(pregunta13) + parseInt(pregunta19)
-        var shd = parseInt(pregunta2) + parseInt(pregunta8) + parseInt(pregunta14)
-        var ga = parseInt(pregunta3) + parseInt(pregunta9) + parseInt(pregunta15)
-        var gd = parseInt(pregunta4) + parseInt(pregunta10) + parseInt(pregunta16)
-        var fa = parseInt(pregunta5) + parseInt(pregunta11) + parseInt(pregunta17)
-        var ap = parseInt(pregunta6) + parseInt(pregunta12) + parseInt(pregunta18)
+        var fcp = parseInt (pregunta1) + parseInt(pregunta7) + parseInt(pregunta13) + parseInt(pregunta19);
+        var shd = parseInt(pregunta2) + parseInt(pregunta8) + parseInt(pregunta14);
+        var ga = parseInt(pregunta3) + parseInt(pregunta9) + parseInt(pregunta15);
+        var gd = parseInt(pregunta4) + parseInt(pregunta10) + parseInt(pregunta16);
+        var fa = parseInt(pregunta5) + parseInt(pregunta11) + parseInt(pregunta17);
+        var ap = parseInt(pregunta6) + parseInt(pregunta12) + parseInt(pregunta18);
 
-        console.log(pregunta2);
-        console.log(pregunta8);
-        console.log(pregunta14);
         //generar
         const usuario={fcp,shd,ga,gd,fa,ap};
-        console.log(usuario);
         //Enviar Resultado
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
@@ -92,7 +91,6 @@ const Cuestionario = ({navigation,route}) =>{
 
         //redireccionar
         navigation.goBack();
-
     }
     return (
         <ScrollView style= {globalStyles.contenedor}>

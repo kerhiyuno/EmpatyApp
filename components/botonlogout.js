@@ -9,7 +9,6 @@ import {ipHost} from './hosts.js';
 
 const host = ipHost();
 
-
 const BotonLogout = ({navigation,route}) => {
     const [alertaseguro,guardarAlertaseguro] = useState(false);
 
@@ -40,9 +39,7 @@ const BotonLogout = ({navigation,route}) => {
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name = await AsyncStorage.getItem('datosSesion');
-                        const postdata = {
-                            Bearer: refresh
-                        }
+                        const postdata = {Bearer: refresh}
                         var logout = await axios.post(host+'/account/logout/',postdata,
                         {
                             headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),},

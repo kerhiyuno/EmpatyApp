@@ -52,7 +52,7 @@ const sesion = ({navigation,route}) =>{
                     try {
                         var name = await AsyncStorage.getItem('datosSesion');
                         const respuesta = await axios.get(host+'/usuarios/psicologo/perfil/',
-                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         guardarNombreSicologo(respuesta.data.fullname);
                         console.log(respuesta);
                     } catch (error) {

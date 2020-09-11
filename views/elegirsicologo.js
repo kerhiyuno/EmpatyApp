@@ -24,7 +24,7 @@ const elegirsicologo = ({navigation,route}) =>{
     const delay = ms => new Promise(res => setTimeout(res, ms));
     const afinidad = async ()=>{
         guardarCargando(true);
-        await delay(3000);
+        await delay(500);
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.get(host+'/usuarios/afinidad/',
@@ -38,7 +38,7 @@ const elegirsicologo = ({navigation,route}) =>{
         } catch (error) {
             console.log("error");
             console.log(error.response);
-            if(error.response.data.code==='token_not_valid'){
+            if(error.response.data.code === 'token_not_valid'){
                 console.log('token_not_valid');
                 try {
                     const refresh0 = await AsyncStorage.getItem('datosSesion');

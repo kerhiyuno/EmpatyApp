@@ -26,9 +26,8 @@ const perfil = ({navigation,route}) => {
     const delay = ms => new Promise(res => setTimeout(res, ms));
     const consultar = async () => {
         guardarCargando(true);
-        await delay(2000);
+        await delay(500);
         try {
-            console.log("df");
             const nombre = await AsyncStorage.getItem('datosSesion');
             console.log(nombre);
             const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},

@@ -18,11 +18,9 @@ const BloqueHorario = (props) => {
     
     const eleccion = async () => {
         if(d === 'no'){
-            console.log("es no");
             await guardard('si');
             await guardarDisponibles([...disponibles,{"bloque":numeroBloque,"dia":numeroDia}]);
         }else{
-            console.log("es si");
             await guardard('no');
             await eliminar({"bloque":numeroBloque,"dia":numeroDia});
         }

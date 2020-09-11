@@ -44,9 +44,11 @@ const sinsesion = ({navigation,route}) =>{
                     {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
                     console.log(respuesta);
                     if(respuesta.data.id_psicologo== null){
-                        navigation.navigate('Buscar Psicólogo');
+                        await AsyncStorage.setItem('tienesicologo',JSON.stringify({ tiene: 'no'}));
+                        navigation.navigate('Tabs');
                     }else{
-                        navigation.navigate('Inicio');
+                        await AsyncStorage.setItem('tienesicologo',JSON.stringify({ tiene: 'si'}));
+                        navigation.navigate('Tabs');
                     }
                     } catch (error) {
                         console.log("error");
@@ -88,13 +90,7 @@ const sinsesion = ({navigation,route}) =>{
         }
     }
 
-
     const iniciosesion = async () => {
-        //validar
-        if (email === '' || password === ''){
-        guardarAlerta(true);
-        return;
-        }
         try {
             const credenciales = {email,password};
             var respuesta = await axios.post(host+'/account/login/', credenciales);
