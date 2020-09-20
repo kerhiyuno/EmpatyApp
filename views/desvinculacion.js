@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text,View,StyleSheet,TouchableHighlight} from 'react-native';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -6,13 +6,56 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import {Checkbox} from 'react-native-paper';
+import {ipHost} from '../components/hosts.js';
+
+const host = ipHost();
 
 const Desvinculacion = () => {
     const [mensaje,guardarMensaje] = useState('');
     const [desvinculacion,guardarDesvinculacion] = useState('no');
     const [desvinculacionautoenviada,guardarDesvinculacionautoenviada] = useState(false);
     const [enviarsolicitud,guardarEnviarSolicitud] = useState(false);
-    
+    const [correopsicologo,guardarCorreopsicologo] = useState('');
+
+    useEffect( () => {
+        obtenercorreo();
+    },[]
+  )
+
+
+    const obtenercorreo = async () => {
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            const respuesta = await axios.get(host+'/usuarios/psicologo/perfil/',
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            guardarCorreopsicologo(respuesta.data.email);
+            console.log(respuesta);
+        } catch (error) {
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh = JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name = await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.get(host+'/usuarios/psicologo/perfil/',
+                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        guardarCorreopsicologo(respuesta.data.email);
+                        console.log(respuesta);
+                    } catch (error) {
+                        console.log(error.response);
+                    }  
+                } catch (error) {
+                    console.log(error.response);
+                }
+            }
+        }
+    }
+
     const enviar = () => {
         if (desvinculacion === 'no'){
             guardarEnviarSolicitud(true);
@@ -30,14 +73,15 @@ const Desvinculacion = () => {
     const envioDefinitivo =  async () => {
         guardarEnviarSolicitud(false);
         var desAutomatica = false;
-        if (desvinculacion==='si'){
+        if (desvinculacion==='si') {
             desAutomatica = true;
         }
-        var envio = {mensaje: mensaje, motivo: "desvinculacion",forzosa: desAutomatica};
+        var envio = {mensaje: mensaje, motivo: "Desvinculacion",forzosa: desAutomatica,psicologo:correopsicologo};
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
-            const respuesta = await axios.post(host+'',envio,
+            const respuesta = await axios.post(host+'/solicitudes/manage/',envio,
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            console.log(respuesta);
         } catch (error) {
             console.log(error);
             console.log(error.response);
@@ -52,7 +96,7 @@ const Desvinculacion = () => {
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.post(host+'',envio,
+                        const respuesta = await axios.post(host+'/solicitudes/manage/',envio,
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
                     } catch (error) {

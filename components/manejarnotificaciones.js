@@ -31,6 +31,7 @@ const ManejarNotificaciones = () => {
   
   
     useEffect( () => {
+      console.log("dassdasdasad");
       gettoken();
       const unsubscribe = messaging().onMessage(async remoteMessage => {
         console.log("Push notificacion recibida",remoteMessage);

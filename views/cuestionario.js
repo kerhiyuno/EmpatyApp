@@ -5,6 +5,8 @@ import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PreguntaTest from '../components/preguntatest';
 import {ipHost} from '../components/hosts.js';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
 const host = ipHost();
 
@@ -75,7 +77,7 @@ const Cuestionario = ({navigation,route}) =>{
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.post(host+'/usuarios/evaluacion/evaluar/',usuario,
+                        const respuesta = await axios.post(host+'/evaluacion/evaluar/',usuario,
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
                     } catch (error) {

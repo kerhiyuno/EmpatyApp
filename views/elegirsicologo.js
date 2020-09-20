@@ -84,7 +84,7 @@ const elegirsicologo = ({navigation,route}) =>{
     }
 
     return (
-        <ScrollView style={globalStyles.contenedor}>
+        <View style={globalStyles.contenedor}>
             {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
             {cargando===false ?
             <View>
@@ -122,7 +122,7 @@ const elegirsicologo = ({navigation,route}) =>{
                     keyExtractor={sicologos => sicologos.email}
                 />
             </View> : null}
-        </ScrollView >
+        </View >
 
     );
 }

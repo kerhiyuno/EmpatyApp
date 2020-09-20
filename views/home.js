@@ -19,6 +19,10 @@ const home = ({navigation,route}) =>{
     const [cargando2,guardarCargando2] = useState(true);
 
     const [tienesicologo,guardarTienesicologo] = useState(false);
+
+    const [alertacuestionario,guardarAlertacuestionario] = useState(false);
+    const [alertaopcionales,guardarAlertaopcionales] = useState(false);
+
     var timer;
 
     useEffect(() => {
@@ -31,9 +35,134 @@ const home = ({navigation,route}) =>{
         revision();
       },[]);
 
-    const funcion = () =>{
-        navigation.navigate('Elegir Psicólogo');
+    const funcion = async () =>{
+        var tienehorario='';
+        var tienepreferencias='';
+        var tienecuestionario='';
+        var correo='';
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            if (respuesta.data.terapia_grupal===null){
+                tienepreferencias='no';
+                console.log("no ha puesto sus preferencias");
+            }
+            console.log(respuesta);
+            correo=respuesta.data.email;
+        } catch (error) {
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh = JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name = await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        if (respuesta.data.terapia_grupal===null){
+                            tienepreferencias='no';
+                            console.log("no ha puesto sus preferencias");
+                        }
+                        console.log(respuesta);
+                        correo=respuesta.data.email;
+                    } catch (error) {
+                        console.log(error.response);
+                    }  
+                } catch (error) {
+                    console.log(error.response);
+                }
+            }
+        }
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            const respuesta = await axios.get(host+'/horarios/mihorario/',
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            if (respuesta.data.length === 0){
+                console.log("no ha elegido horario");
+                tienehorario='no';
+            }
+            console.log(respuesta);
+        } catch (error) {
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh = JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name = await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.get(host+'/horarios/mihorario/',
+                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        if (respuesta.data.length === 0){
+                            console.log("no ha elegido horario");
+                            tienehorario='no';
+                        }
+                        console.log(respuesta);
+                    } catch (error) {
+                        console.log(error.response);
+                    }  
+                } catch (error) {
+                    console.log(error.response);
+                }
+            }
+        }
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            const respuesta = await axios.post(host+'/evaluacion/listar/',{paciente:correo,entre_fechas:false},
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            if (respuesta.data.length===0){
+                tienecuestionario='no';
+                console.log("no ha hecho el cuestionario");
+            }
+            console.log(respuesta);
+        } catch (error) {
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh = JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name = await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{paciente:correo,entre_fechas:false},
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        if (respuesta.data.length===0){
+                            tienecuestionario='no';
+                            console.log("no ha hecho el cuestionario");
+                        }
+                        console.log(respuesta);
+                    } catch (error) {
+                        console.log(error.response);
+                    }  
+                } catch (error) {
+                    console.log(error.response);
+                }
+            }
+        }
+        if(tienecuestionario==='no'){
+            guardarAlertacuestionario(true);
+        }else if(tienehorario==='no' || tienepreferencias==='no'){
+            guardarAlertaopcionales(true);
+        }else{
+            navigation.navigate('Elegir Psicólogo');
+        }
     }
+
+
+
     const funcion2 = () =>{
         navigation.navigate('Solicitudes');
     }
@@ -225,7 +354,6 @@ const home = ({navigation,route}) =>{
                             </View>
                         </TouchableHighlight>
                 </View>
-
                 <Portal>
                     <Dialog visible={SicologoListo} >
                         <Dialog.Title>Psicologo vinculado</Dialog.Title>
@@ -235,6 +363,38 @@ const home = ({navigation,route}) =>{
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
                                 <Button onPress={()=>{guardarSicologoListo(false);}} color='#3c2c18'>Ok</Button>
+                            </View>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
+                <Portal>
+                    <Dialog visible={alertacuestionario} onDismiss={() => {guardarAlertacuestionario(false);}}>
+                        <Dialog.Title>Aviso</Dialog.Title>
+                        <Dialog.Content>
+                            <Paragraph style={globalStyles.textoAlerta}>Para continuar, debe haber respondido el 
+                            cuestionario de sintomatología
+                            </Paragraph>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=>{guardarAlertacuestionario(false);}} color='#3c2c18'>Ok</Button>
+                            </View>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
+                <Portal>
+                    <Dialog visible={alertaopcionales} onDismiss={() => {guardarAlertaopcionales(false);}}>
+                        <Dialog.Title>Aviso</Dialog.Title>
+                        <Dialog.Content>
+                            <Paragraph style={globalStyles.textoAlerta}>Para obtener mejores resultados, seleccione un horario 
+                            y sus preferencias de psicólogo (Opcional)</Paragraph>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=>{guardarAlertaopcionales(false);navigation.navigate('Elegir Psicólogo');}} color='#3c2c18'>Continuar</Button>
+                            </View>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=>{guardarAlertaopcionales(false);}} color='#3c2c18'>Volver</Button>
                             </View>
                         </Dialog.Actions>
                     </Dialog>

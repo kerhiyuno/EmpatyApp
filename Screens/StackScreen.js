@@ -147,7 +147,7 @@ const StackScreen = () => {
           headerRight: (props)=>
             <View style={{flexDirection:'row'}}>
               <BotonInfo {...props} navigation={navigation} route={route}/>
-              <BotonSalir {...props} navigation={navigation} route={route}/>
+              <BotonLogout {...props} navigation={navigation} route={route}/>
             </View>,
             headerTitle: 'Elegir Horario'
         })}

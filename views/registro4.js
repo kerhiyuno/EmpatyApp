@@ -53,7 +53,8 @@ const registro4 = ({navigation,route}) =>{
             console.log(usuario);
             await axios.post(host+'/usuarios/paciente/registro/',usuario);
         } catch (error){
-        console.log(error)
+        console.log(error);
+        console.log(error.response);
         }
         //limpiar formulario
         guardarRegistrolisto(true);

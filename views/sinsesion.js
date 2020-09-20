@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import {View,StyleSheet,Text,TouchableHighlight} from 'react-native';
-import {TextInput, Headline, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
+import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -16,6 +16,7 @@ const sinsesion = ({navigation,route}) =>{
     const [password,guardarPassword] = useState('');
     const [alerta,guardarAlerta] =useState(false);
     const [inicioFallido,guardarInicioFallido] =useState(false);
+    const [alertavacio,guardarAlertaVacio] =useState(false);
 
     /*const inicioautomatico = async () => {
         const token = await AsyncStorage.getItem('datosSesion');
@@ -91,6 +92,10 @@ const sinsesion = ({navigation,route}) =>{
     }
 
     const iniciosesion = async () => {
+        if( email === '' || password === ''){
+            guardarAlertaVacio(true);
+            return;
+        }
         try {
             const credenciales = {email,password};
             var respuesta = await axios.post(host+'/account/login/', credenciales);
@@ -161,6 +166,17 @@ const sinsesion = ({navigation,route}) =>{
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarInicioFallido(false)} color='#3c2c18'>Ok</Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+            <Portal>
+                <Dialog visible={alertavacio} onDismiss={() => guardarAlertaVacio(false)} >
+                    <Dialog.Title>Error</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios</Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={()=>guardarAlertaVacio(false)} color='#3c2c18'>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

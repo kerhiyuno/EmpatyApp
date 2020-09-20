@@ -5,21 +5,63 @@ import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import {ipHost} from '../components/hosts.js';
+
+const host = ipHost();
 
 const Disconformidad = () => {
 
     const [alertamensaje,guardarAlertaMensaje] = useState(false);
     const [mensaje,guardarMensaje] = useState('');
+    const [correopsicologo,guardarCorreopsicologo] = useState('');
+
+    useEffect( () => {
+        obtenercorreo();
+    },[]
+  )
+    const obtenercorreo = async () => {
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            const respuesta = await axios.get(host+'/usuarios/psicologo/perfil/',
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            guardarCorreopsicologo(respuesta.data.email);
+            console.log(respuesta);
+        } catch (error) {
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh = JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name = await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.get(host+'/usuarios/psicologo/perfil/',
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        guardarCorreopsicologo(respuesta.data.email);
+                        console.log(respuesta);
+                    } catch (error) {
+                        console.log(error.response);
+                    }  
+                } catch (error) {
+                    console.log(error.response);
+                }
+            }
+        }
+    }
 
     const enviar = async () => {
         console.log(mensaje);
         guardarAlertaMensaje(false);
-        var envio = {motivo: "disconformidad",mensaje: mensaje}
+        var envio = {psicologo:correopsicologo, motivo: "Problema Grupo", mensaje: mensaje}
 
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.post(host+'',envio,
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            console.log(respuesta);
         } catch (error) {
             console.log(error);
             console.log(error.response);
