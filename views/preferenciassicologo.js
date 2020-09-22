@@ -368,7 +368,6 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                             guardarOtrosproblemas('no');
                             guardarIndividualincomodo('no');
                             guardarOtro('no');
-                            guardarGenero_psicologo('no');
                         }
                     }}
                     color='black'

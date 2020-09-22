@@ -15,6 +15,7 @@ const registro4 = ({navigation,route}) =>{
     const [tratamiento_vigenteS,guardarTratamiento_vigente] = useState('');
     const [alerta,guardarAlerta] = useState(false);
     const [registrolisto,guardarRegistrolisto] = useState(false);
+    const [registroenprogreso,guardarRegistroenprogreso] = useState(false);
     
     const fullname = (route.params.usuario.fullname);
     const rut = (route.params.usuario.rut);
@@ -27,37 +28,43 @@ const registro4 = ({navigation,route}) =>{
     const fecha_nacimiento = (route.params.usuario.fecha_nacimiento);
 
     const registrar = async () => {
-        var psico_prev = true;
-        var psiquia_prev = true;
-        var tratamiento_vigente = true;
+        if (registroenprogreso===false){
+            guardarRegistroenprogreso(true);
+            var psico_prev = true;
+            var psiquia_prev = true;
+            var tratamiento_vigente = true;
 
-        //validar
-        if(psico_prevS==='' || tratamiento_vigenteS===''){
-            guardarAlerta(true);
-            return
-        }
+            //validar
+            if(psico_prevS==='' || tratamiento_vigenteS===''){
+                guardarAlerta(true);
+                return
+            }
 
-        if(psico_prevS==='no'){
-            psico_prev = false;
+            if(psico_prevS==='no'){
+                psico_prev = false;
+            }
+            if(psiquia_prevS==='no'){
+                psiquia_prev=false;
+            }
+            if(tratamiento_vigenteS==='no'){
+                tratamiento_vigente=false;
+            }
+            //validar
+            const usuario={fullname,rut,email,password,telefono,genero,gender_description,hobbies,psico_prev,psiquia_prev,tratamiento_vigente,fecha_nacimiento};
+            //guardar en api
+            try {
+                console.log(usuario);
+                await axios.post(host+'/usuarios/paciente/registro/',usuario);
+            } catch (error){
+            console.log(error);
+            console.log(error.response);
+            }
+            //limpiar formulario
+            guardarRegistrolisto(true);
         }
-        if(psiquia_prevS==='no'){
-            psiquia_prev=false;
+        else{
+            console.log("registro en progreso");
         }
-        if(tratamiento_vigenteS==='no'){
-            tratamiento_vigente=false;
-        }
-        //validar
-        const usuario={fullname,rut,email,password,telefono,genero,gender_description,hobbies,psico_prev,psiquia_prev,tratamiento_vigente,fecha_nacimiento};
-        //guardar en api
-        try {
-            console.log(usuario);
-            await axios.post(host+'/usuarios/paciente/registro/',usuario);
-        } catch (error){
-        console.log(error);
-        console.log(error.response);
-        }
-        //limpiar formulario
-        guardarRegistrolisto(true);
     }
 
     return (
@@ -152,7 +159,7 @@ const registro4 = ({navigation,route}) =>{
                         <Paragraph style={globalStyles.textoAlerta}>Se ha registrado exitosamente</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>{guardarRegistrolisto(false);navigation.navigate('Iniciar Sesion')}} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>{guardarRegistrolisto(false);guardarRegistroenprogreso(false);navigation.navigate('Iniciar Sesion')}} color='#3c2c18'>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

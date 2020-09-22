@@ -227,7 +227,7 @@ const horariosicologo = ({navigation,route}) => {
             console.log("----------");
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'Buscar Psicólogo' }],
+                routes: [{ name: 'Inicio' }],
             });
     
         } catch (error) {

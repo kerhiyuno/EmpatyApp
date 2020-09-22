@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {Text,View,StyleSheet,TouchableHighlight} from 'react-native';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -9,11 +9,13 @@ import {ipHost} from '../components/hosts.js';
 
 const host = ipHost();
 
-const Disconformidad = () => {
+const Disconformidad = ({navigation}) => {
 
     const [alertamensaje,guardarAlertaMensaje] = useState(false);
     const [mensaje,guardarMensaje] = useState('');
     const [correopsicologo,guardarCorreopsicologo] = useState('');
+
+    const [alertaexito,guardarAlertaexito] = useState(false);
 
     useEffect( () => {
         obtenercorreo();
@@ -52,6 +54,9 @@ const Disconformidad = () => {
         }
     }
 
+    const volver = () =>{
+        navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});
+    }
     const enviar = async () => {
         console.log(mensaje);
         guardarAlertaMensaje(false);
@@ -59,9 +64,12 @@ const Disconformidad = () => {
 
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
-            const respuesta = await axios.post(host+'',envio,
+            const respuesta = await axios.post(host+'/solicitudes/manage/',envio,
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta);
+            if (respuesta.status===201){
+                guardarAlertaexito(true);
+            }
         } catch (error) {
             console.log(error);
             console.log(error.response);
@@ -76,9 +84,12 @@ const Disconformidad = () => {
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.post(host+'',envio,
+                        const respuesta = await axios.post(host+'/solicitudes/manage/',envio,
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
+                        if (respuesta.status===201){
+                            guardarAlertaexito(true);
+                        }
                     } catch (error) {
                         console.log(error.response);
                         console.log("error acaa");
@@ -112,7 +123,7 @@ const Disconformidad = () => {
             </View>
             <Portal>
                 <Dialog visible={alertamensaje} onDismiss={() => guardarAlertaMensaje(false)}>
-                    <Dialog.Title>Desvinculación Automática</Dialog.Title>
+                    <Dialog.Title>Disconformidad</Dialog.Title>
                     <Dialog.Content>
                         <Paragraph style={globalStyles.textoAlerta}>¿Estas seguro de enviar este mensaje?</Paragraph>
                     </Dialog.Content>
@@ -122,6 +133,19 @@ const Disconformidad = () => {
                             </View>
                             <View style={{marginRight:10}}>
                                 <Button onPress={()=> guardarAlertaMensaje(false)} color='#3c2c18'>No</Button>
+                            </View>
+                        </Dialog.Actions>
+                </Dialog>
+            </Portal>
+            <Portal>
+                <Dialog visible={alertaexito} onDismiss={() => guardarAlertaexito(false)}>
+                    <Dialog.Title>Éxito</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={globalStyles.textoAlerta}>El mensaje se ha enviado correctamente</Paragraph>
+                    </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=> volver()} color='#3c2c18'>Ok</Button>
                             </View>
                         </Dialog.Actions>
                 </Dialog>

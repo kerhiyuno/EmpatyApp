@@ -12,6 +12,7 @@ const host = ipHost();
 
 const HorarioPaciente = ({navigation}) =>{
     const [disponibles,guardarDisponibles] = useState([]);
+    const [guardadoenprogreso,guardarGuardadoenprogreso] = useState(false);
 
     const [l1,guardarl1] = useState('no');
     const [l2,guardarl2] = useState('no');
@@ -549,48 +550,51 @@ const HorarioPaciente = ({navigation}) =>{
     }
 
 
-
-
-
     const registrar = async () => {
-        console.log(disponibles);
-        //validar
-        const usuario = {disponibles}
-        //guardar en api
-        try {
-            const nombre = await AsyncStorage.getItem('datosSesion');
-            console.log(nombre);
-            const respuesta = await axios.put(host+'/horarios/mihorario/',usuario,
-            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
-        } catch (error) {
-            console.log(error);
-            console.log(error.response);
-            if(error.response.data.code==='token_not_valid'){
-                console.log('token_not_valid');
-                try {
-                    const refresh0 = await AsyncStorage.getItem('datosSesion')
-                    var refresh = JSON.parse(refresh0).refresh;
-                    refresh = {refresh}
-                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
-                    refresh=JSON.parse(refresh0).refresh;
-                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+        console.log(guardadoenprogreso);
+        if (guardadoenprogreso===false){
+            guardarGuardadoenprogreso(true);
+            console.log(disponibles);
+            //validar
+            const usuario = {disponibles}
+            //guardar en api
+            try {
+                const nombre = await AsyncStorage.getItem('datosSesion');
+                console.log(nombre);
+                const respuesta = await axios.put(host+'/horarios/mihorario/',usuario,
+                {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            } catch (error) {
+                console.log(error);
+                console.log(error.response);
+                if(error.response.data.code==='token_not_valid'){
+                    console.log('token_not_valid');
                     try {
-                        var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.put(host+'/horarios/mihorario/',usuario,
-                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
-                        console.log(respuesta);
+                        const refresh0 = await AsyncStorage.getItem('datosSesion')
+                        var refresh = JSON.parse(refresh0).refresh;
+                        refresh = {refresh}
+                        var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                        refresh=JSON.parse(refresh0).refresh;
+                        await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                        try {
+                            var name= await AsyncStorage.getItem('datosSesion');
+                            const respuesta = await axios.put(host+'/horarios/mihorario/',usuario,
+                            {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                            console.log(respuesta);
+                        } catch (error) {
+                            console.log(error.response);
+                            console.log("error acaa");
+                        }  
                     } catch (error) {
+                        console.log("error aqui");
                         console.log(error.response);
-                        console.log("error acaa");
-                    }  
-                } catch (error) {
-                    console.log("error aqui");
-                    console.log(error.response);
+                    }
                 }
             }
+            guardarGuardadoenprogreso(false);
+            navigation.goBack();
+        }else{
+            console.log("enprogreso");
         }
-
-        navigation.goBack();
     }
 
     return (

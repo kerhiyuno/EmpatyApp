@@ -175,7 +175,7 @@ const StackScreen = () => {
               <BotonInfo {...props} navigation={navigation} route={route}/>
               <BotonLogout {...props} navigation={navigation} route={route}/>
             </View>,
-            headerTitle: 'Selección de horario'
+            headerTitle: 'Horario'
         })}
       >
       </Stack.Screen>

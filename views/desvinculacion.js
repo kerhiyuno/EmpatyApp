@@ -10,12 +10,14 @@ import {ipHost} from '../components/hosts.js';
 
 const host = ipHost();
 
-const Desvinculacion = () => {
+const Desvinculacion = ({navigation}) => {
     const [mensaje,guardarMensaje] = useState('');
     const [desvinculacion,guardarDesvinculacion] = useState('no');
     const [desvinculacionautoenviada,guardarDesvinculacionautoenviada] = useState(false);
     const [enviarsolicitud,guardarEnviarSolicitud] = useState(false);
     const [correopsicologo,guardarCorreopsicologo] = useState('');
+
+    const [alertaexito,guardarAlertaexito] = useState(false);
 
     useEffect( () => {
         obtenercorreo();
@@ -56,6 +58,10 @@ const Desvinculacion = () => {
         }
     }
 
+    const volver = () =>{
+        navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});
+    }
+
     const enviar = () => {
         if (desvinculacion === 'no'){
             guardarEnviarSolicitud(true);
@@ -82,6 +88,9 @@ const Desvinculacion = () => {
             const respuesta = await axios.post(host+'/solicitudes/manage/',envio,
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta);
+            if (respuesta.status===201){
+                guardarAlertaexito(true);
+            }
         } catch (error) {
             console.log(error);
             console.log(error.response);
@@ -167,19 +176,32 @@ const Desvinculacion = () => {
                 </Dialog>
             </Portal>
             <Portal>
-            <Dialog visible={enviarsolicitud} onDismiss={() => guardarEnviarSolicitud(false)}>
-                <Dialog.Title>Desviculación</Dialog.Title>
-                <Dialog.Content>
-                    <Paragraph style={globalStyles.textoAlerta}>¿Esta seguro de desvincularse de su psicólogo?</Paragraph>
-                </Dialog.Content>
-                <Dialog.Actions>
-                    <View style={{marginRight:10}}>
-                        <Button onPress={()=> envioDefinitivo()} color='#3c2c18'>Si</Button>
-                    </View>
-                    <View style={{marginRight:10}}>
-                        <Button onPress={()=> guardarEnviarSolicitud()} color='#3c2c18'>No</Button>
-                    </View>
-                </Dialog.Actions>
+                <Dialog visible={enviarsolicitud} onDismiss={() => guardarEnviarSolicitud(false)}>
+                    <Dialog.Title>Desviculación</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={globalStyles.textoAlerta}>¿Esta seguro de desvincularse de su psicólogo?</Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <View style={{marginRight:10}}>
+                            <Button onPress={()=> envioDefinitivo()} color='#3c2c18'>Si</Button>
+                        </View>
+                        <View style={{marginRight:10}}>
+                            <Button onPress={()=> guardarEnviarSolicitud()} color='#3c2c18'>No</Button>
+                        </View>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+            <Portal>
+                <Dialog visible={alertaexito} onDismiss={() => guardarAlertaexito(false)}>
+                    <Dialog.Title>Éxito</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={globalStyles.textoAlerta}>El mensaje se ha enviado correctamente</Paragraph>
+                    </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=> volver()} color='#3c2c18'>Ok</Button>
+                            </View>
+                        </Dialog.Actions>
                 </Dialog>
             </Portal>
         </View>

@@ -362,7 +362,7 @@ const home = ({navigation,route}) =>{
                         </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=>{guardarSicologoListo(false);}} color='#3c2c18'>Ok</Button>
+                                <Button onPress={()=>{guardarSicologoListo(false);guardarTienesicologo(true);}} color='#3c2c18'>Ok</Button>
                             </View>
                         </Dialog.Actions>
                     </Dialog>
