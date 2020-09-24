@@ -439,7 +439,7 @@ const registro = ({navigation}) =>{
 const styles=StyleSheet.create({
    
     botonC: {
-        height: 40,
+        height: 35,
         marginBottom: 0,
         marginHorizontal: 10,
         justifyContent: 'center',
@@ -449,13 +449,13 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 17,
+        fontSize: 16,
         color: 'white',
         textAlign: 'center',
         fontFamily: 'Inter-Light'
     },
     botonS:{
-        height: 40,
+        height: 35,
         marginTop: 5,
         marginHorizontal: 4,
         justifyContent: "center",

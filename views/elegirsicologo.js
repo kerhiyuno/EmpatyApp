@@ -99,7 +99,7 @@ const elegirsicologo = ({navigation,route}) =>{
                                 <View style={{flex:0.3,flexDirection: 'column'}}>
                                     {imagenperfil !== '' ? avatarimagen(imagenperfil) : item.fullname !== '' ? avatar(item.fullname) : console.log('')}
                                 </View>
-                                <View style={{flex:0.3,flexDirection: 'column',marginVertical:10,marginLeft:0}}>
+                                <View style={{flex:0.25,flexDirection: 'column',marginVertical:10,marginLeft:0}}>
                                     <View style={{flex:0.6}}>
                                         <Text style={[styles.textoC]}>Nombre:</Text>
                                     </View>
@@ -107,7 +107,7 @@ const elegirsicologo = ({navigation,route}) =>{
                                         <Text style={[styles.textoC]}>Género:</Text>
                                     </View>
                                 </View>
-                                <View style={{flex:0.4,flexDirection: 'column',marginVertical:10,marginRight:10}}>
+                                <View style={{flex:0.45,flexDirection: 'column',marginVertical:10,marginRight:10}}>
                                     <View style={{flex:0.6}}>
                                         <Text style={[styles.textoC]}>{item.fullname}</Text>
                                     </View>
@@ -132,7 +132,7 @@ const styles=StyleSheet.create({
         marginTop: 0,
         height: 90,
         marginBottom: 20,
-        marginHorizontal: 30,
+        marginHorizontal: 20,
         justifyContent: 'center',
         backgroundColor: '#1e524c',
         borderRadius: 8

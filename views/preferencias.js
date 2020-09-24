@@ -51,14 +51,14 @@ const styles=StyleSheet.create({
     textoS:{
         marginBottom: 10,
         marginHorizontal: 10,
-        fontSize: 18,
+        fontSize: 17,
         color: 'black',
         fontFamily: 'Inter-Regular'
     },
     textoC: {
-        marginBottom: 10,
+        marginBottom: 0,
         marginHorizontal: 7,
-        fontSize: 18,
+        fontSize: 17,
         color: 'white',
         fontFamily: 'Inter-Light'
     }

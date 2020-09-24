@@ -338,12 +338,12 @@ const horariosicologo = ({navigation,route}) => {
                 date={new Date(año+"-"+mes+"-"+dia)}
             />
             <View style={{alignItems:'center',marginTop:10,marginBottom:40}}> 
-                <Text style={{marginBottom:30,marginLeft:10,fontSize:18,fontFamily:'Inter-Regular'}}>Fecha seleccionada: {fechaformateo(fecha)}</Text>
+                <Text style={{marginBottom:30,marginLeft:10,fontSize:17,fontFamily:'Inter-Regular'}}>Fecha seleccionada: {fechaformateo(fecha)}</Text>
             </View>
             <View style={{alignItems:'center',marginBottom:15}}>
                 <Text style={{marginLeft:10,fontSize:21,fontFamily:'Inter-Bold'}}>Seleccione una hora:</Text>
             </View>
-            {horarios.length>0 ? <Text></Text> : <View style={{alignItems:'center',alignContent:'center',marginHorizontal:30}}><Text style={{fontSize:18,fontFamily:'Inter-Regular'}}>No hay horarios disponibles el día seleccionado</Text></View>}
+            {horarios.length>0 ? <Text></Text> : <View style={{alignItems:'center',alignContent:'center',marginHorizontal:30}}><Text style={{fontSize:17,fontFamily:'Inter-Regular'}}>No hay horarios disponibles el día seleccionado</Text></View>}
             <FlatList
                 data={horarios}
                 style={{marginBottom: 10}}

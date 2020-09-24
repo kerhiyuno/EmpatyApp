@@ -1,27 +1,33 @@
 import React, {useState} from 'react';
 import {View, StyleSheet,Text,ScrollView,TouchableHighlight } from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
+import {TextInput, Button,RadioButton} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+import {ipHost} from '../components/hosts.js';
+
+const host = ipHost();
 
 const editarperfil = ({navigation,route}) =>{
 
     const nombre = (route.params.datos.nombre);
     const telefono = (route.params.datos.telefono);
+    const generodescripcion = (route.params.datos.generodescripcion);
     const genero = (route.params.datos.genero);
 
     const [nombrecambio,guardarNombrecambio] = useState(nombre);
     const [telefonocambio,guardarTelefonocambio] = useState(telefono);
-    const [generocambio,guardarGenerocambio] = useState(genero)
+    const [generodescripcioncambio,guardarGenerodescripcioncambio] = useState(generodescripcion);
+    const [generocambio,guardarGenerocambio] = useState(genero);
 
     const enviar = async () => {
-        console.log(nombrecambio);
-        console.log(telefonocambio);
-        console.log(generocambio);
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
-            const respuesta = await axios.post(host+'',{},
+            const respuesta = await axios.put(host+'/usuarios/paciente/perfil/',{fullname: nombrecambio,
+            genero: generocambio,gender_description: generodescripcioncambio,telefono:telefonocambio},
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            console.log(respuesta);
         } catch (error) {
             console.log(error);
             console.log(error.response);
@@ -36,8 +42,9 @@ const editarperfil = ({navigation,route}) =>{
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name = await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.post(host+'',{},
-                        {headers: {'Authorization': 'Bearer ' + (JSON.parse(name).access),}});
+                        const respuesta = await axios.put(host+'/usuarios/paciente/perfil/',{fullname: nombrecambio,
+                            genero: generocambio,gender_description: generodescripcioncambio,telefono:telefonocambio},
+                            {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
                     } catch (error) {
                         console.log(error.response);
@@ -68,12 +75,58 @@ const editarperfil = ({navigation,route}) =>{
                 defaultValue = {telefono}
                 keyboardType='phone-pad'
             />
-            <Text style={styles.texto}>Género:</Text>
+            <Text style={[styles.texto,styles.minTitulo]}>Género:</Text>
+            <View style={styles.pregunta}>
+                <RadioButton
+                    value="first"
+                    status={ generocambio === 'Masculino' ? 'checked' : 'unchecked' }
+                    onPress={() => guardarGenerocambio('Masculino')}
+                    color='black'
+                />
+                <Text style={styles.texto,styles.texto2}>Masculino</Text>
+            </View>
+            <View style={styles.pregunta}>
+                <RadioButton
+                    value="second"
+                    status={ generocambio === 'Femenino' ? 'checked' : 'unchecked' }
+                    onPress={() => guardarGenerocambio('Femenino')}
+                    color='black'
+                />
+                <Text style={styles.texto,styles.texto2}>Femenino</Text>
+            </View>
+            <View style={styles.pregunta}>
+                <RadioButton
+                    value="third"
+                    status={ generocambio === 'No binario' ? 'checked' : 'unchecked' }
+                    onPress={() => guardarGenerocambio('No binario')}
+                    color='black'
+                />
+                <Text style={styles.texto,styles.texto2}>No Binario</Text>
+            </View>
+            <View style={styles.pregunta}>
+                <RadioButton
+                    value="Fourth"
+                    status={ generocambio === 'Otro' ? 'checked' : 'unchecked' }
+                    onPress={() => guardarGenerocambio('Otro')}
+                    color='black'
+                />
+                <Text style={styles.texto,styles.texto2}>Otro</Text>
+            </View>
+            <View style={styles.pregunta}>
+                <RadioButton
+                    value="fifth"
+                    status={ generocambio === 'Prefiero no decir' ? 'checked' : 'unchecked' }
+                    onPress={() => guardarGenerocambio('Prefiero no decir')}
+                    color='black'
+                />
+                <Text style={styles.texto,styles.texto2}>Prefiero no decir</Text>
+            </View>
+            <Text style={styles.texto}>Como prefieres que te identifiquemos:</Text>
             <TextInput
-                onChangeText={(texto) => guardarGenerocambio(texto)}
+                onChangeText={(texto) => guardarGenerodescripcioncambio(texto)}
                 style={globalStyles.input}
                 theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
-                defaultValue = {genero}
+                defaultValue = {generodescripcion}
             />
             <TouchableHighlight style={styles.botonS} onPress={() => enviar() }>
                 <View style={{flexDirection:'row'}}>
@@ -88,7 +141,7 @@ const editarperfil = ({navigation,route}) =>{
 const styles=StyleSheet.create({
     texto: {
         marginTop:10,
-        fontSize: 18,
+        fontSize: 16,
         marginLeft:8,
         marginRight:0,
         fontFamily: 'Inter-Regular'
@@ -99,7 +152,7 @@ const styles=StyleSheet.create({
     },
     textoC:{
         marginBottom: 2,
-        fontSize: 17,
+        fontSize: 16,
         color: 'white',
         alignSelf: 'center',
         fontFamily: 'Inter-Light'
@@ -112,6 +165,22 @@ const styles=StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#1e524c",
         borderRadius: 8
+    },
+    texto2: {
+        fontSize: 16,
+        fontFamily: 'Inter-Regular'
+    },
+    pregunta:{
+        flex: 1,
+        flexDirection:'row',
+        marginTop:2,
+        marginLeft:10,
+        alignItems:'center'
+    },
+    minTitulo:{
+        marginTop:0,
+        fontFamily: "Inter-Bold",
+        fontSize:18
     },
 })
 

@@ -36,7 +36,6 @@ const PreferenciasSicologo = ({navigation,route}) =>{
 
     const consultar = async () => {
         guardarCargando(true);
-        await delay(2000);
         try {
             console.log("df");
             const nombre = await AsyncStorage.getItem('datosSesion');
@@ -451,9 +450,12 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
 }
 
 const styles=StyleSheet.create({
-
-    texto: {
-        fontSize: 17,
+    texto2:{
+        fontSize: 14,
+        fontFamily: 'Inter-Regular'
+    },
+    texto:{
+        fontSize: 16,
         marginLeft:5,
         marginRight:10,
         marginVertical:7,
@@ -461,7 +463,7 @@ const styles=StyleSheet.create({
         textAlign:'justify'
     },
     textopregunta: {
-        fontSize: 17,
+        fontSize: 16,
         marginLeft:5,
         marginRight:10,
         fontFamily: 'Inter-Regular'
@@ -469,7 +471,7 @@ const styles=StyleSheet.create({
     pregunta:{
         flex: 1,
         flexDirection:'row',
-        marginTop: 10,
+        marginTop: 5,
         marginHorizontal:10,
         alignItems:'center',
         marginRight:25
@@ -484,7 +486,7 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 17,
+        fontSize: 16,
         color: 'white',
         textAlign: 'center',
         fontFamily:'Inter-Light'

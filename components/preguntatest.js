@@ -62,11 +62,12 @@ const PreguntaTest = (props) =>{
 
 const styles=StyleSheet.create({
     numero:{
-        fontFamily: 'Inter-Regular'
+        fontFamily: 'Inter-Regular',
+        fontSize: 14
     },
     texto: {
         marginTop:25,
-        fontSize: 17,
+        fontSize: 15,
         marginLeft:5,
         marginRight:5,
         fontFamily: 'Inter-Regular'

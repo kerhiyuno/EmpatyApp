@@ -40,7 +40,7 @@ const EleccionHobbies = (props) =>{
 
 const styles=StyleSheet.create({
     texto: {
-        fontSize: 17,
+        fontSize: 16,
         marginLeft:5,
         marginRight:5,
         fontFamily: 'Inter-Regular'

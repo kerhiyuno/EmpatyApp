@@ -27,7 +27,6 @@ const home = ({navigation,route}) =>{
 
     useEffect(() => {
         timer = setInterval(async() => consultar(), 20000);
-        console.log(timer);
         return () => clearInterval(timer);
       });
 
@@ -283,12 +282,7 @@ const home = ({navigation,route}) =>{
                         <Text style={styles.textoC}>Cuestionario de Sintomatología</Text>
                     </View>
                 </TouchableHighlight >
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Chat')}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="chat" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Chat</Text>
-                    </View>
-                </TouchableHighlight >
+                
                 <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate("Disconformidad") }>
                     <View style={{flexDirection:'row'}}>
                         <Icon name="account-alert-outline" color="white" size={25}></Icon>
@@ -435,3 +429,11 @@ const styles=StyleSheet.create({
 })
 
 export default home;
+
+
+/*<TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Chat')}>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="chat" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>Chat</Text>
+                    </View>
+                </TouchableHighlight >*/

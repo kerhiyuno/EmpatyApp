@@ -509,7 +509,6 @@ const HorarioPaciente = ({navigation}) =>{
 
     const consultarHorario =  async () => {
         guardarCargando(true);
-        await delay(500);
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.get(host+'/horarios/mihorario/',

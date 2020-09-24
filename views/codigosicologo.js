@@ -14,6 +14,8 @@ const codigosicologo = ({navigation,route}) =>{
     const [codigo,guardarCodigo] = useState('');
     const [alertacodigo,guardarAlertacodigo] = useState('');
     const [alertasicologo,guardarAlertasicologo] = useState(false);
+    const [mensajeerrorenvio,guardarMensajeerrorenvio] = useState('');
+    const [alertaerrorenvio,guardarAlertaErrorenvio] = useState(false);
 
     const enviar = async () => {
         if (codigo === ''){
@@ -23,7 +25,8 @@ const codigosicologo = ({navigation,route}) =>{
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             console.log(nombre);
-            const respuesta = await axios.post(host+'/codigopsicologo/connect/',mensaje,
+            console.log(codigo);
+            const respuesta = await axios.post(host+'/codigopsicologo/connect/',{codigo: codigo},
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             if (respuesta.status===200){
                 guardarAlertasicologo(true);
@@ -42,7 +45,7 @@ const codigosicologo = ({navigation,route}) =>{
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.post(host+'/codigopsicologo/connect/',usuario,
+                        const respuesta = await axios.post(host+'/codigopsicologo/connect/',codigo,
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         if (respuesta.status===200){
                             guardarAlertasicologo(true);
@@ -56,6 +59,10 @@ const codigosicologo = ({navigation,route}) =>{
                     console.log("error aqui");
                     console.log(error.response);
                 }
+            }
+            else if (error.response.status===404){
+                guardarMensajeerrorenvio(error.response.data.message);
+                guardarAlertaErrorenvio(true);
             }
         }
     }
@@ -110,6 +117,19 @@ const codigosicologo = ({navigation,route}) =>{
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
+            <Portal>
+                <Dialog visible={alertaerrorenvio} onDismiss={() => guardarAlertaErrorenvio(false)}>
+                 <Dialog.Title>Psicólogo encontrado</Dialog.Title>
+                 <Dialog.Content>
+                    <Paragraph style={globalStyles.textoAlerta}>{mensajeerrorenvio}</Paragraph>
+                 </Dialog.Content>
+                    <Dialog.Actions>
+                        <View style={{marginRight:10}}>
+                            <Button onPress={()=> guardarAlertaErrorenvio(false)} color='#3c2c18'>Ok</Button>
+                        </View>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </ScrollView>
     );
 }
@@ -118,7 +138,7 @@ const styles=StyleSheet.create({
 
     texto: {
         marginTop:150,
-        fontSize: 18,
+        fontSize: 17,
         marginLeft:5,
         marginRight:5,
         marginBottom:15,
@@ -142,7 +162,7 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 0,
         marginHorizontal: 10,
-        fontSize: 18,
+        fontSize: 17,
         color: 'white',
         fontFamily: 'Inter-Light'
     }

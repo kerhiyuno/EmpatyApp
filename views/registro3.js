@@ -66,13 +66,13 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 17,
+        fontSize: 16,
         color: 'white',
         textAlign: 'center',
         fontFamily:'Inter-Light'
     },
     botonS:{
-        height: 40,
+        height: 35,
         marginTop: 15,
         marginHorizontal: 4,
         justifyContent: "center",

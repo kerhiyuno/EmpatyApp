@@ -21,6 +21,9 @@ import Preferencias from '../views/preferencias';
 import Chat from '../views/chat';
 import Disconformidad from '../views/disconformidad';
 import Desvinculacion from '../views/desvinculacion';
+import encuestas from '../views/encuestas';
+import encuesta from '../views/encuesta';
+
 import BotonLogout from '../components/botonlogout';
 import BotonInfo from '../components/botoninfo';
 
@@ -267,6 +270,32 @@ const StackScreen = () => {
               <BotonLogout {...props} navigation={navigation} route={route}/>
             </View>,
             headerTitle: 'Disconformidad'
+        })}
+      >
+      </Stack.Screen>
+      <Stack.Screen
+        name= 'Encuestas'
+        component={encuestas}
+        options={ ({navigation,route}) => ({
+          headerRight: (props)=>
+            <View style={{flexDirection:'row'}}>
+              <BotonInfo {...props} navigation={navigation} route={route}/>
+              <BotonLogout {...props} navigation={navigation} route={route}/>
+            </View>,
+            headerTitle: 'Encuestas'
+        })}
+      >
+      </Stack.Screen>
+      <Stack.Screen
+        name= 'Encuesta'
+        component={encuesta}
+        options={ ({navigation,route}) => ({
+          headerRight: (props)=>
+            <View style={{flexDirection:'row'}}>
+              <BotonInfo {...props} navigation={navigation} route={route}/>
+              <BotonLogout {...props} navigation={navigation} route={route}/>
+            </View>,
+            headerTitle: 'Encuesta'
         })}
       >
       </Stack.Screen>

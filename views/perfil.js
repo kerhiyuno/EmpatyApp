@@ -15,7 +15,8 @@ const perfil = ({navigation,route}) => {
     const [email,guardarEmail] = useState('');
     const [telefono,guardarTelefono] = useState('');
     const [genero,guardarGenero] = useState('');
-    const [imagenperfil,guardarImagenperfil] = useState('https://homepages.cae.wisc.edu/~ece533/images/airplane.png');
+    const [generodescripcion,guardarGenerodescripcion] = useState('');
+    const [imagenperfil,guardarImagenperfil] = useState('');
     
     const [cargando, guardarCargando] = useState(false);
 
@@ -23,10 +24,8 @@ const perfil = ({navigation,route}) => {
         consultar();
     },[]);
     
-    const delay = ms => new Promise(res => setTimeout(res, ms));
     const consultar = async () => {
         guardarCargando(true);
-        await delay(500);
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             console.log(nombre);
@@ -36,6 +35,7 @@ const perfil = ({navigation,route}) => {
             guardarEmail(respuesta.data.email);
             guardarTelefono(respuesta.data.telefono);
             guardarGenero(respuesta.data.genero);
+            guardarGenerodescripcion(respuesta.data.gender_description);
             console.log(respuesta);
             guardarCargando(false);
         } catch (error) {
@@ -60,6 +60,7 @@ const perfil = ({navigation,route}) => {
                         guardarEmail(respuesta.data.email);
                         guardarTelefono(respuesta.data.telefono);
                         guardarGenero(respuesta.data.genero);
+                        guardarGenerodescripcion(respuesta.data.gender_description);
                         guardarCargando(false);
                     } catch (error) {
                         console.log(error.response);
@@ -75,14 +76,16 @@ const perfil = ({navigation,route}) => {
 
     const editarperfil = () => {
         console.log("hola");
-        const datos={nombre,telefono,genero};
+        const datos={nombre,telefono,generodescripcion,genero};
         navigation.navigate('EditarPerfil', {datos});
     }
 
     const avatar = () => {
         return (<View style={{alignItems: 'center'}}>
                     <UserAvatar size={100} name= {nombre} />
-                    <Text style={styles.textoS}>{nombre}</Text>
+                    <View style={{borderRadius:40,marginTop:10,alignSelf:"center",borderWidth:2, borderColor:"#828282"}}>
+                        <Text style={[styles.textoS,{fontSize:16,color:"black",marginTop:5,marginBottom:5,marginHorizontal:10,marginLeft:5}]}>{nombre}</Text>
+                    </View>
                 </View>)
     }
 
@@ -90,7 +93,7 @@ const perfil = ({navigation,route}) => {
         return (<View style={{alignItems: 'center'}}>
                     <Avatar.Image size={100} source={{uri: imagenperfil}}/>
                     <View style={{borderRadius:40,marginTop:10,alignSelf:"center",borderWidth:2, borderColor:"#828282"}}>
-                        <Text style={[styles.textoS,{fontSize:16,color:"black",marginTop:5,marginBottom:5,marginHorizontal:10}]}>{nombre}</Text>
+                        <Text style={[styles.textoS,{fontSize:16,color:"black",marginTop:5,marginBottom:5,marginHorizontal:10,marginLeft:5}]}>{nombre}</Text>
                     </View>
                 </View>)
     }
@@ -114,7 +117,7 @@ const perfil = ({navigation,route}) => {
                         </View>
                         <View style={{flexDirection: 'row',marginHorizontal: 10}}>
                             <Icon name="rhombus-outline" color="#515254" size={20}></Icon>
-                            <Text style={styles.textoS}>Género: {genero}</Text>
+                            <Text style={styles.textoS}>Género: {generodescripcion}</Text>
                         </View>
                     </View>
                 </View>
@@ -153,6 +156,7 @@ const styles=StyleSheet.create({
     textoS:{
         marginBottom: 8,
         marginHorizontal: 0,
+        marginLeft: 1,
         fontSize: 16,
         color: 'black',
         fontFamily: 'Inter-Regular'
@@ -171,6 +175,9 @@ const styles=StyleSheet.create({
         color: 'white',
         alignSelf: 'center',
         fontFamily: 'Inter-Light'
+    },
+    textoNombre:{
+        marginLeft:5
     }
 })
 

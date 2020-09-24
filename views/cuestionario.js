@@ -162,7 +162,7 @@ const styles=StyleSheet.create({
 
     texto: {
         marginTop:25,
-        fontSize: 17,
+        fontSize: 15,
         marginLeft:5,
         marginRight:5,
         fontFamily:'Inter-Regular',
@@ -170,7 +170,7 @@ const styles=StyleSheet.create({
     },
     escala: {
         marginTop:7,
-        fontSize: 17,
+        fontSize: 15,
         marginLeft:5,
         marginRight:5,
         fontFamily:'Inter-Regular'
@@ -178,7 +178,7 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 17,
+        fontSize: 16,
         color: 'white',
         textAlign: 'center',
         fontFamily:'Inter-Light'

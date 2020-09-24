@@ -12,9 +12,7 @@ const host = ipHost();
 const sesion = ({navigation,route}) =>{
  
     const [nombresicologo,guardarNombreSicologo] = useState('Juan');
-    const [descripcion,guardarDescripcion] = useState('');
-    const [email,guardarEmail] = useState('')
-
+    const [tienegrupo,guardarTienegrupo] = useState(true);
     const [sinsesiones,guardarSinsesiones] = useState(false);
    /* const pedirDatos = async() => {
         const datosSesion = AsyncStorage.getItem(datosSesion);
@@ -29,16 +27,67 @@ const sesion = ({navigation,route}) =>{
 */
     useEffect( () => {
          datospsicologo();
+         consultar();
     },[]
     )
+
+
+
+
+    const consultar = async () => {
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            console.log(nombre);
+            const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            if (respuesta.data.id_grupo.oculto===true){
+                guardarTienegrupo(false);
+            }
+            else{console.log("·dsaasd")}
+        } catch (error) {
+            console.log("error");
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                console.log('token_not_valid');
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh = JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name = await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        console.log(respuesta);
+                        if (respuesta.data.id_grupo.oculto===true){
+                            guardarTienegrupo(false);
+                        }
+                        else{console.log("·dsaasd")}
+                    } catch (error) {
+                        console.log(error.response);
+                        console.log("error acaa");
+                    }  
+                } catch (error) {
+                    console.log("error aqui");
+                    console.log(error.response);
+                }
+            }
+        }
+    }
 
     const datospsicologo = async () => {
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.get(host+'/usuarios/psicologo/perfil/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            console.log("asadas")
+            console.log(respuesta);
             guardarNombreSicologo(respuesta.data.fullname);
         } catch (error) {
+            console.log(error);
             console.log(error.response);
             if(error.response.data.code==='token_not_valid'){
                 console.log('token_not_valid');
@@ -241,9 +290,21 @@ const sesion = ({navigation,route}) =>{
                     </View>
                 </TouchableHighlight >
             </View>
+            <View style={styles.container}>
+                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Encuestas') }>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="file-question-outline" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>Encuestas pendientes</Text>
+                    </View>
+                </TouchableHighlight >
+            </View>
             <View style={{marginTop:20,flexDirection:'row'}}>
                 <Text style={[styles.textoS,{fontFamily: 'Inter-Bold'}]}>Mi Psicólogo: </Text>
                 <Text style={styles.textoS}>{nombresicologo}</Text>
+            </View>
+            <View>
+            {tienegrupo===false ? <Text style={[styles.textoS,{fontFamily: 'Inter-Bold'}]}> 
+            No has sido asignado a un grupo</Text> : null}
             </View>
             <Portal>
                 <Dialog visible={sinsesiones} onDismiss={() => guardarSinsesiones(false)} >
@@ -279,7 +340,7 @@ const styles=StyleSheet.create({
     textoS:{
         marginBottom: 10,
         marginHorizontal: 10,
-        fontSize: 18,
+        fontSize: 17,
         color: 'black',
         fontFamily: 'Inter-Regular'
     },

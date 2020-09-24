@@ -20,7 +20,6 @@ const solicitudes = ({navigation,route}) =>{
 
     const buscar = async() =>{
         guardarCargando(true);
-        await delay(500);
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.get(host+'/solicitudes/manage/',
@@ -57,6 +56,14 @@ const solicitudes = ({navigation,route}) =>{
         }
     }
 
+    const fechaformateo=(fecha)=>{
+        if(fecha==='-'){
+            return '-';
+        }
+        var f=fecha.split('-');
+        fecha = f[2]+"-"+f[1]+"-"+f[0];
+        return fecha;
+    }
 
     const eliminarCita = async (id) =>{
         try {
@@ -100,7 +107,7 @@ const solicitudes = ({navigation,route}) =>{
         <View style={globalStyles.contenedor}>
             {cargando===true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
             {cargando===false ? <Text style={globalStyles.titulo}>Solicitudes pendientes</Text> : null}
-            {solicitudes.length>0 ? null :  cargando===false ? <View style={{alignItems:'center'}}><Text style={{fontSize:19}}>No tienes solicitudes pendientes</Text></View>: null}
+            {solicitudes.length>0 ? null :  cargando===false ? <View style={{alignItems:'center'}}><Text style={{fontSize:17}}>No tienes solicitudes pendientes</Text></View>: null}
             <FlatList
                 data={solicitudes}
                 style={{marginBottom: 20}}
@@ -108,27 +115,27 @@ const solicitudes = ({navigation,route}) =>{
                     <View style={styles.solicitud}>
                         <View style={{flex:1,flexDirection: 'column'}}>
                                 <View style={{flex:1,flexDirection: 'row',marginTop:5}}>
-                                    <View style={{flex:0.5}}>
+                                    <View style={{flex:0.4}}>
                                         <Text style={[styles.textoC]}>Psicólogo</Text>
                                     </View>
-                                    <View style={{flex:0.5}}>
+                                    <View style={{flex:0.6}}>
                                         <Text style={[styles.textoC]}>{item.psicologo_sol}</Text>
                                     </View>
                                 </View>
                                 <View style={{flex:1,flexDirection: 'row'}}>
-                                    <View style={{flex:0.5}}>
+                                    <View style={{flex:0.4}}>
                                         <Text style={[styles.textoC]}>Hora: </Text>
                                     </View>
-                                    <View style={{flex:0.5}}>
+                                    <View style={{flex:0.6}}>
                                         <Text style={[styles.textoC]}>{item.horario_inicio}</Text>
                                     </View>
                                 </View>
                                 <View style={{flex:1,flexDirection: 'row'}}>
-                                    <View style={{flex:0.5}}>
+                                    <View style={{flex:0.4}}>
                                         <Text style={[styles.textoC]}>Fecha: </Text>
                                     </View>
-                                    <View style={{flex:0.5}}>
-                                        <Text style={[styles.textoC]}>{item.fecha_reunion}</Text>
+                                    <View style={{flex:0.6}}>
+                                        <Text style={[styles.textoC]}>{fechaformateo(item.fecha_reunion)}</Text>
                                     </View>
                                 </View>
                         </View>

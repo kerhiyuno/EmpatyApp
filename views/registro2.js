@@ -79,7 +79,7 @@ const registro2 = ({navigation,route}) =>{
                 />
                 <Text style={styles.texto,styles.texto2}>Prefiero no decir</Text>
             </View>
-            <Text style={[styles.texto,{marginTop: 10,marginBottom:5,fontSize:18}]}>¿Cómo prefieres que te identifiquemos?</Text>
+            <Text style={[styles.texto,{marginTop: 20,marginBottom:5,fontSize:16}]}>¿Cómo prefieres que te identifiquemos?</Text>
             <TextInput
                 label="Hombre, Mujer, Otro"
                 onChangeText={(texto) => guardarGender_description(texto) }
@@ -113,7 +113,7 @@ const styles=StyleSheet.create({
 
     texto: {
         marginTop:0,
-        fontSize: 17,
+        fontSize: 16,
         marginLeft:5,
         marginRight:5,
         fontFamily: 'Inter-Regular'
@@ -132,18 +132,18 @@ const styles=StyleSheet.create({
     minTitulo:{
         marginTop:15,
         fontFamily: "Inter-Bold",
-        fontSize:20
+        fontSize: 20
     },
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 17,
+        fontSize: 16,
         color: 'white',
         textAlign: 'center',
         fontFamily: 'Inter-Light'
     },
     botonS:{
-        height: 40,
+        height: 35,
         marginBottom: 0,
         marginHorizontal: 4,
         justifyContent: "center",

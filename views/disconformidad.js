@@ -156,7 +156,7 @@ const Disconformidad = ({navigation}) => {
 
 const styles=StyleSheet.create({
     texto: {
-        fontSize: 17,
+        fontSize: 16,
         marginLeft:7,
         marginRight:7,
         fontFamily: 'Inter-Regular',
@@ -174,7 +174,7 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 0,
         marginHorizontal: 10,
-        fontSize: 18,
+        fontSize: 17,
         color: 'white',
         fontFamily: 'Inter-Light'
     }

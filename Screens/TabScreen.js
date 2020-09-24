@@ -55,7 +55,7 @@ const TabScreen =  () => {
        screenOptions={({route }) => ({
         tabBarIcon:({color, size})=>{
           let iconName;
-          if (route.name=='Empaty') {
+          if (route.name=='Inicio') {
         
             iconName='home'
         
@@ -77,7 +77,7 @@ const TabScreen =  () => {
           backgroundColor: '#357870'
         },
         }}>
-        <Tab.Screen name="Empaty" component={StackScreen} />
+        <Tab.Screen name="Inicio" component={StackScreen} />
         <Tab.Screen name="Notificaciones" component={notificacionesStackScreen} options={{ tabBarBadge: cantidad }} 
          listeners={{
           tabPress: () => {
