@@ -298,7 +298,7 @@ const sesion = ({navigation,route}) =>{
                     </View>
                 </TouchableHighlight >
             </View>
-            <View style={{marginTop:20,flexDirection:'row'}}>
+            <View style={{marginTop:20,flexDirection:'row',marginHorizontal: 10}}>
                 <Text style={[styles.textoS,{fontFamily: 'Inter-Bold'}]}>Mi Psicólogo: </Text>
                 <Text style={styles.textoS}>{nombresicologo}</Text>
             </View>
