@@ -16,54 +16,64 @@ const codigosicologo = ({navigation,route}) =>{
     const [alertasicologo,guardarAlertasicologo] = useState(false);
     const [mensajeerrorenvio,guardarMensajeerrorenvio] = useState('');
     const [alertaerrorenvio,guardarAlertaErrorenvio] = useState(false);
+    const [envioenprogreso,guardarEnvioenprogreso] = useState(false);
+
+    const delay = ms => new Promise(res => setTimeout(res, ms));
 
     const enviar = async () => {
-        if (codigo === ''){
-            guardarAlertacodigo(true);
-            return
-        }
-        try {
-            const nombre = await AsyncStorage.getItem('datosSesion');
-            console.log(nombre);
-            console.log(codigo);
-            const respuesta = await axios.post(host+'/codigopsicologo/connect/',{codigo: codigo},
-            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
-            if (respuesta.status===200){
-                guardarAlertasicologo(true);
+        if (envioenprogreso===false){
+            guardarEnvioenprogreso(true);
+            if (codigo === ''){
+                guardarAlertacodigo(true);
+                return
             }
-        } catch (error) {
-            console.log(error);
-            console.log(error.response);
-            if(error.response.data.code==='token_not_valid'){
-                console.log('token_not_valid');
-                try {
-                    const refresh0 = await AsyncStorage.getItem('datosSesion')
-                    var refresh = JSON.parse(refresh0).refresh;
-                    refresh = {refresh}
-                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
-                    refresh=JSON.parse(refresh0).refresh;
-                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+            try {
+                const nombre = await AsyncStorage.getItem('datosSesion');
+                console.log(nombre);
+                console.log(codigo);
+                const respuesta = await axios.post(host+'/codigopsicologo/connect/',{codigo: codigo},
+                {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+                if (respuesta.status===200){
+                    guardarAlertasicologo(true);
+                }
+            } catch (error) {
+                console.log(error);
+                console.log(error.response);
+                if(error.response.data.code==='token_not_valid'){
+                    console.log('token_not_valid');
                     try {
-                        var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.post(host+'/codigopsicologo/connect/',codigo,
-                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
-                        if (respuesta.status===200){
-                            guardarAlertasicologo(true);
-                        }
-                        console.log(respuesta);
+                        const refresh0 = await AsyncStorage.getItem('datosSesion')
+                        var refresh = JSON.parse(refresh0).refresh;
+                        refresh = {refresh}
+                        var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                        refresh=JSON.parse(refresh0).refresh;
+                        await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                        try {
+                            var name= await AsyncStorage.getItem('datosSesion');
+                            const respuesta = await axios.post(host+'/codigopsicologo/connect/',codigo,
+                            {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                            if (respuesta.status===200){
+                                guardarAlertasicologo(true);
+                            }
+                            console.log(respuesta);
+                        } catch (error) {
+                            console.log(error.response);
+                            console.log("error acaa");
+                        }  
                     } catch (error) {
+                        console.log("error aqui");
                         console.log(error.response);
-                        console.log("error acaa");
-                    }  
-                } catch (error) {
-                    console.log("error aqui");
-                    console.log(error.response);
+                    }
+                }
+                else if (error.response.status===404 || error.response.status===400 ||error.response.status===500){
+                    guardarMensajeerrorenvio(error.response.data.message);
+                    guardarAlertaErrorenvio(true);
                 }
             }
-            else if (error.response.status===404){
-                guardarMensajeerrorenvio(error.response.data.message);
-                guardarAlertaErrorenvio(true);
-            }
+            guardarEnvioenprogreso(false);
+        }
+        else{
+            console.log("envio en progreso");
         }
     }
 
@@ -119,7 +129,7 @@ const codigosicologo = ({navigation,route}) =>{
             </Portal>
             <Portal>
                 <Dialog visible={alertaerrorenvio} onDismiss={() => guardarAlertaErrorenvio(false)}>
-                 <Dialog.Title>Psicólogo encontrado</Dialog.Title>
+                 <Dialog.Title>Error</Dialog.Title>
                  <Dialog.Content>
                     <Paragraph style={globalStyles.textoAlerta}>{mensajeerrorenvio}</Paragraph>
                  </Dialog.Content>

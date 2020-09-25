@@ -69,7 +69,7 @@ const encuestas = ({navigation,route}) => {
             {cargando===false ?
             <View>
                 <Text style={[globalStyles.titulo,{marginBottom:0}]}>Encuestas pendientes</Text>
-                {listaencuestas.length>0 ? <Text></Text> : <View style={{alignItems:'center'}}><Text style={{fontSize:19}}> No tienes encuestas pendientes </Text></View>}
+                {listaencuestas.length>0 ? <Text></Text> : <View style={{alignItems:'center',marginTop:20}}><Text style={{fontSize:17,fontFamily: "Inter-Regular"}}> No tienes encuestas pendientes </Text></View>}
                 <FlatList
                     data={listaencuestas}
                     style={{marginBottom: 10}}

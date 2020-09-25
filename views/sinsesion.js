@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {View,StyleSheet,Text,TouchableHighlight} from 'react-native';
+import {View,StyleSheet,Text,TouchableHighlight,ActivityIndicator} from 'react-native';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -14,9 +14,11 @@ const sinsesion = ({navigation,route}) =>{
 
     const [email,guardarEmail] = useState('');
     const [password,guardarPassword] = useState('');
-    const [alerta,guardarAlerta] =useState(false);
-    const [inicioFallido,guardarInicioFallido] =useState(false);
-    const [alertavacio,guardarAlertaVacio] =useState(false);
+    const [alerta,guardarAlerta] = useState(false);
+    const [inicioFallido,guardarInicioFallido] = useState(false);
+    const [alertavacio,guardarAlertaVacio] = useState(false);
+
+    const [cargando,guardarCargando] = useState(false)
 
     /*const inicioautomatico = async () => {
         const token = await AsyncStorage.getItem('datosSesion');
@@ -46,9 +48,11 @@ const sinsesion = ({navigation,route}) =>{
                     console.log(respuesta);
                     if(respuesta.data.id_psicologo== null){
                         await AsyncStorage.setItem('tienesicologo',JSON.stringify({ tiene: 'no'}));
+                        guardarCargando(false);
                         navigation.navigate('Tabs');
                     }else{
                         await AsyncStorage.setItem('tienesicologo',JSON.stringify({ tiene: 'si'}));
+                        guardarCargando(false);
                         navigation.navigate('Tabs');
                     }
                     } catch (error) {
@@ -67,7 +71,16 @@ const sinsesion = ({navigation,route}) =>{
                                     var name= await AsyncStorage.getItem('datosSesion');
                                     const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
                                     {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
-                                        console.log(hola);          
+                                    console.log(hola);
+                                    if(respuesta.data.id_psicologo== null){
+                                        await AsyncStorage.setItem('tienesicologo',JSON.stringify({ tiene: 'no'}));
+                                        guardarCargando(false);
+                                        navigation.navigate('Tabs');
+                                    }else{
+                                        await AsyncStorage.setItem('tienesicologo',JSON.stringify({ tiene: 'si'}));
+                                        guardarCargando(false);
+                                        navigation.navigate('Tabs');
+                                    }
                                 } catch (error) {
                                     console.log(error.response);
                                     console.log("error acaa");
@@ -92,8 +105,10 @@ const sinsesion = ({navigation,route}) =>{
     }
 
     const iniciosesion = async () => {
+        guardarCargando(true);
         if( email === '' || password === ''){
             guardarAlertaVacio(true);
+            guardarCargando(false);
             return;
         }
         try {
@@ -112,6 +127,7 @@ const sinsesion = ({navigation,route}) =>{
                 guardarInicioFallido(true);
             }
             console.log(error.response);
+            guardarCargando(false);
             return;
         }
    }
@@ -139,6 +155,7 @@ const sinsesion = ({navigation,route}) =>{
                         <Text style={styles.textoC}>Iniciar Sesión</Text>
                     </View>
                 </TouchableHighlight >
+                {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {styles.cargando}/> : null}
             </View>
             <View style={[styles.container,{marginTop:70}]}>
                 <TouchableHighlight  style={[styles.botonS,{marginHorizontal:100}]} underlayColor = {'transparent'} onPress={ () => navigation.navigate('Registro 1/7')}>
@@ -201,7 +218,16 @@ const styles=StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#1e524c",
         borderRadius: 8
-    }
+    },
+    cargando: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop:30,
+        height: 0,
+        alignContent: 'center',
+        alignSelf:'center',
+        marginVertical: 0
+     }
 })
 
 export default sinsesion;

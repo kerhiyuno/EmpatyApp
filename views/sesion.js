@@ -215,8 +215,9 @@ const sesion = ({navigation,route}) =>{
         try {
             console.log("df");
             const nombre = await AsyncStorage.getItem('datosSesion');
-            const respuesta = await axios.get('http://10.0.2.2:8000/grupal/sesiones/',
+            const respuesta = await axios.get(host +'/grupal/sesiones/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            console.log(respuesta);
             if (respuesta.data.length<1){
                 console.log("gola");
                 guardarSinsesiones(true);

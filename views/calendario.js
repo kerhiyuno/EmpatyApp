@@ -170,7 +170,7 @@ const traductorhora = (bloque) =>{
             {cargando===false ?
             <View>
                 <Text style={[globalStyles.titulo,{marginBottom:0}]}> Agenda de sesiones</Text>
-                {sesiones.length>0 ? <Text></Text> : <View style={{alignItems:'center'}}><Text style={{fontSize:17}}> No tienes sesiones agendadas </Text></View>}
+                {sesiones.length>0 ? <Text></Text> : <View style={{alignItems:'center',marginTop:20}}><Text style={{fontSize:17,fontFamily: "Inter-Regular"}}> No tienes sesiones agendadas </Text></View>}
                 <FlatList
                     data={sesiones}
                     style={{marginBottom: 10}}

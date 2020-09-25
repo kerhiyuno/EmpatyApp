@@ -168,7 +168,7 @@ const home = ({navigation,route}) =>{
     const funcion3 = () =>{
         navigation.navigate('CodigoSicologo');
     }
-      const revision = async () => {
+    const revision = async () => {
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},

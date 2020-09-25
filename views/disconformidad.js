@@ -105,7 +105,7 @@ const Disconformidad = ({navigation}) => {
     return(
         <View style={globalStyles.contenedor}>
             <Text style={globalStyles.titulo}>Notificar disconformidad</Text>
-            <Text style={styles.texto}>Describe tu problema (opcional):</Text>
+            <Text style={styles.texto}>Describe el problema:</Text>
             <TextInput
                 label="Mensaje"
                 onChangeText={(texto) => guardarMensaje(texto)}
