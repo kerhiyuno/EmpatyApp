@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View,StyleSheet,Text,ScrollView,TouchableHighlight} from 'react-native';
+import {View,StyleSheet,Text,ScrollView,TouchableHighlight,ActivityIndicator} from 'react-native';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -18,9 +18,12 @@ const codigosicologo = ({navigation,route}) =>{
     const [alertaerrorenvio,guardarAlertaErrorenvio] = useState(false);
     const [envioenprogreso,guardarEnvioenprogreso] = useState(false);
 
+    const [cargando,guardarCargando] = useState(false);
+
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
     const enviar = async () => {
+        console.log("hgola");
         if (envioenprogreso===false){
             guardarEnvioenprogreso(true);
             if (codigo === ''){
@@ -31,12 +34,15 @@ const codigosicologo = ({navigation,route}) =>{
                 const nombre = await AsyncStorage.getItem('datosSesion');
                 console.log(nombre);
                 console.log(codigo);
+                guardarCargando(true);
                 const respuesta = await axios.post(host+'/codigopsicologo/connect/',{codigo: codigo},
                 {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+                guardarCargando(false);
                 if (respuesta.status===200){
                     guardarAlertasicologo(true);
                 }
             } catch (error) {
+                guardarCargando(false);
                 console.log(error);
                 console.log(error.response);
                 if(error.response.data.code==='token_not_valid'){
@@ -93,23 +99,24 @@ const codigosicologo = ({navigation,route}) =>{
                 theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
             />
             
-            <View style={[styles.container,{marginTop:5}]}>
+            <View style={[{marginTop:5}]}>
                 <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>enviar()}>
                     <View style={{flexDirection:'row'}}>
                         <Icon name="send" color="white" size={25}></Icon>
                         <Text style={styles.textoC}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
+                {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {styles.cargando}/> : null}
             </View>
             <Portal>
-                <Dialog visible={alertacodigo} onDismiss={() => guardarAlertacodigo(false)}>
+                <Dialog visible={alertacodigo} onDismiss={() => {guardarEnvioenprogreso(false);guardarAlertacodigo(false);}}>
                  <Dialog.Title>Error</Dialog.Title>
                  <Dialog.Content>
                      <Paragraph style={globalStyles.textoAlerta}>Debe ingresar un código</Paragraph>
                  </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>
-                            <Button onPress={()=>{guardarAlertacodigo(false);}} color='#3c2c18'>Ok</Button>
+                            <Button onPress={()=>{guardarEnvioenprogreso(false);guardarAlertacodigo(false);}} color='#3c2c18'>Ok</Button>
                         </View>
                     </Dialog.Actions>
                 </Dialog>
@@ -128,14 +135,14 @@ const codigosicologo = ({navigation,route}) =>{
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertaerrorenvio} onDismiss={() => guardarAlertaErrorenvio(false)}>
+                <Dialog visible={alertaerrorenvio} onDismiss={() => {guardarEnvioenprogreso(false);guardarAlertaErrorenvio(false);}}>
                  <Dialog.Title>Error</Dialog.Title>
                  <Dialog.Content>
                     <Paragraph style={globalStyles.textoAlerta}>{mensajeerrorenvio}</Paragraph>
                  </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>
-                            <Button onPress={()=> guardarAlertaErrorenvio(false)} color='#3c2c18'>Ok</Button>
+                            <Button onPress={()=> {guardarEnvioenprogreso(false);guardarAlertaErrorenvio(false);}} color='#3c2c18'>Ok</Button>
                         </View>
                     </Dialog.Actions>
                 </Dialog>
@@ -175,7 +182,15 @@ const styles=StyleSheet.create({
         fontSize: 17,
         color: 'white',
         fontFamily: 'Inter-Light'
-    }
+    },
+    cargando: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop:30,
+        alignContent: 'center',
+        alignSelf:'center',
+        marginVertical: 0
+    },
 })
 
 export default codigosicologo;
