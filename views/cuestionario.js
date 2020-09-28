@@ -33,109 +33,256 @@ const Cuestionario = ({navigation,route}) =>{
     const [pregunta19,guardarPregunta19] = useState('');
 
     const [alerta,guardarAlerta] = useState(false);
+    const [alertaexito,guardarAlertaexito] = useState(false);
+    const [guardadoenprogreso,guardarGuardadoenprogreso] = useState(false);
 
+    const [parte,guardarParte] = useState(1);
 
     const enviarCuestionario = async () => {
+        if (guardadoenprogreso===false){
 
-        //validar
-        //validar
-        if(pregunta1==='' || pregunta2==='' || pregunta3==='' || pregunta4==='' || pregunta5==='' || pregunta6==='' || 
-        pregunta7==='' || pregunta8==='' || pregunta9==='' || pregunta10==='' || pregunta11==='' || pregunta12==='' || 
-        pregunta13==='' || pregunta14==='' || pregunta15==='' || pregunta16==='' || pregunta17==='' || pregunta18==='' ||
-         pregunta19===''){
-            guardarAlerta(true);
-            return
-        }
+            //validar
+            //validar
+            if(pregunta1==='' || pregunta2==='' || pregunta3==='' || pregunta4==='' || pregunta5==='' || pregunta6==='' || 
+            pregunta7==='' || pregunta8==='' || pregunta9==='' || pregunta10==='' || pregunta11==='' || pregunta12==='' || 
+            pregunta13==='' || pregunta14==='' || pregunta15==='' || pregunta16==='' || pregunta17==='' || pregunta18==='' ||
+            pregunta19===''){
+                guardarAlerta(true);
+                return
+            }
 
-        //puntajes
-        var fcp = parseInt (pregunta1) + parseInt(pregunta7) + parseInt(pregunta13) + parseInt(pregunta19);
-        var shd = parseInt(pregunta2) + parseInt(pregunta8) + parseInt(pregunta14);
-        var ga = parseInt(pregunta3) + parseInt(pregunta9) + parseInt(pregunta15);
-        var gd = parseInt(pregunta4) + parseInt(pregunta10) + parseInt(pregunta16);
-        var fa = parseInt(pregunta5) + parseInt(pregunta11) + parseInt(pregunta17);
-        var ap = parseInt(pregunta6) + parseInt(pregunta12) + parseInt(pregunta18);
+            //puntajes
+            var fcp = parseInt (pregunta1) + parseInt(pregunta7) + parseInt(pregunta13) + parseInt(pregunta19);
+            var shd = parseInt(pregunta2) + parseInt(pregunta8) + parseInt(pregunta14);
+            var ga = parseInt(pregunta3) + parseInt(pregunta9) + parseInt(pregunta15);
+            var gd = parseInt(pregunta4) + parseInt(pregunta10) + parseInt(pregunta16);
+            var fa = parseInt(pregunta5) + parseInt(pregunta11) + parseInt(pregunta17);
+            var ap = parseInt(pregunta6) + parseInt(pregunta12) + parseInt(pregunta18);
 
-        //generar
-        const usuario={fcp,shd,ga,gd,fa,ap};
-        //Enviar Resultado
-        try {
-            const nombre = await AsyncStorage.getItem('datosSesion');
-            console.log(nombre);
-            const respuesta = await axios.post(host+'/evaluacion/evaluar/',usuario,
-            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
-        } catch (error) {
-            console.log(error);
-            console.log(error.response);
-            if(error.response.data.code==='token_not_valid'){
-                console.log('token_not_valid');
-                try {
-                    const refresh0 = await AsyncStorage.getItem('datosSesion')
-                    var refresh = JSON.parse(refresh0).refresh;
-                    refresh = {refresh}
-                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
-                    refresh=JSON.parse(refresh0).refresh;
-                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+            //generar
+            const usuario={fcp,shd,ga,gd,fa,ap};
+            //Enviar Resultado
+            try {
+                const nombre = await AsyncStorage.getItem('datosSesion');
+                console.log(nombre);
+                const respuesta = await axios.post(host+'/evaluacion/evaluar/',usuario,
+                {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+                if (respuesta.status===201){
+                    guardarAlertaexito(true);
+                }
+            } catch (error) {
+                console.log(error);
+                console.log(error.response);
+                if(error.response.data.code==='token_not_valid'){
+                    console.log('token_not_valid');
                     try {
-                        var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.post(host+'/evaluacion/evaluar/',usuario,
-                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
-                        console.log(respuesta);
+                        const refresh0 = await AsyncStorage.getItem('datosSesion')
+                        var refresh = JSON.parse(refresh0).refresh;
+                        refresh = {refresh}
+                        var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                        refresh=JSON.parse(refresh0).refresh;
+                        await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                        try {
+                            var name= await AsyncStorage.getItem('datosSesion');
+                            const respuesta = await axios.post(host+'/evaluacion/evaluar/',usuario,
+                            {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                            console.log(respuesta);
+                            if (respuesta.status===201){
+                                guardarAlertaexito(true);
+                            }
+                        } catch (error) {
+                            console.log(error.response);
+                            console.log("error acaa");
+                        }  
                     } catch (error) {
+                        console.log("error aqui");
                         console.log(error.response);
-                        console.log("error acaa");
-                    }  
-                } catch (error) {
-                    console.log("error aqui");
-                    console.log(error.response);
+                    }
                 }
             }
+        }else{
+            console.log("en progreso");
         }
-
-        //redireccionar
-        navigation.goBack();
+    }
+    const validacionVacio = (parte) =>{
+        if (parte===2){
+            if(pregunta1 === '' ||pregunta2 === '' ||pregunta3 === '' ||pregunta4 === '' ||pregunta5 === ''){
+                guardarAlerta(true);
+                return
+            }
+        }
+        else if(parte===3){
+            if(pregunta6 === '' ||pregunta7 === '' ||pregunta8 === '' ||pregunta9 === '' ||pregunta10 === ''){
+                guardarAlerta(true);
+                return
+            }
+        }
+        else if(parte===4){
+            if(pregunta11 === '' ||pregunta12 === '' ||pregunta13 === '' ||pregunta14 === '' ||pregunta15 === ''){
+                guardarAlerta(true);
+                return
+            }
+        }
+        else if(parte===5){
+            if(pregunta16 === '' ||pregunta17 === '' ||pregunta18 === '' ||pregunta19 === ''){
+                guardarAlerta(true);
+                return
+            }
+        }
+        guardarParte(parte+1);
     }
     return (
         <ScrollView style= {globalStyles.contenedor}>
-            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>El siguiente cuestionario aborda temas que pueden haberle 
-            afectado en las últimas dos semanas. Debe responder según la escala asignada.
-            </Text>
-            <Text style={styles.escala}>
-            0 - Nada
-            </Text>
-            <Text style={styles.escala}>
-            1 - Un Poco
-            </Text>
-            <Text style={styles.escala}>
-            2 - Moderadamente
-            </Text>
-            <Text style={styles.escala}>
-            3 - Bastante
-            </Text>
-            <Text style={styles.escala}>
-            4 - Extremadamente
-            </Text>
-            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
-            <PreguntaTest pregunta={pregunta1} setpregunta={guardarPregunta1} texto={'Tener que esforzarme para recordar las cosas:'} />
-            <PreguntaTest pregunta={pregunta2} setpregunta={guardarPregunta2} texto={'Pensar en quitarme la vida:'} />
-            <PreguntaTest pregunta={pregunta3} setpregunta={guardarPregunta3} texto={'Sentirme ansioso o nervioso:'} />
-            <PreguntaTest pregunta={pregunta4} setpregunta={guardarPregunta4} texto={'Sentirme sin esperanza:'} />
-            <PreguntaTest pregunta={pregunta5} setpregunta={guardarPregunta5} texto={'Tener que evitar cosas porque me asustan:'} />
-            <PreguntaTest pregunta={pregunta6} setpregunta={guardarPregunta6} texto={'No ser capaz de ponerme en marcha (acción):'} />
-            <PreguntaTest pregunta={pregunta7} setpregunta={guardarPregunta7} texto={'Encontrar difícil concentrarme:'} />
-            <PreguntaTest pregunta={pregunta8} setpregunta={guardarPregunta8} texto={'Querer hacerme daño:'} />
-            <PreguntaTest pregunta={pregunta9} setpregunta={guardarPregunta9} texto={'Sentir miedo intenso:'} />
-            <PreguntaTest pregunta={pregunta10} setpregunta={guardarPregunta10} texto={'Sentirme inútil:'} />
-            <PreguntaTest pregunta={pregunta11} setpregunta={guardarPregunta11} texto={'Sentirme temeroso de salir de casa:'} />
-            <PreguntaTest pregunta={pregunta12} setpregunta={guardarPregunta12} texto={'Sentirme cansado la mayor parte del tiempo:'} />
-            <PreguntaTest pregunta={pregunta13} setpregunta={guardarPregunta13} texto={'Sentirme confundido (al pensar, recordar, etc):'} />
-            <PreguntaTest pregunta={pregunta14} setpregunta={guardarPregunta14} texto={'Tener impulsos de cortarme o mutilarme:'} />
-            <PreguntaTest pregunta={pregunta15} setpregunta={guardarPregunta15} texto={'Sentirme tenso:'} />
-            <PreguntaTest pregunta={pregunta16} setpregunta={guardarPregunta16} texto={'Sentir que la vida no tiene sentido:'} />
-            <PreguntaTest pregunta={pregunta17} setpregunta={guardarPregunta17} texto={'Sentirme ansioso dentro de una multitud:'} />
-            <PreguntaTest pregunta={pregunta18} setpregunta={guardarPregunta18} texto={'No tener energía:'} />
-            <PreguntaTest pregunta={pregunta19} setpregunta={guardarPregunta19} texto={'Tener dificultad para tomar decisiones:'} />
+            {parte===1 ?
+            <View style={{flex:1,flexDirection:'column'}}>
+                <View style={{flex:0.5}}>
+                    <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>El siguiente cuestionario aborda temas que pueden haberle 
+                    afectado en las últimas dos semanas. Debe responder según la escala asignada.
+                    </Text>
+                    <Text style={styles.escala}>
+                    0 - Nada
+                    </Text>
+                    <Text style={styles.escala}>
+                    1 - Un Poco
+                    </Text>
+                    <Text style={styles.escala}>
+                    2 - Moderadamente
+                    </Text>
+                    <Text style={styles.escala}>
+                    3 - Bastante
+                    </Text>
+                    <Text style={styles.escala}>
+                    4 - Extremadamente
+                    </Text>
+                </View>
+                <View style={{flex:0.5}}>
+                    <View style={[styles.container,{marginTop:40}]}>
+                        <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarParte(2)}>
+                            <View style={{flexDirection:'row'}}>
+                                <Icon name="greater-than" color="white" size={25}></Icon>
+                                <Text style={styles.textoC}>Siguiente</Text>
+                            </View>
+                        </TouchableHighlight >
+                    </View>
+                </View>
+            </View>
+            : null}
+            {parte===2 ?
+            <View style={{flex:1,flexDirection:'column'}}>
+                <View style={{flex:0.1}}>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Parte 1 de 4</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>0 - Nada    4 - Extremadamente</Text>
+                </View>
+                    <View style={{flex:0.1}}>
+                        <PreguntaTest pregunta={pregunta1} setpregunta={guardarPregunta1} texto={'Tener que esforzarme para recordar las cosas:'} />
+                    </View>
+                    <View style={{flex:0.1}}>
+                        <PreguntaTest pregunta={pregunta2} setpregunta={guardarPregunta2} texto={'Pensar en quitarme la vida:'} />
+                    </View>
+                    <View style={{flex:0.1}}>
+                        <PreguntaTest pregunta={pregunta3} setpregunta={guardarPregunta3} texto={'Sentirme ansioso o nervioso:'} />
+                    </View>
+                    <View style={{flex:0.1}}>    
+                        <PreguntaTest pregunta={pregunta4} setpregunta={guardarPregunta4} texto={'Sentirme sin esperanza:'} />
+                    </View>
+                    <View style={{flex:0.1}}>    
+                        <PreguntaTest pregunta={pregunta5} setpregunta={guardarPregunta5} texto={'Tener que evitar cosas porque me asustan:'} />
+                    </View>
+                <View style={{flex:0.1}}>
+                    <View style={{flexDirection:'row'}}>
+                        <View style={[styles.container,{marginTop:5, flex:0.5}]}>
+                            <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarParte(1)}>
+                                <View style={{flexDirection:'row'}}>
+                                    <Text style={styles.textoC}>Volver</Text>
+                                </View>
+                            </TouchableHighlight >
+                        </View>
+                        <View style={[styles.container,{marginTop:5, flex:0.5}]}>
+                            <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>{validacionVacio(2)}}>
+                                <View style={{flexDirection:'row'}}>
+                                    <Text style={styles.textoC}>Siguiente</Text>
+                                </View>
+                            </TouchableHighlight >
+                        </View>
+                    </View>
+                </View>
+            </View>
+            :null}
+            {parte===3 ?
+            <View style={{flex:1,flexDirection:'column'}}>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Parte 2 de 4</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>0 - Nada    4 - Extremadamente</Text>
+                <PreguntaTest pregunta={pregunta6} setpregunta={guardarPregunta6} texto={'No ser capaz de ponerme en marcha (acción):'} />
+                <PreguntaTest pregunta={pregunta7} setpregunta={guardarPregunta7} texto={'Encontrar difícil concentrarme:'} />
+                <PreguntaTest pregunta={pregunta8} setpregunta={guardarPregunta8} texto={'Querer hacerme daño:'} />
+                <PreguntaTest pregunta={pregunta9} setpregunta={guardarPregunta9} texto={'Sentir miedo intenso:'} />
+                <PreguntaTest pregunta={pregunta10} setpregunta={guardarPregunta10} texto={'Sentirme inútil:'} />
+                <View style={{flexDirection:'row'}}>
+                <View style={[styles.container,{marginTop:5, flex:0.5}]}>
+                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarParte(2)}>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={styles.textoC}>Volver</Text>
+                        </View>
+                    </TouchableHighlight >
+                </View>
+                <View style={[styles.container,{marginTop:5, flex:0.5}]}>
+                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>{validacionVacio(3)}}>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={styles.textoC}>Siguiente</Text>
+                        </View>
+                    </TouchableHighlight >
+                </View>
+            </View>
+            </View>
+            : null}
+            {parte===4?
+            <View style={{flex:1,flexDirection:'column'}}>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Parte 3 de 4</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>0 - Nada    4 - Extremadamente</Text>
+                <PreguntaTest pregunta={pregunta11} setpregunta={guardarPregunta11} texto={'Sentirme temeroso de salir de casa:'} />
+                <PreguntaTest pregunta={pregunta12} setpregunta={guardarPregunta12} texto={'Sentirme cansado la mayor parte del tiempo:'} />
+                <PreguntaTest pregunta={pregunta13} setpregunta={guardarPregunta13} texto={'Sentirme confundido (al pensar, recordar, etc):'} />
+                <PreguntaTest pregunta={pregunta14} setpregunta={guardarPregunta14} texto={'Tener impulsos de cortarme o mutilarme:'} />
+                <PreguntaTest pregunta={pregunta15} setpregunta={guardarPregunta15} texto={'Sentirme tenso:'} />
+                <View style={{flexDirection:'row'}}>
+                <View style={[styles.container,{marginTop:5, flex:0.5}]}>
+                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarParte(3)}>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={styles.textoC}>Volver</Text>
+                        </View>
+                    </TouchableHighlight >
+                </View>
+                <View style={[styles.container,{marginTop:5, flex:0.5}]}>
+                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>{validacionVacio(4)}}>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={styles.textoC}>Siguiente</Text>
+                        </View>
+                    </TouchableHighlight >
+                </View>
+            </View>
+            </View> : null}
+            {parte===5 ?
+            <View style={{flex:1,flexDirection:'column'}}>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Parte 4 de 4</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>0 - Nada    4 - Extremadamente</Text>
+                <PreguntaTest pregunta={pregunta16} setpregunta={guardarPregunta16} texto={'Sentir que la vida no tiene sentido:'} />
+                <PreguntaTest pregunta={pregunta17} setpregunta={guardarPregunta17} texto={'Sentirme ansioso dentro de una multitud:'} />
+                <PreguntaTest pregunta={pregunta18} setpregunta={guardarPregunta18} texto={'No tener energía:'} />
+                <PreguntaTest pregunta={pregunta19} setpregunta={guardarPregunta19} texto={'Tener dificultad para tomar decisiones:'} />
 
-            <View style={[styles.container,{marginTop:5}]}>
+                <View style={{flexDirection:'row'}}>
+                <View style={[styles.container,{marginTop:5, flex:0.5}]}>
+                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarParte(4)}>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={styles.textoC}>Volver</Text>
+                        </View>
+                    </TouchableHighlight >
+                </View>
+                <View style={[styles.container,{marginTop:5, flex:0.5}]}>
                 <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>enviarCuestionario()}>
                     <View style={{flexDirection:'row'}}>
                         <Icon name="greater-than" color="white" size={25}></Icon>
@@ -143,6 +290,8 @@ const Cuestionario = ({navigation,route}) =>{
                     </View>
                 </TouchableHighlight >
             </View>
+            </View>
+            </View> : null}
             <Portal>
                 <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)}>
                     <Dialog.Title>Error</Dialog.Title>
@@ -154,6 +303,19 @@ const Cuestionario = ({navigation,route}) =>{
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
+            <Portal>
+                <Dialog visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}}>
+                    <Dialog.Title>Éxito</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={globalStyles.textoAlerta}>El formulario ha sido enviado correctamente</Paragraph>
+                    </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=> {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}} color='#3c2c18'>Ok</Button>
+                            </View>
+                        </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </ScrollView>
     );
 }
@@ -161,7 +323,8 @@ const Cuestionario = ({navigation,route}) =>{
 const styles=StyleSheet.create({
 
     texto: {
-        marginTop:25,
+        marginTop:4,
+        marginBottom:4,
         fontSize: 15,
         marginLeft:5,
         marginRight:5,
@@ -189,9 +352,8 @@ const styles=StyleSheet.create({
         marginHorizontal: 4,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1e524c",
+        backgroundColor: "#e35d17",
         borderRadius: 8,
-        marginTop: 15
     }
 })
 

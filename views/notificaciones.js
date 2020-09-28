@@ -30,8 +30,8 @@ const Notificaciones = () => {
                 style={{marginBottom: 10}}
                 renderItem={({item,index}) => (
                     <View style={styles.notificaciones}>
-                        <Text style={styles.title}> {item.title} </Text>
-                       <Text style={styles.body}> {item.body} </Text>
+                        <Text style={styles.title}>{item.title}</Text>
+                       <Text style={styles.body}>{item.body}</Text>
                      </View>
                 )
                 }
@@ -45,23 +45,24 @@ const styles=StyleSheet.create({
     notificaciones:{
         borderWidth:2,
         borderColor:"#828282",
-        marginTop: 20,
+        marginTop: 15,
         marginHorizontal:10,
         borderRadius: 10
     },
     title:{
         marginBottom: 0,
-        marginHorizontal: 0,
-        fontSize: 17,
+        marginHorizontal: 7,
+        fontSize: 16,
         color: 'black',
         fontFamily: 'Inter-Bold'
     },
     body:{
         marginBottom: 8,
-        marginHorizontal: 0,
-        fontSize: 16,
+        marginHorizontal: 7,
+        fontSize: 15,
         color: 'black',
-        fontFamily: 'Inter-Regular'
+        fontFamily: 'Inter-Regular',
+        textAlign: 'justify'
     }
 })
 

@@ -9,14 +9,14 @@ const globalStyles = StyleSheet.create({
     },
     titulo: {
         textAlign: 'center',
-        marginTop: 10,
-        marginBottom: 25,
-        fontSize: 21,
+        marginTop: 8,
+        marginBottom: 16,
+        fontSize: 20,
         fontFamily: "Inter-Bold",
         color: '#141414'
     },
     botonG:{
-        backgroundColor: '#1e524c',
+        backgroundColor: '#e35d17',
         borderRadius: 8
     },
     botonAlerta:{
@@ -25,13 +25,14 @@ const globalStyles = StyleSheet.create({
         fontSize: 50,
     },
     input:{
-        marginBottom: 15,
+        marginBottom: 10,
         backgroundColor: 'transparent',
         borderStyle: 'solid',
         borderColor: '#357870',
         borderWidth: 1,
         height: 45,
-        marginHorizontal: 8
+        marginHorizontal: 8,
+        fontSize:14
     },
     entradaTexto:{
         marginTop: 15,

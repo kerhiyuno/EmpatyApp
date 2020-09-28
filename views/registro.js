@@ -195,7 +195,7 @@ const registro = ({navigation}) =>{
     //registra el cliente
     const registrar= async () =>{
         //validar
-        if (fullname === '' || rut === '' || email === '' || fecha_nacimiento === '-' || telefono === '' || password === '' || password2 === ''){
+        if (fullname === '' || rut === '' || email === '' || telefono === '' || fecha_nacimiento ===''|| password === '' || password2 === ''){
             guardarAlerta(true);
             if(errorContraseña==true){
                 guardarAlertacontra(true);
@@ -304,16 +304,13 @@ const registro = ({navigation}) =>{
         return;
     }
     return (
-        <ScrollView style= {globalStyles.contenedor}>
-            <Text style={globalStyles.titulo}>Ingresar datos</Text>
+        <View style= {[globalStyles.contenedor]}>
             <TextInput
                 label="Nombre Completo"
                 onChangeText={(texto) => guardarFullname(texto)}
-                style={globalStyles.input}
+                style={[globalStyles.input,{marginTop:10}]}
                 theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
             />
-
-            <View>
             <TouchableHighlight underlayColor = {'transparent'} style={styles.botonC} onPress={showDatePicker} >
                 <View style={{flexDirection:'row',justifyContent:'center'}}>
                     <Icon name="calendar" color="white" size={25}></Icon>
@@ -327,8 +324,7 @@ const registro = ({navigation}) =>{
                 onCancel={hideDatePicker}
                 date={new Date(año+"-"+mes+"-"+dia)}
             />
-            </View>
-            <Text style={{marginBottom:10,marginLeft:10,fontSize:16,marginLeft:15,fontFamily:'Inter-Regular'}}>Fecha seleccionada: {fechaformateo(fecha_nacimiento)}</Text>
+            <Text style={{marginBottom:10,marginLeft:10,fontSize:15,marginLeft:15,fontFamily:'Inter-Regular'}}>Fecha seleccionada: {fechaformateo(fecha_nacimiento)}</Text>
             <TextInput
                 label="rut (Ej:12345678-9)"
                 onChangeText={(texto) => {guardarRut(texto);verificarRut(texto);}}
@@ -336,17 +332,17 @@ const registro = ({navigation}) =>{
                 theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
             />
             <Text  style={{marginBottom:5,marginLeft:10,fontSize:14,color: '#a12b2b'}}>{errorRut==true ? 'Rut no válido' : ''}</Text>
-            <TextInput
-                label="Correo"
-                onChangeText={(texto) => {guardarEmail(texto); console.log("cambio",texto); if (!validateEmail(texto)) {
-                    guardarErrorEmail(true);
-                    }else{
-                        guardarErrorEmail(false);
-                    } }}
-                style={[globalStyles.input,{marginBottom: 0,}]}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
-            />
-            <Text  style={{marginBottom:5,marginLeft:10,fontSize:14,color: '#a12b2b'}}>{erroremail==true ? 'Correo no válido' : ''}</Text>
+                <TextInput
+                    label="Correo"
+                    onChangeText={(texto) => {guardarEmail(texto); console.log("cambio",texto); if (!validateEmail(texto)) {
+                        guardarErrorEmail(true);
+                        }else{
+                            guardarErrorEmail(false);
+                        } }}
+                    style={[globalStyles.input,{marginBottom: 0,}]}
+                    theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                />
+                <Text  style={{marginBottom:5,marginLeft:10,fontSize:14,color: '#a12b2b'}}>{erroremail==true ? 'Correo no válido' : ''}</Text>
             <TextInput
                 label="Teléfono"
                 onChangeText={(texto) => guardarTelefono(texto) }
@@ -432,7 +428,7 @@ const registro = ({navigation}) =>{
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
-        </ScrollView>
+        </View>
     );
 }
 
@@ -443,7 +439,7 @@ const styles=StyleSheet.create({
         marginBottom: 0,
         marginHorizontal: 10,
         justifyContent: 'center',
-        backgroundColor: '#1e524c',
+        backgroundColor: '#e35d17',
         borderRadius: 8
     },
     textoC: {
@@ -460,7 +456,7 @@ const styles=StyleSheet.create({
         marginHorizontal: 4,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1e524c",
+        backgroundColor: "#e35d17",
         borderRadius: 8
     },
 })

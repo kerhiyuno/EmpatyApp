@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import {Text,FlatList,View,StyleSheet,TouchableHighlight,ActivityIndicator} from 'react-native';
+import {Paragraph,Dialog, Portal,Button} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -11,6 +12,8 @@ const host = ipHost();
 const solicitudes = ({navigation,route}) =>{
     const [solicitudes, guardarSolicitudes] = useState([]);
     const [cargando, guardarCargando] = useState(false);
+    const [alertaborrar,guardarAlertaborrar] = useState(false);
+    const [aborrar,guardarAborrar] = useState('');
 
     useEffect( () => {
         buscar();
@@ -139,7 +142,7 @@ const solicitudes = ({navigation,route}) =>{
                                     </View>
                                 </View>
                         </View>
-                        <TouchableHighlight onPress={ () => eliminarCita(item.id) } style={styles.botonC}>
+                        <TouchableHighlight onPress={ () => {guardarAborrar(item.id);guardarAlertaborrar(true)} } style={styles.botonC}>
                             <View style={{flexDirection:'row',justifyContent:'center'}}>
                                 <Icon name="delete-outline" color="white" size={20}></Icon>
                                 <Text style={styles.textoB}>Eliminar</Text>
@@ -150,6 +153,22 @@ const solicitudes = ({navigation,route}) =>{
                 }
                 keyExtractor={solicitudes => solicitudes.id.toString()}
             />
+            <Portal>
+                <Dialog visible={alertaborrar} onDismiss={() => {eliminarCita(aborrar);guardarAlertaborrar(false);}}>
+                    <Dialog.Title>Éxito</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={globalStyles.textoAlerta}>¿Está seguro que desea eliminar la solicitud?</Paragraph>
+                    </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:30}}>
+                                <Button onPress={()=> {eliminarCita(aborrar);guardarAlertaborrar(false);}} color='#3c2c18'>Si</Button>
+                            </View>
+                            <View style={{marginRight:10}}>
+                            <Button onPress={() => guardarAlertaborrar(false)} color='#3c2c18'>No</Button>
+                        </View>
+                        </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </View >
     );
 }

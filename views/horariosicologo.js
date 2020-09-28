@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import {Text,FlatList,View,StyleSheet,TouchableHighlight} from 'react-native';
-import {Headline,Paragraph,Dialog, Portal,Button} from 'react-native-paper';
+import {Paragraph,Dialog, Portal,Button} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import axios from 'axios';
@@ -22,7 +22,7 @@ const horariosicologo = ({navigation,route}) => {
     const [fechapalabras,guardarFechapalabras] = useState('-');
 
     const [alertaeleccion,guardarAlertaeleccion] = useState(false);
-
+    const [alertaexito,guardarAlertaexito] = useState(false);
     const [horarios,guardarHorario] = useState([]);
 
     useEffect( () => {
@@ -224,12 +224,7 @@ const horariosicologo = ({navigation,route}) => {
             const respuesta = await axios.post(host+'/solicitudes/manage/',elegido,
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta.data);
-            console.log("----------");
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Inicio' }],
-            });
-    
+            guardarAlertaexito(true);
         } catch (error) {
             console.log("error");
             console.log(error);
@@ -248,6 +243,7 @@ const horariosicologo = ({navigation,route}) => {
                         const respuesta = await axios.post(host+'/solicitudes/manage/',elegido,
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
+                        guardarAlertaexito(true);
                     } catch (error) {
                         console.log(error.response);
                         console.log("error acaa");
@@ -373,6 +369,19 @@ const horariosicologo = ({navigation,route}) => {
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
+            <Portal>
+                <Dialog visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});}}>
+                    <Dialog.Title>Elegir horario</Dialog.Title>
+                    <Dialog.Content>
+                    <Paragraph style={[globalStyles.textoAlerta,{fontSize:16}]}>La solicitud ha sido enviada correctamente</Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <View style={{marginRight:10}}>
+                            <Button onPress={() => {guardarAlertaexito(false);navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});}} color='#3c2c18'>Ok</Button>
+                        </View>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </View >
     );
 }
@@ -384,7 +393,7 @@ const styles=StyleSheet.create({
         marginBottom: 5,
         marginHorizontal: 30,
         justifyContent: 'center',
-        backgroundColor: '#1e524c',
+        backgroundColor: '#e35d17',
         alignItems: 'center',
         borderRadius: 8
     },

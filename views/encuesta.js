@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react';
-import {Text,View,StyleSheet,TouchableHighlight,ActivityIndicator} from 'react-native';
+import {Text,View,StyleSheet,TouchableHighlight} from 'react-native';
+import {Button,Paragraph,Dialog, Portal} from 'react-native-paper';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import globalStyles from '../styles/global';
@@ -15,6 +16,8 @@ const encuesta = ({navigation,route}) => {
 
     
     const [cargando, guardarCargando] = useState(false);
+    const [alertaexito,guardarAlertaexito] = useState(false);
+
     const [nombresicologo,guardarNombreSicologo] = useState('Juan');
     const [calificacion11,guardarCalificacion11] = useState(false);
     const [calificacion12,guardarCalificacion12] = useState(false);
@@ -36,6 +39,10 @@ const encuesta = ({navigation,route}) => {
     const [medalla1,guardarMedalla1] = useState(false);
     const [medalla2,guardarMedalla2] = useState(false);
     const [medalla3,guardarMedalla3] = useState(false);
+
+    const id = route.params.id;
+    const fecha = route.params.fecha;
+    console.log(route.params);
 
     useEffect(() => {
         datospsicologo();
@@ -270,10 +277,10 @@ const encuesta = ({navigation,route}) => {
     }
 
     const enviar = async () => {
+        console.log(fecha);
         var calificacion1 = '';
         var calificacion2 = '';
         var calificacion3 = '';
-        var medallas = [];
 
         if (calificacion11===true){
             calificacion1='1'
@@ -320,21 +327,14 @@ const encuesta = ({navigation,route}) => {
         else if(calificacion35===true){
             calificacion3='5'
         }
-        if (medalla1===true){
-            medallas.push('1');
-        }
-        if (medalla2===true){
-            medallas.push('2');
-        }
-        if (medalla3===true){
-            medallas.push('3');
-        }
+
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
-            const respuesta = await axios.post(host+'',{pregunta1: calificacion1, pregunta2: calificacion2,
-                medallas:medallas,comentario: mensaje},
+            const respuesta = await axios.post(host+'/feedback/evaluar/',{sesion: id , fecha_sesion: fecha, tono_voz: calificacion1, buen_trato: calificacion2, me_senti_bien: calificacion3,
+                amable:medalla1,entiende:medalla2,ayuda:medalla3,comentario: mensaje},
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta);
+            guardarAlertaexito(true);
         } catch (error) {
             console.log(error);
             console.log(error.response);
@@ -349,9 +349,11 @@ const encuesta = ({navigation,route}) => {
                     await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
                     try {
                         var name = await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.post(host+'',{},
+                        const respuesta = await axios.post(host+'/feedback/evaluar/',{id_sesion: id , fecha_sesion: fecha, tono_voz: calificacion1, buen_trato: calificacion2, me_senti_bien: calificacion3,
+                            amable:medalla1,entiende:medalla2,ayuda:medalla3,comentario: mensaje},
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
+                        guardarAlertaexito(true);
                     } catch (error) {
                         console.log(error.response);
                         console.log("error acaa");
@@ -486,7 +488,17 @@ const encuesta = ({navigation,route}) => {
                     <Text style={[styles.textoC]}>Enviar</Text>
                 </View>
                 </TouchableHighlight>
-
+                <Portal>
+                    <Dialog visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);navigation.navigate('Iniciar Sesion')}}>
+                        <Dialog.Title>Éxito</Dialog.Title>
+                        <Dialog.Content>
+                            <Paragraph style={globalStyles.textoAlerta}>Las respuestas han sido guardadas correctamente</Paragraph>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <Button onPress={()=>{guardarAlertaexito(false);navigation.reset({index: 1,routes: [{ name: 'Inicio' },{name: 'Sesion'}],});}} color='#3c2c18'>Ok</Button>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
             </ScrollView>
     );
 }
@@ -508,7 +520,7 @@ const styles=StyleSheet.create({
         marginBottom: 5,
         marginHorizontal: 30,
         justifyContent: 'center',
-        backgroundColor: '#1e524c',
+        backgroundColor: '#e35d17',
         alignItems: 'center',
         borderRadius: 8,
     },
@@ -526,7 +538,7 @@ const styles=StyleSheet.create({
         marginHorizontal: 100,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1e524c",
+        backgroundColor: "#e35d17",
         borderRadius: 8
     },
     textoC:{
@@ -567,7 +579,7 @@ const styles=StyleSheet.create({
     boton: {
         height: 35,
         marginHorizontal: 2,
-        backgroundColor: '#1e524c',
+        backgroundColor: '#e35d17',
         justifyContent: 'center',
         alignItems: 'center'
     },

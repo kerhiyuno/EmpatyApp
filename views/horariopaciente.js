@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import {View,StyleSheet,Text,ScrollView,TouchableHighlight,ActivityIndicator} from 'react-native';
+import {Button,Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,6 +14,7 @@ const host = ipHost();
 const HorarioPaciente = ({navigation}) =>{
     const [disponibles,guardarDisponibles] = useState([]);
     const [guardadoenprogreso,guardarGuardadoenprogreso] = useState(false);
+    const [alertaexito,guardarAlertaexito] = useState(false);
 
     const [l1,guardarl1] = useState('no');
     const [l2,guardarl2] = useState('no');
@@ -562,6 +564,9 @@ const HorarioPaciente = ({navigation}) =>{
                 console.log(nombre);
                 const respuesta = await axios.put(host+'/horarios/mihorario/',usuario,
                 {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+                if (respuesta.status===200){
+                    guardarAlertaexito(true);
+                }
             } catch (error) {
                 console.log(error);
                 console.log(error.response);
@@ -579,6 +584,9 @@ const HorarioPaciente = ({navigation}) =>{
                             const respuesta = await axios.put(host+'/horarios/mihorario/',usuario,
                             {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                             console.log(respuesta);
+                            if (respuesta.status===200){
+                                guardarAlertaexito(true);
+                            }
                         } catch (error) {
                             console.log(error.response);
                             console.log("error acaa");
@@ -589,8 +597,6 @@ const HorarioPaciente = ({navigation}) =>{
                     }
                 }
             }
-            guardarGuardadoenprogreso(false);
-            navigation.goBack();
         }else{
             console.log("enprogreso");
         }
@@ -675,6 +681,19 @@ const HorarioPaciente = ({navigation}) =>{
                     </TouchableHighlight >
                 </View>
             </View> : null}
+            <Portal>
+                <Dialog visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}}>
+                    <Dialog.Title>Éxito</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={globalStyles.textoAlerta}>El horario ha sido guardado correctamente</Paragraph>
+                    </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=> {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}} color='#3c2c18'>Ok</Button>
+                            </View>
+                        </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </ScrollView>
     );
 }
@@ -701,7 +720,7 @@ const styles=StyleSheet.create({
         height: 35,
         marginBottom: 2,
         marginHorizontal: 2,
-        backgroundColor: '#1e524c',
+        backgroundColor: '#e35d17',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 15
@@ -734,7 +753,7 @@ const styles=StyleSheet.create({
         marginHorizontal: 4,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1e524c",
+        backgroundColor: "#e35d17",
         borderRadius: 8,
         marginTop: 15
     }

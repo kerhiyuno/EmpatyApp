@@ -11,7 +11,7 @@ import registro4 from './views/registro4';
 import ManejarNotificaciones from './components/manejarnotificaciones';
 import BotonInfo from './components/botoninfo';
 import BotonSalir from './components/botonsalir';
-
+import Informacion from './views/informacion';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import TabScreen from './Screens/TabScreen';
@@ -21,11 +21,12 @@ import NotificacionesState from './context/notificacionesState';
 const Stack2= createStackNavigator();
 
 //tema
+
 const theme= {
   ...DefaultTheme,
   colors:{
     ...DefaultTheme.colors,
-    primary: '#357870',
+    primary: '#f58b2f',
     accent: '#194540',
     backdrop: '#3c2c18'
   }
@@ -118,6 +119,10 @@ const App = () => {
           })}
         >
         </Stack2.Screen>
+        <Stack2.Screen
+        name= 'Informacion'
+        component={Informacion}
+      ></Stack2.Screen>
         </Stack2.Navigator>
       </NavigationContainer>
       </NotificacionesState>

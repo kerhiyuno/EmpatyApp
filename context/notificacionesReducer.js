@@ -1,4 +1,4 @@
-import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD} from '../types';
+import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,REINICIAR_CONTENIDO} from '../types';
 export default (state,action) =>{
     switch (action.type){
         case OBTENER_NOTIFICACIONES:
@@ -17,7 +17,12 @@ export default (state,action) =>{
                 ...state,
                 cantidad: 0
             }
-            
+        case REINICIAR_CONTENIDO:
+            return{
+                ...state,
+                notificaciones: [],
+                cantidad:0
+            }
         default:
             return state;
     }

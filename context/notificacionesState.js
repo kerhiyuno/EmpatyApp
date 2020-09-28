@@ -2,7 +2,7 @@ import React, {useReducer, useEffect} from 'react';
 import NotificacionesContext from './notificacionesContext';
 import NotificacionesReducer from './notificacionesReducer';
 
-import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD} from '../types';
+import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,REINICIAR_CONTENIDO} from '../types';
 
 const NotificacionesState = (props) => {
 
@@ -37,6 +37,11 @@ const NotificacionesState = (props) => {
             type: REINICIAR_CANTIDAD,
         });
     }
+    const reiniciarContenido = () => {
+        dispatch({
+            type: REINICIAR_CONTENIDO
+        });
+    }
 
     return(
         <NotificacionesContext.Provider
@@ -46,7 +51,8 @@ const NotificacionesState = (props) => {
                 obtenerCantidad,
                 obtenerNotificaciones,
                 aumentarCantidad,
-                reiniciarCantidad
+                reiniciarCantidad,
+                reiniciarContenido
             }}
         >
             {props.children}

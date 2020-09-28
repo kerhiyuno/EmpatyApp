@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {View,StyleSheet,Text,TouchableHighlight,ActivityIndicator} from 'react-native';
+import {View,StyleSheet,Text,TouchableHighlight,ActivityIndicator,Image} from 'react-native';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -133,8 +133,13 @@ const sinsesion = ({navigation,route}) =>{
    }
    
     return (
-        <View style={[globalStyles.contenedor,{marginTop:100}]}>
-            <Text style={globalStyles.titulo}>Buen día</Text>
+        <View style={[globalStyles.contenedor,{justifyContent:'center',marginBottom:70}]}>
+            <Image
+                style={styles.tinyLogo}
+                source={
+                    require('../images/empaty.png')
+                }
+            />
             <TextInput
                 label="Correo"
                 onChangeText={(texto) => guardarEmail(texto)}
@@ -216,7 +221,7 @@ const styles=StyleSheet.create({
         marginHorizontal: 8,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1e524c",
+        backgroundColor: "#e35d17",
         borderRadius: 8
     },
     cargando: {
@@ -227,7 +232,13 @@ const styles=StyleSheet.create({
         alignContent: 'center',
         alignSelf:'center',
         marginVertical: 0
-     }
+    },
+    tinyLogo: {
+        alignSelf:'center',
+        width:120,
+        height: 144,
+        marginBottom: 40
+    },
 })
 
 export default sinsesion;

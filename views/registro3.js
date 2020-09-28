@@ -77,7 +77,7 @@ const styles=StyleSheet.create({
         marginHorizontal: 4,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1e524c",
+        backgroundColor: "#e35d17",
         borderRadius: 8
     }
 })

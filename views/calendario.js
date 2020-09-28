@@ -211,7 +211,7 @@ const styles=StyleSheet.create({
         marginBottom: 15,
         marginHorizontal: 20,
         justifyContent: 'center',
-        backgroundColor: '#1e524c',
+        backgroundColor: '#e35d17',
         borderRadius: 8
     },
     textoC: {

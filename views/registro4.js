@@ -153,7 +153,7 @@ const registro4 = ({navigation,route}) =>{
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={registrolisto} onDismiss={() => {guardarRegistrolisto(false);navigation.navigate('Iniciar Sesion')}}>
+                <Dialog visible={registrolisto} onDismiss={() => {guardarRegistrolisto(false);guardarRegistroenprogreso(false);navigation.navigate('Iniciar Sesion')}}>
                     <Dialog.Title>Registro completado</Dialog.Title>
                     <Dialog.Content>
                         <Paragraph style={globalStyles.textoAlerta}>Se ha registrado exitosamente</Paragraph>
@@ -172,7 +172,7 @@ const styles=StyleSheet.create({
         fontFamily:'Inter-Regular'
     },
     texto: {
-        marginTop:25,
+        marginTop:10,
         fontSize: 16,
         marginLeft:5,
         marginRight:5,
@@ -202,7 +202,7 @@ const styles=StyleSheet.create({
         marginHorizontal: 4,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1e524c",
+        backgroundColor: "#e35d17",
         borderRadius: 8,
         marginTop: 15
     }

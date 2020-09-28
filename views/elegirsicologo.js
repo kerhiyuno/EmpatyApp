@@ -24,7 +24,6 @@ const elegirsicologo = ({navigation,route}) =>{
     const delay = ms => new Promise(res => setTimeout(res, ms));
     const afinidad = async ()=>{
         guardarCargando(true);
-        await delay(500);
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.get(host+'/usuarios/afinidad/',
@@ -134,7 +133,7 @@ const styles=StyleSheet.create({
         marginBottom: 20,
         marginHorizontal: 20,
         justifyContent: 'center',
-        backgroundColor: '#1e524c',
+        backgroundColor: '#e35d17',
         borderRadius: 8
     },
     textoC:{

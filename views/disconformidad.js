@@ -105,21 +105,23 @@ const Disconformidad = ({navigation}) => {
     return(
         <View style={globalStyles.contenedor}>
             <Text style={globalStyles.titulo}>Notificar disconformidad</Text>
-            <Text style={styles.texto}>Describe el problema:</Text>
-            <TextInput
-                label="Mensaje"
-                onChangeText={(texto) => guardarMensaje(texto)}
-                style={[globalStyles.entradaTexto,]}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
-                multiline={true}
-            />
-            <View style={{marginTop:5}}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarAlertaMensaje(true)}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="send" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Enviar</Text>
-                    </View>
-                </TouchableHighlight >
+            <View style={{marginTop:10}}>
+                <Text style={styles.texto}>Describe el problema:</Text>
+                <TextInput
+                    label="Mensaje"
+                    onChangeText={(texto) => guardarMensaje(texto)}
+                    style={[globalStyles.entradaTexto,]}
+                    theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                    multiline={true}
+                />
+                <View style={{marginTop:5}}>
+                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarAlertaMensaje(true)}>
+                        <View style={{flexDirection:'row'}}>
+                            <Icon name="send" color="white" size={25}></Icon>
+                            <Text style={styles.textoC}>Enviar</Text>
+                        </View>
+                    </TouchableHighlight >
+                </View>
             </View>
             <Portal>
                 <Dialog visible={alertamensaje} onDismiss={() => guardarAlertaMensaje(false)}>
@@ -168,7 +170,7 @@ const styles=StyleSheet.create({
         marginHorizontal: 10,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1e524c",
+        backgroundColor: "#e35d17",
         borderRadius: 8
     },
     textoC: {

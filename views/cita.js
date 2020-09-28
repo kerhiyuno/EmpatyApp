@@ -173,7 +173,7 @@ const styles=StyleSheet.create({
         marginBottom: 5,
         marginHorizontal: 24,
         justifyContent: 'center',
-        backgroundColor: '#1e524c',
+        backgroundColor: '#e35d17',
         alignItems: 'center',
         borderRadius: 8
     },

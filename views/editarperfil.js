@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, StyleSheet,Text,ScrollView,TouchableHighlight } from 'react-native';
-import {TextInput, Button,RadioButton} from 'react-native-paper';
+import {TextInput, Button,RadioButton, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
@@ -21,40 +21,55 @@ const editarperfil = ({navigation,route}) =>{
     const [generodescripcioncambio,guardarGenerodescripcioncambio] = useState(generodescripcion);
     const [generocambio,guardarGenerocambio] = useState(genero);
 
+    const [alertaexito,guardarAlertaexito] = useState(false);
+    const [guardadoenprogreso,guardarGuardadoenprogreso] = useState(false);
+
     const enviar = async () => {
-        try {
-            const nombre = await AsyncStorage.getItem('datosSesion');
-            const respuesta = await axios.put(host+'/usuarios/paciente/perfil/',{fullname: nombrecambio,
-            genero: generocambio,gender_description: generodescripcioncambio,telefono:telefonocambio},
-            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
-            console.log(respuesta);
-        } catch (error) {
-            console.log(error);
-            console.log(error.response);
-            if(error.response.data.code==='token_not_valid'){
-                console.log('token_not_valid');
-                try {
-                    const refresh0 = await AsyncStorage.getItem('datosSesion')
-                    var refresh = JSON.parse(refresh0).refresh;
-                    refresh = {refresh}
-                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
-                    refresh=JSON.parse(refresh0).refresh;
-                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+        if (guardadoenprogreso===false){
+            guardarGuardadoenprogreso(true);
+            try {
+                const nombre = await AsyncStorage.getItem('datosSesion');
+                const respuesta = await axios.put(host+'/usuarios/paciente/perfil/',{fullname: nombrecambio,
+                genero: generocambio,gender_description: generodescripcioncambio,telefono:telefonocambio},
+                {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+                console.log(respuesta);
+                if (respuesta.status===200){
+                    guardarAlertaexito(true);
+                }
+            } catch (error) {
+                console.log(error);
+                console.log(error.response);
+                if(error.response.data.code==='token_not_valid'){
+                    console.log('token_not_valid');
                     try {
-                        var name = await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.put(host+'/usuarios/paciente/perfil/',{fullname: nombrecambio,
-                            genero: generocambio,gender_description: generodescripcioncambio,telefono:telefonocambio},
-                            {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
-                        console.log(respuesta);
+                        const refresh0 = await AsyncStorage.getItem('datosSesion')
+                        var refresh = JSON.parse(refresh0).refresh;
+                        refresh = {refresh}
+                        var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                        refresh=JSON.parse(refresh0).refresh;
+                        await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                        try {
+                            var name = await AsyncStorage.getItem('datosSesion');
+                            const respuesta = await axios.put(host+'/usuarios/paciente/perfil/',{fullname: nombrecambio,
+                                genero: generocambio,gender_description: generodescripcioncambio,telefono:telefonocambio},
+                                {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                            console.log(respuesta);
+                            if (respuesta.status===200){
+                                guardarAlertaexito(true);
+                            }
+                        } catch (error) {
+                            console.log(error.response);
+                            console.log("error acaa");
+                        }  
                     } catch (error) {
+                        console.log("error aqui");
                         console.log(error.response);
-                        console.log("error acaa");
-                    }  
-                } catch (error) {
-                    console.log("error aqui");
-                    console.log(error.response);
+                    }
                 }
             }
+        }
+        else{
+            console.log("enprogreso");
         }
     }
 
@@ -134,6 +149,19 @@ const editarperfil = ({navigation,route}) =>{
                     <Text style={[styles.textoC]}> Guardar Cambios</Text>
                 </View>
             </TouchableHighlight>
+            <Portal>
+                <Dialog visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false)}}>
+                    <Dialog.Title>Éxito</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={globalStyles.textoAlerta}>Los cambios han sido guardados correctamente</Paragraph>
+                    </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=> {guardarGuardadoenprogreso(false);guardarAlertaexito(false)}} color='#3c2c18'>Ok</Button>
+                            </View>
+                        </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </ScrollView>
     );
 }
@@ -163,7 +191,7 @@ const styles=StyleSheet.create({
         marginHorizontal: 4,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1e524c",
+        backgroundColor: "#e35d17",
         borderRadius: 8
     },
     texto2: {

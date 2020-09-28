@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import {Button,Paragraph,Dialog, Portal} from 'react-native-paper';
 import {TouchableHighlight, View,StyleSheet,Text} from 'react-native';
 import globalStyles from '../styles/global';
@@ -6,10 +6,13 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from './hosts.js';
+import NotificacionesContext from '../context/notificacionesContext'
 
 const host = ipHost();
 
 const BotonLogout = ({navigation,route}) => {
+
+    const { reiniciarContenido } = useContext(NotificacionesContext);
     const [alertaseguro,guardarAlertaseguro] = useState(false);
 
     const Logout = async () => {
@@ -20,6 +23,7 @@ const BotonLogout = ({navigation,route}) => {
             var logout = await axios.post(host+'/account/logout/',postdata,
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access)}});
             await AsyncStorage.removeItem('datosSesion');
+            reiniciarContenido();
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'Iniciar Sesion' }],
@@ -46,6 +50,7 @@ const BotonLogout = ({navigation,route}) => {
                         });
                         await AsyncStorage.removeItem('datosSesion');
                         console.log(logout);
+                        reiniciarContenido();
                         navigation.reset({
                             index: 0,
                             routes: [{ name: 'Iniciar Sesion' }],
@@ -98,7 +103,7 @@ const styles=StyleSheet.create({
         marginRight:10,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1e524c",
+        backgroundColor: "#d15311",
         borderRadius: 8
     },
     textoC: {

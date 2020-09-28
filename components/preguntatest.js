@@ -66,7 +66,7 @@ const styles=StyleSheet.create({
         fontSize: 14
     },
     texto: {
-        marginTop:25,
+        marginTop:0,
         fontSize: 15,
         marginLeft:5,
         marginRight:5,
@@ -75,7 +75,7 @@ const styles=StyleSheet.create({
     pregunta:{
         flex: 1,
         flexDirection:'row',
-        marginTop:10,
+        marginTop:2,
         marginLeft:10
     },
     opciones:{

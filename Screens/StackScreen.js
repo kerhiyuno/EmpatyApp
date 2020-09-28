@@ -31,14 +31,15 @@ import BotonInfo from '../components/botoninfo';
 const Stack= createStackNavigator();
 
 const theme= {
-    ...DefaultTheme,
-    colors:{
-      ...DefaultTheme.colors,
-      primary: '#357870',
-      accent: '#194540',
-      backdrop: '#3c2c18'
-    }
+  ...DefaultTheme,
+  colors:{
+    ...DefaultTheme.colors,
+    primary: '#f58b2f',
+    accent: '#194540',
+    backdrop: '#3c2c18'
+  }
 }
+
 
 const StackScreen = () => {
     return (
@@ -65,6 +66,7 @@ const StackScreen = () => {
                 <BotonLogout {...props} navigation={navigation} route={route}/>
               </View>,
               headerLeft:null,
+              headerTitle: 'Empaty'
           })}
       >
       </Stack.Screen>
@@ -89,7 +91,7 @@ const StackScreen = () => {
               <BotonInfo {...props} navigation={navigation} route={route}/>
               <BotonLogout {...props} navigation={navigation} route={route}/>
             </View>,
-            headerTitle: 'Mi grupo'
+            headerTitle: 'Mis sesiones'
         })}
       >
       </Stack.Screen>

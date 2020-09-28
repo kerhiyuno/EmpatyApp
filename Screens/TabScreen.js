@@ -11,7 +11,7 @@ const theme= {
     ...DefaultTheme,
     colors:{
       ...DefaultTheme.colors,
-      primary: '#357870',
+      primary: '#f58b2f',
       accent: '#194540',
       backdrop: '#3c2c18'
     }
@@ -49,6 +49,7 @@ const TabScreen =  () => {
     useEffect(() => {
         obtenerCantidad();
     },[]);
+  
 
   return(
       <Tab.Navigator
@@ -74,17 +75,24 @@ const TabScreen =  () => {
           fontSize: 17,
         },
         tabStyle: {
-          backgroundColor: '#357870'
+          backgroundColor: '#f58b2f'
         },
         }}>
         <Tab.Screen name="Inicio" component={StackScreen} />
+        {cantidad >0 ?
         <Tab.Screen name="Notificaciones" component={notificacionesStackScreen} options={{ tabBarBadge: cantidad }} 
          listeners={{
           tabPress: () => {
             reiniciarCantidad();
           },
          }}
-        />
+        /> : 
+        <Tab.Screen name="Notificaciones" component={notificacionesStackScreen} 
+         listeners={{
+          tabPress: () => {
+            reiniciarCantidad();
+          },
+        }} /> }
       </Tab.Navigator>
   )
 }

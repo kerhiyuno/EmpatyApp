@@ -26,7 +26,8 @@ const PreferenciasSicologo = ({navigation,route}) =>{
     const [alertagenerosicologo,guardarAlertagenerosicologo] = useState(false);
 
     const [cargando,guardarCargando] = useState(false);
-
+    const [alertaexito,guardarAlertaexito] = useState(false);
+    const [guardadoenprogreso,guardarGuardadoenprogreso] = useState(false);
 
     useEffect(() => {
         consultar();
@@ -43,6 +44,7 @@ const PreferenciasSicologo = ({navigation,route}) =>{
             const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             guardarTerapia_grupal(respuesta.data.terapia_grupal);
+            guardarGenero_psicologo(respuesta.data.genero_psicologo)
             console.log(respuesta);
             var motivos=respuesta.data.motivos_terapia;
             for(let i=0;i<motivos.length;i++){
@@ -129,91 +131,101 @@ const PreferenciasSicologo = ({navigation,route}) =>{
 
 
     const enviarPreferencias = async () => {
-        //validar
-        if(terapia_grupal===''){
-            guardarAlertasigrupal(true);
-            if(genero_psicologo===''){
-                guardarAlertagenerosicologo(true);
-                return;
-            }
-            return;
-        }
-        console.log("aaaaaaa");
-        if(terapia_grupal==='Si'){
-            if(grupoapoyo==='no' && habcomunicacion==='no' &&  mismosproblemas==='no' && otrosproblemas==='no' &&  individualincomodo==='no' &&  otro==='no' &&  nodecir==='no'){
-                guardarAlertainteres(true);
+        if (guardadoenprogreso===false){
+            //validar
+            if(terapia_grupal===''){
+                guardarAlertasigrupal(true);
                 if(genero_psicologo===''){
                     guardarAlertagenerosicologo(true);
                     return;
                 }
-            return;
+                return;
             }
-        }
-        console.log("genero_psicologo");
-        if(genero_psicologo===''){
-            guardarAlertagenerosicologo(true);
-            return;
-        }
-
-        var motivos_terapia=[];
-        if (grupoapoyo==='si'){
-            motivos_terapia=[...motivos_terapia,1];
-        }
-        if (habcomunicacion==='si'){
-            motivos_terapia=[...motivos_terapia,2];
-        }
-        if(mismosproblemas==='si'){
-            motivos_terapia=[...motivos_terapia,3];
-        }
-        if(otrosproblemas==='si'){
-            motivos_terapia=[...motivos_terapia,4];
-        }
-        if(individualincomodo==='si'){
-            motivos_terapia=[...motivos_terapia,5];
-        }
-        if(otro==='si'){
-            motivos_terapia=[...motivos_terapia,6];
-        }
-        if(nodecir==='si'){
-            motivos_terapia=[7];
-        }
-        const usuario={terapia_grupal,genero_psicologo,motivos_terapia};
-        
-        //Enviar
-        try {
-            const nombre = await AsyncStorage.getItem('datosSesion');
-            console.log(nombre);
-            const respuesta = await axios.put(host+'/usuarios/paciente/preferencias/',usuario,
-            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
-        } catch (error) {
-            console.log(error);
-            console.log(error.response);
-            if(error.response.data.code==='token_not_valid'){
-                console.log('token_not_valid');
-                try {
-                    const refresh0 = await AsyncStorage.getItem('datosSesion')
-                    var refresh = JSON.parse(refresh0).refresh;
-                    refresh = {refresh}
-                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
-                    refresh=JSON.parse(refresh0).refresh;
-                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
-                    try {
-                        var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.put(host+'/usuarios/paciente/preferencias/',usuario,
-                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
-                        console.log(respuesta);
-                    } catch (error) {
-                        console.log(error.response);
-                        console.log("error acaa");
-                    }  
-                } catch (error) {
-                    console.log("error aqui");
-                    console.log(error.response);
+            console.log("aaaaaaa");
+            if(terapia_grupal==='Si'){
+                if(grupoapoyo==='no' && habcomunicacion==='no' &&  mismosproblemas==='no' && otrosproblemas==='no' &&  individualincomodo==='no' &&  otro==='no' &&  nodecir==='no'){
+                    guardarAlertainteres(true);
+                    if(genero_psicologo===''){
+                        guardarAlertagenerosicologo(true);
+                        return;
+                    }
+                return;
                 }
             }
-        }
+            console.log("genero_psicologo");
+            if(genero_psicologo===''){
+                guardarAlertagenerosicologo(true);
+                return;
+            }
+
+            var motivos_terapia=[];
+            if (grupoapoyo==='si'){
+                motivos_terapia=[...motivos_terapia,1];
+            }
+            if (habcomunicacion==='si'){
+                motivos_terapia=[...motivos_terapia,2];
+            }
+            if(mismosproblemas==='si'){
+                motivos_terapia=[...motivos_terapia,3];
+            }
+            if(otrosproblemas==='si'){
+                motivos_terapia=[...motivos_terapia,4];
+            }
+            if(individualincomodo==='si'){
+                motivos_terapia=[...motivos_terapia,5];
+            }
+            if(otro==='si'){
+                motivos_terapia=[...motivos_terapia,6];
+            }
+            if(nodecir==='si'){
+                motivos_terapia=[7];
+            }
+            const usuario={terapia_grupal,genero_psicologo,motivos_terapia};
+            
+            //Enviar
+            try {
+                const nombre = await AsyncStorage.getItem('datosSesion');
+                console.log(nombre);
+                const respuesta = await axios.put(host+'/usuarios/paciente/preferencias/',usuario,
+                {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+                if (respuesta.status===200){
+                    guardarAlertaexito(true);
+                }
+            } catch (error) {
+                console.log(error);
+                console.log(error.response);
+                if(error.response.data.code==='token_not_valid'){
+                    console.log('token_not_valid');
+                    try {
+                        const refresh0 = await AsyncStorage.getItem('datosSesion')
+                        var refresh = JSON.parse(refresh0).refresh;
+                        refresh = {refresh}
+                        var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                        refresh=JSON.parse(refresh0).refresh;
+                        await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                        try {
+                            var name= await AsyncStorage.getItem('datosSesion');
+                            const respuesta = await axios.put(host+'/usuarios/paciente/preferencias/',usuario,
+                            {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                            console.log(respuesta);
+                            if (respuesta.status===200){
+                                guardarAlertaexito(true);
+                            }
+                        } catch (error) {
+                            console.log(error.response);
+                            console.log("error acaa");
+                        }  
+                    } catch (error) {
+                        console.log("error aqui");
+                        console.log(error.response);
+                    }
+                }
+            }
         //Volver
-        navigation.goBack();
+        }
+        else{
+            console.log("en progreso");
+        }
     }
     return (
         <ScrollView style= {globalStyles.contenedor}>
@@ -445,6 +457,19 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
+            <Portal>
+                <Dialog visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}}>
+                    <Dialog.Title>Éxito</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={globalStyles.textoAlerta}>Sus preferencias han sido guardadas correctamente</Paragraph>
+                    </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=> {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}} color='#3c2c18'>Ok</Button>
+                            </View>
+                        </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </ScrollView>
     );
 }
@@ -497,7 +522,7 @@ const styles=StyleSheet.create({
         marginHorizontal: 4,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1e524c",
+        backgroundColor: "#e35d17",
         borderRadius: 8,
         marginTop: 15
     }

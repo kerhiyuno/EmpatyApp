@@ -256,24 +256,24 @@ const home = ({navigation,route}) =>{
         }
     }
     return (
-        <View style={globalStyles.contenedor}>
+        <View style={[globalStyles.contenedor]}>
             {cargando2 === true ? <ActivityIndicator  size = "large" animating = {cargando2} style = {globalStyles.cargando}/> : null}
             {cargando2===false ?
             <View>
             {tienesicologo===true ?
             <View>
-            <Text style={globalStyles.titulo}>Empaty</Text>
+            <Text style={[globalStyles.titulo]}>Inicio</Text>
             <View style={styles.container}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Sesion') }>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="account-group" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Mi grupo</Text>
-                    </View>
-                </TouchableHighlight >
                 <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Perfil')}>
                     <View style={{flexDirection:'row'}}>
                         <Icon name="account-details" color="white" size={25}></Icon>
                         <Text style={styles.textoC}>Mi perfil</Text>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Sesion') }>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="account-multiple-outline" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>Mis sesiones</Text>
                     </View>
                 </TouchableHighlight >
                 <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Cuestionario')}>
@@ -411,7 +411,7 @@ const styles=StyleSheet.create({
         marginHorizontal: 10,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1e524c",
+        backgroundColor: "#e35d17",
         borderRadius: 8
     },
     textoS:{
