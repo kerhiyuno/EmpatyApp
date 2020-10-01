@@ -6,7 +6,7 @@ import NotificacionesContext from '../context/notificacionesContext'
 
 const ManejarNotificaciones = () => {
 
-    const { aumentarCantidad,obtenerNotificaciones } = useContext(NotificacionesContext);
+    const { aumentarCantidad,obtenerNotificaciones, guardarTokenFirebase } = useContext(NotificacionesContext);
     const appState = useRef(AppState.currentState);
     const [appStateVisible, guardarAppStateVisible] = useState(appState.current);
 
@@ -44,6 +44,7 @@ const ManejarNotificaciones = () => {
     const gettoken = async () => {
       var fcmToken = await firebase.messaging().getToken();
       console.log(fcmToken);
+      guardarTokenFirebase(fcmToken);
     }
     return(<View></View>)
 }

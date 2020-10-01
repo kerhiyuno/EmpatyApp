@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import {View,StyleSheet,Text,TouchableHighlight,ActivityIndicator,Image} from 'react-native';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -6,11 +6,13 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
+import NotificacionesContext from '../context/notificacionesContext'
 
 const host = ipHost();
 
 const sinsesion = ({navigation,route}) =>{
 
+    const {obtenerTokenFirebase} = useContext(NotificacionesContext);
 
     const [email,guardarEmail] = useState('');
     const [password,guardarPassword] = useState('');
@@ -34,11 +36,43 @@ const sinsesion = ({navigation,route}) =>{
 
     const resultadoinicio = async (respuesta) => {
         if (respuesta.status==200){
+            var tokenfirebase= obtenerTokenFirebase()
+            console.log(tokenfirebase);
             try {
                 await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,
                     refresh: respuesta.data.refresh
                     }));
                 await AsyncStorage.setItem('email',email);
+                try {
+                    const nombre = await AsyncStorage.getItem('datosSesion');
+                    const respuesta = await axios.post(host+'/push/fcm/',{fcm: tokenfirebase},
+                    {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+                    console.log(respuesta);
+                } catch (error) {
+                    console.log(error);
+                    console.log(error.response);
+                    if(error.response.data.code==='token_not_valid'){
+                        console.log('token_not_valid');
+                        try {
+                            const refresh0 = await AsyncStorage.getItem('datosSesion')
+                            var refresh = JSON.parse(refresh0).refresh;
+                            refresh = {refresh}
+                            var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                            refresh=JSON.parse(refresh0).refresh;
+                            await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                            try {
+                                var name= await AsyncStorage.getItem('datosSesion');
+                                const respuesta = await axios.post(host+'/push/fcm/',{fcm: tokenfirebase},
+                                {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                                console.log(respuesta);
+                            } catch (error) {
+                                console.log(error.response);
+                            }  
+                        } catch (error) {
+                            console.log(error.response);
+                        }
+                    }
+                }
                 try {
                     const nombre = await AsyncStorage.getItem('datosSesion');
                     console.log(nombre);

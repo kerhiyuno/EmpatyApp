@@ -574,17 +574,18 @@ const styles=StyleSheet.create({
         flex: 1,
         flexDirection:'row',
         marginTop:0,
-        marginLeft:10
+        justifyContent:'center',
+        marginHorizontal:10
     },
     boton: {
-        height: 35,
+        height: 30,
         marginHorizontal: 2,
         backgroundColor: '#e35d17',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     botonno: {
-        height: 35,
+        height: 30,
         marginHorizontal: 2,
         backgroundColor: '#5e5e5e',
         justifyContent: 'center',

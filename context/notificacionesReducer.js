@@ -1,4 +1,5 @@
-import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,REINICIAR_CONTENIDO} from '../types';
+import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,
+    REINICIAR_CONTENIDO,GUARDAR_TOKEN_FIREBASE} from '../types';
 export default (state,action) =>{
     switch (action.type){
         case OBTENER_NOTIFICACIONES:
@@ -22,6 +23,11 @@ export default (state,action) =>{
                 ...state,
                 notificaciones: [],
                 cantidad:0
+            }
+        case GUARDAR_TOKEN_FIREBASE:
+            return{
+                ...state,
+                token_firebase: action.payload
             }
         default:
             return state;

@@ -2,13 +2,15 @@ import React, {useReducer, useEffect} from 'react';
 import NotificacionesContext from './notificacionesContext';
 import NotificacionesReducer from './notificacionesReducer';
 
-import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,REINICIAR_CONTENIDO} from '../types';
+import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,
+    REINICIAR_CONTENIDO,GUARDAR_TOKEN_FIREBASE} from '../types';
 
 const NotificacionesState = (props) => {
 
     const initialState = {
         notificaciones: [],
-        cantidad: 0
+        cantidad: 0,
+        token_firebase: ''
     }
 
     const [state,dispatch] = useReducer(NotificacionesReducer,initialState);
@@ -20,6 +22,10 @@ const NotificacionesState = (props) => {
             payload: nuevo
         });
 
+    }
+    const obtenerTokenFirebase = () => {
+        console.log(state.token_firebase);
+        return state.token_firebase
     }
 
     const obtenerCantidad = () => {
@@ -42,6 +48,12 @@ const NotificacionesState = (props) => {
             type: REINICIAR_CONTENIDO
         });
     }
+    const guardarTokenFirebase = (token) => {
+        dispatch({
+            type: GUARDAR_TOKEN_FIREBASE,
+            payload: token
+        })
+    }
 
     return(
         <NotificacionesContext.Provider
@@ -52,7 +64,9 @@ const NotificacionesState = (props) => {
                 obtenerNotificaciones,
                 aumentarCantidad,
                 reiniciarCantidad,
-                reiniciarContenido
+                reiniciarContenido,
+                guardarTokenFirebase,
+                obtenerTokenFirebase
             }}
         >
             {props.children}

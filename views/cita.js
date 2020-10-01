@@ -13,6 +13,7 @@ const cita = ({navigation,route}) =>{
 
     const [nolink,guardarNolink] = useState(false);
     const [nosubgrupo,guardarNosubgrupo] = useState(false);
+    const [sesionfinalizada,guardarSesionfinalizada] = useState(false);
 
     const openLink=async(link) =>{
         try {
@@ -107,19 +108,83 @@ const cita = ({navigation,route}) =>{
                   } catch (error) {
                       console.log(error.response);
                       console.log("error acaa");
-                      //navigation.navigate('Home');
                   }
               } catch (error) {
                   console.log("error aqui");
                   console.log(error.response);
               }
           }
-
-
       }
     }
     const funcion2 = async (id) =>{
-        guardarNosubgrupo(true);
+        try {
+            const name = await AsyncStorage.getItem('datosSesion');
+            const Bearer=JSON.parse(name).refresh;
+            var respuesta =await axios.get(host+'/grupal/subgrupos/',
+            {
+                headers: {
+                    'Authorization': 'Bearer ' +(JSON.parse(name).access),
+                    },
+            }
+            );
+            console.log(respuesta);
+            if(respuesta.data.vacio===true){
+                console.log("0");
+                guardarNosubgrupo(true);
+            }
+            else{
+                console.log("1");
+              openLink(respuesta.data.link_meet);}
+        } catch (error){
+            console.log("error");
+            console.log(error);
+            console.log(error.response);
+            if (error.response.status===400){
+                console.log("400-1");
+                guardarSesionfinalizada(true);
+                return
+            }
+
+            if(error.response.data.code==='token_not_valid'){
+                console.log('token_not_valid');
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh=JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name= await AsyncStorage.getItem('datosSesion');
+
+                        var respuesta =await axios.get(host+'/grupal/subgrupos/',{},
+                        {
+                            headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),},
+                        });
+                        console.log(respuesta);
+                        if(respuesta.data.vacio===true){
+                            console.log("si");
+                            guardarNosubgrupo(true);
+                        }
+                      else{
+                          openLink(respuesta.data.link_meet);}
+                    } catch (error) {
+                        console.log("error-2");
+                        if (error.response.status===400){
+                            console.log("400-2");
+                            guardarSesionfinalizada(true);
+                            return
+                        }
+                        console.log(error.response);
+                        console.log("error acaa");
+                        //navigation.navigate('Home');
+                    }
+                } catch (error) {
+                    console.log("error aqui");
+                    console.log(error.response);
+                }
+            }
+        }
     }
     return (
         <View style={globalStyles.contenedor}>
@@ -160,6 +225,17 @@ const cita = ({navigation,route}) =>{
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarNosubgrupo(false)} color='#3c2c18'>Ok</Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+            <Portal>
+                <Dialog visible={sesionfinalizada} onDismiss={() => guardarSesionfinalizada(false)} >
+                    <Dialog.Title>Aviso</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={globalStyles.textoAlerta}>La sesión ha finalizado</Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={()=>guardarSesionfinalizada(false)} color='#3c2c18'>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

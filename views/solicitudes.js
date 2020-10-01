@@ -30,7 +30,6 @@ const solicitudes = ({navigation,route}) =>{
             guardarSolicitudes(respuesta.data);
             console.log(respuesta.data);
             guardarCargando(false);
-    
         } catch (error) {
             console.log(error.response);
             if(error.response.data.code==='token_not_valid'){
