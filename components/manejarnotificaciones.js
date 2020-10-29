@@ -6,7 +6,9 @@ import NotificacionesContext from '../context/notificacionesContext'
 
 const ManejarNotificaciones = () => {
 
-    const { aumentarCantidad,obtenerNotificaciones, guardarTokenFirebase } = useContext(NotificacionesContext);
+    const { aumentarCantidad,obtenerNotificaciones, guardarTokenFirebase,
+      guardarMensajes,hayNuevomensaje } = useContext(NotificacionesContext);
+
     const appState = useRef(AppState.currentState);
     const [appStateVisible, guardarAppStateVisible] = useState(appState.current);
 
@@ -35,8 +37,14 @@ const ManejarNotificaciones = () => {
       gettoken();
       const unsubscribe = messaging().onMessage(async remoteMessage => {
         console.log("Push notificacion recibida",remoteMessage);
+        console.log(remoteMessage.notification.title);
+        if(remoteMessage.notification.title == "Mensaje Nuevo"){
+          console.log("hahhasdffs")
+          hayNuevomensaje(1);
+          hayNuevomensaje(0);
+        }
         obtenerNotificaciones(remoteMessage.notification);
-        aumentarCantidad();
+        aumentarCantidad(remoteMessage.notification);
       });
       return unsubscribe;
     }, []);

@@ -23,6 +23,8 @@ import Disconformidad from '../views/disconformidad';
 import Desvinculacion from '../views/desvinculacion';
 import encuestas from '../views/encuestas';
 import encuesta from '../views/encuesta';
+import Sentimiento from '../views/sentimiento';
+
 
 import BotonLogout from '../components/botonlogout';
 import BotonInfo from '../components/botoninfo';
@@ -298,6 +300,19 @@ const StackScreen = () => {
               <BotonLogout {...props} navigation={navigation} route={route}/>
             </View>,
             headerTitle: 'Encuesta'
+        })}
+      >
+      </Stack.Screen>
+      <Stack.Screen
+        name= 'Sentimiento'
+        component={Sentimiento}
+        options={ ({navigation,route}) => ({
+          headerRight: (props)=>
+            <View style={{flexDirection:'row'}}>
+              <BotonInfo {...props} navigation={navigation} route={route}/>
+              <BotonLogout {...props} navigation={navigation} route={route}/>
+            </View>,
+            headerTitle: 'Sentimientos'
         })}
       >
       </Stack.Screen>

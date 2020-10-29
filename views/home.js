@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import {View,Text,TouchableHighlight,StyleSheet,ActivityIndicator,ScrollView} from 'react-native';
 import {Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
+import NotificacionesContext from '../context/notificacionesContext'
 
 const host = ipHost();
 
@@ -15,6 +16,8 @@ const home = ({navigation,route}) =>{
         title:'sda',
         headerleft:null
     }
+    const { guardarChatroom } = useContext(NotificacionesContext);
+
     const [SicologoListo,guardarSicologoListo] = useState(false);
     const [cargando2,guardarCargando2] = useState(true);
 
@@ -168,6 +171,43 @@ const home = ({navigation,route}) =>{
     const funcion3 = () =>{
         navigation.navigate('CodigoSicologo');
     }
+    const pedirChatroom = async () => {
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            const respuesta = await axios.get(host+'/chat/rooms/',
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            console.log(respuesta.data);
+            guardarChatroom(respuesta.data[0].id);
+        } catch (error){
+            console.log("error");
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                console.log('token_not_valid');
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion');
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh=JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name= await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.get(host+'/chat/rooms/',
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        console.log(respuesta.data); 
+                    } catch (error) {
+                        console.log(error.response);
+                        console.log("error acaa");
+                        //navigation.navigate('Home');
+                    }  
+                } catch (error) {
+                    console.log("error aqui");
+                    console.log(error.response);
+                }
+            }
+        }
+    }
     const revision = async () => {
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
@@ -175,6 +215,7 @@ const home = ({navigation,route}) =>{
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta);
             if(respuesta.data.id_psicologo !== null){
+                pedirChatroom();
                 guardarTienesicologo(true);
                 clearInterval(timer);
             }
@@ -274,6 +315,18 @@ const home = ({navigation,route}) =>{
                     <View style={{flexDirection:'row'}}>
                         <Icon name="account-multiple-outline" color="white" size={25}></Icon>
                         <Text style={styles.textoC}>Mis sesiones</Text>
+                    </View>
+                </TouchableHighlight >
+                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Chat')}>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="chat" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>Chat</Text>
+                    </View>
+                </TouchableHighlight >
+                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Sentimiento')}>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="emoticon-happy-outline" color="white" size={25}></Icon>
+                        <Text style={styles.textoC}>¿Cómo te sientes?</Text>
                     </View>
                 </TouchableHighlight >
                 <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Cuestionario')}>
@@ -406,7 +459,7 @@ const styles=StyleSheet.create({
         paddingHorizontal: 10,
       },
     botonS:{
-        height: 60,
+        height: 50,
         marginBottom: 15,
         marginHorizontal: 10,
         justifyContent: "center",
@@ -429,11 +482,3 @@ const styles=StyleSheet.create({
 })
 
 export default home;
-
-
-/*<TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Chat')}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="chat" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Chat</Text>
-                    </View>
-                </TouchableHighlight >*/

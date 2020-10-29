@@ -1,7 +1,25 @@
 import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,
-    REINICIAR_CONTENIDO,GUARDAR_TOKEN_FIREBASE} from '../types';
+    REINICIAR_CONTENIDO,GUARDAR_TOKEN_FIREBASE,GUARDAR_MENSAJES,GUARDAR_CHATROOM,NUEVO_MENSAJE} from '../types';
 export default (state,action) =>{
     switch (action.type){
+        case NUEVO_MENSAJE:
+            console.log(state.nuevomensaje);
+            return{
+                ...state,
+                nuevomensaje: action.payload
+            }
+        case GUARDAR_CHATROOM:
+            console.log(state.chatRoom);
+            return{
+                ...state,
+                chatRoom: action.payload
+            }
+        case GUARDAR_MENSAJES:
+            console.log(state.mensajes);
+            return{
+                ...state,
+                mensajes: action.payload
+            }
         case OBTENER_NOTIFICACIONES:
             console.log(state.notificaciones);
             return{

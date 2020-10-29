@@ -3,17 +3,41 @@ import NotificacionesContext from './notificacionesContext';
 import NotificacionesReducer from './notificacionesReducer';
 
 import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,
-    REINICIAR_CONTENIDO,GUARDAR_TOKEN_FIREBASE} from '../types';
+    REINICIAR_CONTENIDO,GUARDAR_TOKEN_FIREBASE,GUARDAR_MENSAJES,GUARDAR_CHATROOM,NUEVO_MENSAJE} from '../types';
 
 const NotificacionesState = (props) => {
 
     const initialState = {
         notificaciones: [],
         cantidad: 0,
-        token_firebase: ''
+        token_firebase: '',
+        mensajes: [],
+        chatRoom: 0,
+        nuevomensaje:0
     }
 
     const [state,dispatch] = useReducer(NotificacionesReducer,initialState);
+
+    const hayNuevomensaje = (numero) => {
+        console.log(state.nuevomensaje);
+        dispatch({
+            type: NUEVO_MENSAJE,
+            payload: numero
+        })
+    }
+
+
+    const guardarChatroom = (chatroom) => {
+        console.log(chatroom);
+        dispatch({
+            type: GUARDAR_CHATROOM,
+            payload: chatroom
+        })
+    }
+    const obtenerChatroom = () => {
+        console.log(state.chatRoom);
+        return state.chatRoom
+    }
 
     const obtenerNotificaciones = (nuevo) => {
         console.log(nuevo);
@@ -54,6 +78,12 @@ const NotificacionesState = (props) => {
             payload: token
         })
     }
+    const guardarMensajes = (mensajes) => {
+        dispatch({
+            type: GUARDAR_MENSAJES,
+            payload: mensajes
+        })
+    }
 
     return(
         <NotificacionesContext.Provider
@@ -66,7 +96,12 @@ const NotificacionesState = (props) => {
                 reiniciarCantidad,
                 reiniciarContenido,
                 guardarTokenFirebase,
-                obtenerTokenFirebase
+                obtenerTokenFirebase,
+                guardarMensajes,
+                guardarChatroom,
+                obtenerChatroom,
+                hayNuevomensaje,
+                nuevomensaje: state.nuevomensaje
             }}
         >
             {props.children}
