@@ -22,7 +22,7 @@ const Sentimiento = () => {
             const respuesta = await axios.post(host+'/sentimiento/manage/',{texto:mensaje,slider:valorslider[0]},
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta.data);
-            if (respuesta.status===201){
+            if (respuesta.data.message==="Sentimiento registrado"){
                 guardarAlertaexito(true);
             }
         } catch (error) {
@@ -42,7 +42,7 @@ const Sentimiento = () => {
                         const respuesta = await axios.post(host+'/sentimiento/manage/',{texto:mensaje,slider:valorslider},
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta.data);
-                        if (respuesta.status===201){
+                        if (respuesta.data.message==="Sentimiento registrado"){
                             guardarAlertaexito(true);
                         }
                     } catch (error) {
@@ -94,6 +94,20 @@ const Sentimiento = () => {
                     </View>
                 </TouchableHighlight >
             </View>
+            <Portal>
+                    <Dialog visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);}}>
+                        <Dialog.Title>Éxito</Dialog.Title>
+                        <Dialog.Content>
+                            <Paragraph style={globalStyles.textoAlerta}>Se ha enviado correctamente
+                            </Paragraph>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=>{guardarAlertaexito(false);}} color='#3c2c18'>Ok</Button>
+                            </View>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
         </View>
     )
 }
