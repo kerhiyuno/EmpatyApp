@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text,View,StyleSheet,TouchableHighlight} from 'react-native';
+import {Text,View,StyleSheet,TouchableHighlight,ActivityIndicator} from 'react-native';
 import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -10,20 +10,23 @@ import { Slider } from "@miblanchard/react-native-slider";
 
 const host = ipHost();
 
-const Sentimiento = () => {
+const Sentimiento = ({navigation,route}) => {
 
     const [mensaje,guardarMensaje] = useState('');
     const [valorslider,guardarValorslider] = useState(0);
     const [alertaexito,guardarAlertaexito] = useState(false);
+    const [cargando,guardarCargando] = useState(false);
 
     const enviar = async () => {
+        guardarCargando(true);
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
-            const respuesta = await axios.post(host+'/sentimiento/manage/',{texto:mensaje,slider:valorslider[0]},
+            const respuesta = await axios.post(host+'/sentimiento/manage/',{texto:mensaje,slider:parseInt(valorslider[0])},
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta.data);
             if (respuesta.data.message==="Sentimiento registrado"){
                 guardarAlertaexito(true);
+                guardarCargando(false);
             }
         } catch (error) {
             console.log(error);
@@ -55,6 +58,9 @@ const Sentimiento = () => {
                 }
             }
         }
+    }
+    const volver = () =>{
+        navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});
     }
 
     return(
@@ -94,8 +100,9 @@ const Sentimiento = () => {
                     </View>
                 </TouchableHighlight >
             </View>
+            {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} /> : null}
             <Portal>
-                    <Dialog visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);}}>
+                    <Dialog visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);volver()}}>
                         <Dialog.Title>Éxito</Dialog.Title>
                         <Dialog.Content>
                             <Paragraph style={globalStyles.textoAlerta}>Se ha enviado correctamente
@@ -103,7 +110,7 @@ const Sentimiento = () => {
                         </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=>{guardarAlertaexito(false);}} color='#3c2c18'>Ok</Button>
+                                <Button onPress={()=>{guardarAlertaexito(false);volver()}} color='#3c2c18'>Ok</Button>
                             </View>
                         </Dialog.Actions>
                     </Dialog>

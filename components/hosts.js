@@ -1,4 +1,4 @@
-var ip_host ='http://10.0.2.2:8000';
+var ip_host ='http://25.93.49.213:8000';
 export function ipHost(){
     return ip_host;
 }

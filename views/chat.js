@@ -112,12 +112,6 @@ const Chat = () => {
   }
 
     const [messages, setMessages] = useState([
-        {
-          _id: 100,
-          text: 'Chat con Psicólogo',
-          createdAt: new Date().getTime(),
-          system: true
-        },
        /* {
           _id: 101,
           text: 'Henlo1!',
