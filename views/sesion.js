@@ -40,7 +40,8 @@ const sesion = ({navigation,route}) =>{
             console.log(nombre);
             const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
-            if (respuesta.data.id_grupo.oculto===true){
+            console.log(respuesta);
+            if (respuesta.data.id_grupo==null){
                 guardarTienegrupo(false);
             }
             else{console.log("·dsaasd")}
@@ -62,7 +63,7 @@ const sesion = ({navigation,route}) =>{
                         const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
-                        if (respuesta.data.id_grupo.oculto===true){
+                        if (respuesta.data.id_grupo==null){
                             guardarTienegrupo(false);
                         }
                         else{console.log("·dsaasd")}
