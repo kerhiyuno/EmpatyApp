@@ -1,13 +1,16 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useContext} from 'react';
 import {Text,View,StyleSheet,TouchableHighlight,ActivityIndicator,ScrollView,FlatList} from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import globalStyles from '../styles/global';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
-const encuestas = ({navigation,route}) => {
+const encuestas = ({navigation}) => {
+
+    const {colorb,colorLetra,colorTextoBoton,colorTitulo,colorFondo} = useContext(EstilosContext);
     
     const [cargando, guardarCargando] = useState(false);
     const [listaencuestas,guardarListaencuestas] = useState([]);
@@ -154,32 +157,32 @@ const encuestas = ({navigation,route}) => {
         return bloques;
     }
     return (
-        <ScrollView style={globalStyles.contenedor}>
+        <ScrollView style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
             {cargando===false ?
             <View>
-                <Text style={[globalStyles.titulo,{marginBottom:0}]}>Encuestas pendientes</Text>
-                {listaencuestas.length>0 ? <Text></Text> : <View style={{alignItems:'center',marginTop:20}}><Text style={{fontSize:17,fontFamily: "Inter-Regular"}}> No tienes encuestas pendientes </Text></View>}
+                <Text style={[globalStyles.titulo,{marginBottom:0,color: colorTitulo}]}>Encuestas pendientes</Text>
+                {listaencuestas.length>0 ? <Text></Text> : <View style={{alignItems:'center',marginTop:20}}><Text style={{fontSize:17,fontFamily: "Inter-Regular",color: colorLetra}}> No tienes encuestas pendientes </Text></View>}
                 <FlatList
                     data={listaencuestas}
                     style={{marginBottom: 10}}
                     renderItem={({item,index}) => (
-                        <TouchableHighlight underlayColor = {'transparent'} onPress={ () => irEncuesta(item.id,item.fecha_sesion)} style={styles.botonC}>
+                        <TouchableHighlight underlayColor = {'transparent'} onPress={ () => irEncuesta(item.id,item.fecha_sesion)} style={[styles.botonC,{backgroundColor: colorb}]}>
                         <View style={{flex:1,flexDirection: 'column'}}>
                                 <View style={{flex:1,flexDirection: 'row',marginTop:5}}>
                                     <View style={{flex:0.3}}>
-                                        <Text style={[styles.textoC]}>Día:  </Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Día:  </Text>
                                     </View>
                                     <View style={{flex:0.7}}>
-                                        <Text style={[styles.textoC]}>{extraerdia(item.fecha_sesion)} de {mespalabra(item.fecha_sesion)}</Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>{extraerdia(item.fecha_sesion)} de {mespalabra(item.fecha_sesion)}</Text>
                                     </View>
                                 </View>
                                 <View style={{flex:1,flexDirection: 'row'}}>
                                     <View style={{flex:0.3}}>
-                                        <Text style={[styles.textoC]}>Hora:  </Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Hora:  </Text>
                                     </View>
                                     <View style={{flex:0.7}}>
-                                        <Text style={[styles.textoC]}>{traductorhora(item.bloque)}</Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>{traductorhora(item.bloque)}</Text>
                                     </View>
                                 </View>
                             </View>

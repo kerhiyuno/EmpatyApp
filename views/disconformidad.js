@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import {Text,View,StyleSheet,TouchableHighlight} from 'react-native';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -6,10 +6,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
 const Disconformidad = ({navigation}) => {
+
+    const {colorb,colorLetra,colorTextoBoton,colorBordeInput,colorPlaceholderinput,
+    colorPrimaryinput,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
 
     const [alertamensaje,guardarAlertaMensaje] = useState(false);
     const [mensaje,guardarMensaje] = useState('');
@@ -103,22 +107,22 @@ const Disconformidad = ({navigation}) => {
     }
 
     return(
-        <View style={globalStyles.contenedor}>
-            <Text style={globalStyles.titulo}>Notificar disconformidad</Text>
+        <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Notificar disconformidad</Text>
             <View style={{marginTop:10}}>
-                <Text style={styles.texto}>Describe el problema:</Text>
+                <Text style={[styles.texto,{color: colorLetra}]}>Describe el problema:</Text>
                 <TextInput
                     label="Mensaje"
                     onChangeText={(texto) => guardarMensaje(texto)}
-                    style={[globalStyles.entradaTexto,]}
-                    theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                    style={[globalStyles.entradaTexto,{borderColor:colorBordeInput}]}
+                    theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                     multiline={true}
                 />
                 <View style={{marginTop:5}}>
-                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarAlertaMensaje(true)}>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>guardarAlertaMensaje(true)}>
                         <View style={{flexDirection:'row'}}>
-                            <Icon name="send" color="white" size={25}></Icon>
-                            <Text style={styles.textoC}>Enviar</Text>
+                            <Icon name="send" color={colorIcono} size={25}></Icon>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
                         </View>
                     </TouchableHighlight >
                 </View>

@@ -7,7 +7,7 @@ import NotificacionesContext from '../context/notificacionesContext'
 const ManejarNotificaciones = () => {
 
     const { aumentarCantidad,obtenerNotificaciones, guardarTokenFirebase,
-      guardarMensajes,hayNuevomensaje } = useContext(NotificacionesContext);
+      guardarMensajes,hayNuevomensaje,cambioaForeground } = useContext(NotificacionesContext);
 
     const appState = useRef(AppState.currentState);
     const [appStateVisible, guardarAppStateVisible] = useState(appState.current);
@@ -25,6 +25,7 @@ const ManejarNotificaciones = () => {
         nextAppState === "active"
       ) {
         console.log("Cambio a foreground!");
+        cambioaForeground(0);
       }
       appState.current = nextAppState;
       guardarAppStateVisible(appState.current);

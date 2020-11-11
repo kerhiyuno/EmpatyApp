@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useContext} from 'react';
 import {Text,FlatList,View,StyleSheet,TouchableHighlight} from 'react-native';
 import {Paragraph,Dialog, Portal,Button} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -7,10 +7,15 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
 const horariosicologo = ({navigation,route}) => {
+
+    const {colorb,colorLetra,colorTextoBoton,colorTitulo,colorIcono,
+    colorFondo} = useContext(EstilosContext);
+
     const [elegido,guardarElegido] = useState({});
     const [hora,guardarHora] = useState('');
 
@@ -318,12 +323,12 @@ const horariosicologo = ({navigation,route}) => {
     }
 
     return (
-        <View style={globalStyles.contenedor}>
-            <Text style={globalStyles.titulo}>Elige un horario para tu primera sesión</Text>            
-            <TouchableHighlight  underlayColor = {'transparent'} style={styles.botonC} onPress={showDatePicker} >
+        <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Elige un horario para tu primera sesión</Text>            
+            <TouchableHighlight  underlayColor = {'transparent'} style={[styles.botonC,{backgroundColor: colorb}]} onPress={showDatePicker} >
                 <View style={{flexDirection:'row',justifyContent:'center'}}>
-                    <Icon name="calendar" color="white" size={25}></Icon>
-                    <Text style={styles.textoC}>Seleccionar fecha</Text>
+                    <Icon name="calendar" color={colorIcono} size={25}></Icon>
+                    <Text style={[styles.textoC,{color: colorTextoBoton}]}>Seleccionar fecha</Text>
                 </View>
             </TouchableHighlight>
             <DateTimePickerModal
@@ -334,19 +339,19 @@ const horariosicologo = ({navigation,route}) => {
                 date={new Date(año+"-"+mes+"-"+dia)}
             />
             <View style={{alignItems:'center',marginTop:10,marginBottom:40}}> 
-                <Text style={{marginBottom:30,marginLeft:10,fontSize:17,fontFamily:'Inter-Regular'}}>Fecha seleccionada: {fechaformateo(fecha)}</Text>
+                <Text style={{marginBottom:30,marginLeft:10,fontSize:17,fontFamily:'Inter-Regular',color: colorLetra}}>Fecha seleccionada: {fechaformateo(fecha)}</Text>
             </View>
             <View style={{alignItems:'center',marginBottom:15}}>
-                <Text style={{marginLeft:10,fontSize:21,fontFamily:'Inter-Bold'}}>Seleccione una hora:</Text>
+                <Text style={{marginLeft:10,fontSize:21,fontFamily:'Inter-Bold',color: colorLetra}}>Seleccione una hora:</Text>
             </View>
-            {horarios.length>0 ? <Text></Text> : <View style={{alignItems:'center',alignContent:'center',marginHorizontal:30}}><Text style={{fontSize:17,fontFamily:'Inter-Regular'}}>No hay horarios disponibles el día seleccionado</Text></View>}
+            {horarios.length>0 ? <Text></Text> : <View style={{alignItems:'center',alignContent:'center',marginHorizontal:30}}><Text style={{fontSize:17,fontFamily:'Inter-Regular',color: colorLetra}}>No hay horarios disponibles el día seleccionado</Text></View>}
             <FlatList
                 data={horarios}
                 style={{marginBottom: 10}}
                 renderItem={({item,index}) => (
-                    <TouchableHighlight underlayColor = {'transparent'} onPress={() => elegirhorario(horarios[index]["id"])} style={styles.botonC} >
+                    <TouchableHighlight underlayColor = {'transparent'} onPress={() => elegirhorario(horarios[index]["id"])} style={[styles.botonC,{backgroundColor: colorb}]} >
                         <View>
-                        <Text style={styles.textoC}> {traductorhora(item["id"])}</Text>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}> {traductorhora(item["id"])}</Text>
                         </View>
                     </TouchableHighlight>
                 )

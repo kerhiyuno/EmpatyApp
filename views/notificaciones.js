@@ -1,16 +1,17 @@
 import React,{useEffect,useState,useContext} from 'react';
 import {Text,FlatList,View,ScrollView,StyleSheet,TouchableHighlight,ActivityIndicator} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
-import globalStyles from '../styles/global';
 import {Avatar} from 'react-native-paper';
 import UserAvatar from 'react-native-user-avatar';
 import {ipHost} from '../components/hosts.js';
 import NotificacionesContext from '../context/notificacionesContext'
+import EstilosContext from '../context/estilosContext';
+import globalStyles from '../styles/global';
+
 
 const Notificaciones = () => {
 
     const {notificaciones,obtenerCantidad, reiniciarCantidad} = useContext(NotificacionesContext);
+    const {colorLetra,colorNotificacionesBorder,colorFondo} = useContext(EstilosContext);
     const [mostrarnotificaciones,guardarMostrarnotificaciones] = useState([]);
 
     useEffect(() => {
@@ -24,14 +25,14 @@ const Notificaciones = () => {
     },[]);
     
     return(
-        <View>
+        <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             <FlatList
                 data={mostrarnotificaciones}
                 style={{marginBottom: 10}}
                 renderItem={({item,index}) => (
-                    <View style={styles.notificaciones}>
-                        <Text style={styles.title}>{item.title}</Text>
-                       <Text style={styles.body}>{item.body}</Text>
+                    <View style={[styles.notificaciones,{borderColor: colorNotificacionesBorder}]}>
+                        <Text style={[styles.title,{color: colorLetra}]}>{item.title}</Text>
+                       <Text style={[styles.body,{color: colorLetra}]}>{item.body}</Text>
                      </View>
                 )
                 }

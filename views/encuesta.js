@@ -1,5 +1,5 @@
-import React,{useEffect,useState} from 'react';
-import {Text,View,StyleSheet,TouchableHighlight} from 'react-native';
+import React,{useEffect,useState,useContext} from 'react';
+import {Text,View,StyleSheet,TouchableHighlight, ColorPropType} from 'react-native';
 import {Button,Paragraph,Dialog, Portal} from 'react-native-paper';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -8,13 +8,15 @@ import {ipHost} from '../components/hosts.js';
 import {TextInput} from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
 const encuesta = ({navigation,route}) => {
 
-    
+    const {colorb,colorLetra,colorTextoBoton,colorBordeInput,colorPrimaryinput,
+        colorPlaceholderinput,colorBotonDesactivado,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
+
     const [cargando, guardarCargando] = useState(false);
     const [alertaexito,guardarAlertaexito] = useState(false);
 
@@ -366,127 +368,127 @@ const encuesta = ({navigation,route}) => {
         }
     }
     return (
-            <ScrollView style={globalStyles.contenedor}>
-                <Text style={[globalStyles.titulo,{marginBottom:10}]}>Encuesta de satisfacción</Text>
-                <Text style={[styles.textoS,{textAlign:'center'}]}>Califica tu sesión con {nombresicologo}</Text>
-                <Text style={[styles.textoS,{textAlign:'center'}]}>1: Muy malo       5: Muy bueno</Text>
+            <ScrollView style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+                <Text style={[globalStyles.titulo,{marginBottom:10,color: colorTitulo}]}>Encuesta de satisfacción</Text>
+                <Text style={[styles.textoS,{textAlign:'center',color: colorLetra}]}>Califica tu sesión con {nombresicologo}</Text>
+                <Text style={[styles.textoS,{textAlign:'center',color: colorLetra}]}>1: Muy malo       5: Muy bueno</Text>
                 <View style={{marginTop:10}}>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Su tono de voz era agradable: </Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Su tono de voz era agradable: </Text>
                     <View style={styles.fila}>
-                        <TouchableHighlight style={calificacion11=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> {calificar(1,1)}} >
+                        <TouchableHighlight style={calificacion11=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> {calificar(1,1)}} >
                             <View>
-                                <Text style={styles.textboton}>1</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>1</Text>
                             </View>
                         </TouchableHighlight>
-                        <TouchableHighlight style={calificacion12=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> calificar(1,2)} >
+                        <TouchableHighlight style={calificacion12=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> calificar(1,2)} >
                             <View>
-                                <Text style={styles.textboton}>2</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>2</Text>
                             </View>
                         </TouchableHighlight>
-                        <TouchableHighlight style={calificacion13=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> calificar(1,3)} >
+                        <TouchableHighlight style={calificacion13=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> calificar(1,3)} >
                             <View>
-                                <Text style={styles.textboton}>3</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>3</Text>
                             </View>
                         </TouchableHighlight>
-                        <TouchableHighlight style={calificacion14=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> calificar(1,4)} >
+                        <TouchableHighlight style={calificacion14=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> calificar(1,4)} >
                             <View>
-                                <Text style={styles.textboton}>4</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>4</Text>
                             </View>
                         </TouchableHighlight>
-                        <TouchableHighlight style={calificacion15=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> calificar(1,5)} >
+                        <TouchableHighlight style={calificacion15=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> calificar(1,5)} >
                             <View>
-                                <Text style={styles.textboton}>5</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>5</Text>
                             </View>
                         </TouchableHighlight>
                     </View>
-                    <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Tuvo un buen trato conmigo: </Text>
+                    <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Tuvo un buen trato conmigo: </Text>
                     <View style={styles.fila}>
-                        <TouchableHighlight style={calificacion21=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> {calificar(2,1)}} >
+                        <TouchableHighlight style={calificacion21=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> {calificar(2,1)}} >
                             <View>
-                                <Text style={styles.textboton}>1</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>1</Text>
                             </View>
                         </TouchableHighlight>
-                        <TouchableHighlight style={calificacion22=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> calificar(2,2)} >
+                        <TouchableHighlight style={calificacion22=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> calificar(2,2)} >
                             <View>
-                                <Text style={styles.textboton}>2</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>2</Text>
                             </View>
                         </TouchableHighlight>
-                        <TouchableHighlight style={calificacion23=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> calificar(2,3)} >
+                        <TouchableHighlight style={calificacion23=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> calificar(2,3)} >
                             <View>
-                                <Text style={styles.textboton}>3</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>3</Text>
                             </View>
                         </TouchableHighlight>
-                        <TouchableHighlight style={calificacion24=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> calificar(2,4)} >
+                        <TouchableHighlight style={calificacion24=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> calificar(2,4)} >
                             <View>
-                                <Text style={styles.textboton}>4</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>4</Text>
                             </View>
                         </TouchableHighlight>
-                        <TouchableHighlight style={calificacion25=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> calificar(2,5)} >
+                        <TouchableHighlight style={calificacion25=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> calificar(2,5)} >
                             <View>
-                                <Text style={styles.textboton}>5</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>5</Text>
                             </View>
                         </TouchableHighlight>
                     </View>
-                    <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Me sentí bien durante la sesión: </Text>
+                    <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Me sentí bien durante la sesión: </Text>
                     <View style={styles.fila}>
-                        <TouchableHighlight style={calificacion31=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> {calificar(3,1)}} >
+                        <TouchableHighlight style={calificacion31=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> {calificar(3,1)}} >
                             <View>
-                                <Text style={styles.textboton}>1</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>1</Text>
                             </View>
                         </TouchableHighlight>
-                        <TouchableHighlight style={calificacion32=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> calificar(3,2)} >
+                        <TouchableHighlight style={calificacion32=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> calificar(3,2)} >
                             <View>
-                                <Text style={styles.textboton}>2</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>2</Text>
                             </View>
                         </TouchableHighlight>
-                        <TouchableHighlight style={calificacion33=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> calificar(3,3)} >
+                        <TouchableHighlight style={calificacion33=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> calificar(3,3)} >
                             <View>
-                                <Text style={styles.textboton}>3</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>3</Text>
                             </View>
                         </TouchableHighlight>
-                        <TouchableHighlight style={calificacion34=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> calificar(3,4)} >
+                        <TouchableHighlight style={calificacion34=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> calificar(3,4)} >
                             <View>
-                                <Text style={styles.textboton}>4</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>4</Text>
                             </View>
                         </TouchableHighlight>
-                        <TouchableHighlight style={calificacion35=== false ? [styles.opcionespuntaje,styles.botonno] : [styles.opcionespuntaje,styles.boton]} onPress={()=> calificar(3,5)} >
+                        <TouchableHighlight style={calificacion35=== false ? [styles.opcionespuntaje,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opcionespuntaje,styles.boton,{backgroundColor: colorb}]} onPress={()=> calificar(3,5)} >
                             <View>
-                                <Text style={styles.textboton}>5</Text>
+                                <Text style={[styles.textboton,{color: colorTextoBoton}]}>5</Text>
                             </View>
                         </TouchableHighlight>
                     </View>
                 </View>
                 <TextInput
-                label="Comentarios adicionales"
-                onChangeText={(texto) => guardarMensaje(texto)}
-                style={[styles.entradaTexto,]}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
-                multiline={true}
+                    label="Comentarios adicionales"
+                    onChangeText={(texto) => guardarMensaje(texto)}
+                    style={[globalStyles.input,{borderColor:colorBordeInput}]}
+                    theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
+                    multiline={true}
                 />
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>¿Quieres darle una medalla a {nombresicologo}?</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>¿Quieres darle una medalla a {nombresicologo}?</Text>
                 <View style={styles.fila}>
-                    <TouchableHighlight style={medalla1=== false ? [styles.opciones,styles.botonno] : [styles.opciones,styles.boton]} onPress={()=> eleccion(1)} >
+                    <TouchableHighlight style={medalla1=== false ? [styles.opciones,styles.botonno] : [styles.opciones,styles.boton,{backgroundColor: colorb}]} onPress={()=> eleccion(1)} >
                         <View>
-                            <Text style={styles.textboton}>Amable</Text>
+                            <Text style={[styles.textboton,{color: colorTextoBoton}]}>Amable</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight style={medalla2===false? [styles.opciones,styles.botonno] : [styles.opciones,styles.boton]} onPress={()=> eleccion(2)} >
+                    <TouchableHighlight style={medalla2===false? [styles.opciones,styles.botonno] : [styles.opciones,styles.boton,{backgroundColor: colorb}]} onPress={()=> eleccion(2)} >
                         <View>
-                            <Text style={styles.textboton}>Me entiende</Text>
+                            <Text style={styles.textboton,{color: colorTextoBoton}}>Me entiende</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight style={medalla3===false? [styles.opciones,styles.botonno] : [styles.opciones,styles.boton]} onPress={()=> eleccion(3)} >
+                    <TouchableHighlight style={medalla3===false? [styles.opciones,styles.botonno] : [styles.opciones,styles.boton,{backgroundColor: colorb}]} onPress={()=> eleccion(3)} >
                         <View>
-                            <Text style={styles.textboton}>Buena ayuda</Text>
+                            <Text style={styles.textboton,{color: colorTextoBoton}}>Buena ayuda</Text>
                         </View>
                     </TouchableHighlight>
                 </View>
 
-                <TouchableHighlight style={styles.botonS} onPress={() => enviar() }>
-                <View style={{flexDirection:'row'}}>
-                    <Icon name="pencil-outline" color="white" size={25}></Icon>
-                    <Text style={[styles.textoC]}>Enviar</Text>
-                </View>
+                <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} onPress={() => enviar() }>
+                    <View style={{flexDirection:'row'}}>
+                        <Icon name="pencil-outline" color={colorIcono} size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
+                    </View>
                 </TouchableHighlight>
                 <Portal>
                     <Dialog visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);navigation.navigate('Iniciar Sesion')}}>

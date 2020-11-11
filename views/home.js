@@ -7,15 +7,14 @@ import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
 import NotificacionesContext from '../context/notificacionesContext'
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
-const home = ({navigation,route}) =>{
+const home = ({navigation}) =>{
 
-    const navigationOptions={
-        title:'sda',
-        headerleft:null
-    }
+    const {colorb,colorTextoBoton,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
+
     const { guardarChatroom } = useContext(NotificacionesContext);
 
     const [SicologoListo,guardarSicologoListo] = useState(false);
@@ -29,7 +28,7 @@ const home = ({navigation,route}) =>{
     var timer;
 
     useEffect(() => {
-        timer = setInterval(async() => consultar(), 20000);
+        timer = setInterval(async() => consultar(), 5000);
         return () => clearInterval(timer);
       });
 
@@ -297,55 +296,67 @@ const home = ({navigation,route}) =>{
         }
     }
     return (
-        <View style={[globalStyles.contenedor]}>
+        <View style={[globalStyles.contenedor,{backgroundColor:colorFondo}]}>
             {cargando2 === true ? <ActivityIndicator  size = "large" animating = {cargando2} style = {globalStyles.cargando}/> : null}
             {cargando2===false ?
             <View>
             {tienesicologo===true ?
             <View>
-            <Text style={[globalStyles.titulo]}>Inicio</Text>
+            <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Inicio</Text>
             <View style={styles.container}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Perfil')}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="account-details" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Mi perfil</Text>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Perfil')}>
+                    <View style={{flexDirection:'row',alignItems:"center"}}>
+                        <Icon name="account-details" color={colorIcono} size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Mi perfil</Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Sesion') }>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="account-multiple-outline" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Mis sesiones</Text>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Sesion') }>
+                    <View style={{flexDirection:'row',alignItems:"center"}}>
+                        <Icon name="account-multiple-outline" color={colorIcono}  size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Mis sesiones</Text>
                     </View>
                 </TouchableHighlight >
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Chat')}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="chat" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Chat</Text>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Chat')}>
+                    <View style={{flexDirection:'row',alignItems:"center"}}>
+                        <Icon name="chat" color={colorIcono}  size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Chat</Text>
                     </View>
                 </TouchableHighlight >
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Sentimiento')}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="emoticon-happy-outline" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>¿Cómo te sientes?</Text>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Sentimiento')}>
+                    <View style={{flexDirection:'row',alignItems:"center"}}>
+                        <Icon name="emoticon-happy-outline" color={colorIcono}  size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>¿Cómo te sientes?</Text>
                     </View>
                 </TouchableHighlight >
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Cuestionario')}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="book-outline" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Cuestionario de Sintomatología</Text>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Cuestionario')}>
+                    <View style={{flexDirection:'row',alignItems:"center"}}>
+                        <Icon name="book-outline" color={colorIcono}  size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Cuestionario de Sintomatología</Text>
                     </View>
                 </TouchableHighlight >
                 
-                <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate("Disconformidad") }>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="account-alert-outline" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Disconformidad con el grupo</Text>
+                <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate("Disconformidad") }>
+                    <View style={{flexDirection:'row',alignItems:"center"}}>
+                        <Icon name="account-alert-outline" color={colorIcono}  size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Disconformidad con el grupo</Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate("Desvinculacion") }>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="close" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Desvincularse de Psicólogo</Text>
+                <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate("Desvinculacion") }>
+                    <View style={{flexDirection:'row',alignItems:"center"}}>
+                        <Icon name="close" color={colorIcono}  size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Desvincularse de Psicólogo</Text>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate("Panico") }>
+                    <View style={{flexDirection:'row',alignItems:"center"}}>
+                        <Icon name="close" color={colorIcono}  size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Botón de pánico</Text>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Personalizar') }>
+                    <View style={{flexDirection:'row',alignItems:"center"}}>
+                        <Icon name="fountain-pen" color={colorIcono} size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Personalizar</Text>
                     </View>
                 </TouchableHighlight>
             </View>
@@ -354,50 +365,58 @@ const home = ({navigation,route}) =>{
             <ScrollView>
                 <Text style={globalStyles.titulo}>Bienvenido</Text>       
                 <View style={styles.container}>
-                    <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => funcion() }>
-                        <View style={{flexDirection:'row'}}>
-                            <Icon name="account-search" color="white" size={25}></Icon>
-                            <Text style={styles.textoC}>Buscar Psicólogo</Text>
+                    <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => funcion() }>
+                        <View style={{flexDirection:'row',alignItems:"center"}}>
+                            <Icon name="account-search" color={colorIcono}  size={25}></Icon>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Buscar Psicólogo</Text>
                         </View>
                     </TouchableHighlight>
                 </View>
                 <View style={[styles.container,{marginTop:5}]}>
-                    <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => funcion2() }>
-                        <View style={{flexDirection:'row'}}>
-                            <Icon name="note-multiple-outline" color="white" size={25}></Icon>
-                            <Text style={styles.textoC}>Ver solicitudes</Text>
+                    <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => funcion2() }>
+                        <View style={{flexDirection:'row',alignItems:"center"}}>
+                            <Icon name="note-multiple-outline" color={colorIcono} size={25}></Icon>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Ver solicitudes</Text>
                         </View>
                     </TouchableHighlight>
                 </View>
                 <View style={[styles.container,{marginTop:5}]}>
-                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Perfil')}>
-                        <View style={{flexDirection:'row'}}>
-                            <Icon name="account-details" color="white" size={25}></Icon>
-                            <Text style={styles.textoC}>Mi perfil</Text>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Perfil')}>
+                        <View style={{flexDirection:'row',alignItems:"center"}}>
+                            <Icon name="account-details" color={colorIcono} size={25}></Icon>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Mi perfil</Text>
                         </View>
                     </TouchableHighlight >
                 </View>
                 <View style={[styles.container,{marginTop:5}]}>
-                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Cuestionario')}>
-                        <View style={{flexDirection:'row'}}>
-                            <Icon name="book-outline" color="white" size={25}></Icon>
-                            <Text style={styles.textoC}>Cuestionario de Sintomatología</Text>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Cuestionario')}>
+                        <View style={{flexDirection:'row',alignItems:"center"}}>
+                            <Icon name="book-outline" color={colorIcono} size={25}></Icon>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Cuestionario de Sintomatología</Text>
                         </View>
                     </TouchableHighlight >
                 </View>
                 <View style={[styles.container,{marginTop:5}]}>
-                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Preferencias')}>
-                        <View style={{flexDirection:'row'}}>
-                            <Icon name="account-question-outline" color="white" size={25}></Icon>
-                            <Text style={styles.textoC}>Preferencias</Text>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Preferencias')}>
+                        <View style={{flexDirection:'row',alignItems:"center"}}>
+                            <Icon name="account-question-outline" color={colorIcono} size={25}></Icon>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Preferencias</Text>
                         </View>
                     </TouchableHighlight >
                 </View>
                 <View style={[styles.container,{marginTop:5}]}>
-                        <TouchableHighlight style={styles.botonS} underlayColor = {'transparent'} onPress={() => funcion3() }>
-                            <View style={{flexDirection:'row'}}>
-                                <Icon name="chevron-right" color="white" size={25}></Icon>
-                                <Text style={styles.textoC}>Ingresar Código</Text>
+                        <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => funcion3() }>
+                            <View style={{flexDirection:'row',alignItems:"center"}}>
+                                <Icon name="chevron-right" color={colorIcono} size={25}></Icon>
+                                <Text style={[styles.textoC,{color: colorTextoBoton}]}>Ingresar Código</Text>
+                            </View>
+                        </TouchableHighlight>
+                </View>
+                <View style={[styles.container,{marginTop:5}]}>
+                        <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Personalizar') }>
+                            <View style={{flexDirection:'row',alignItems:"center"}}>
+                                <Icon name="fountain-pen" color={colorIcono} size={25}></Icon>
+                                <Text style={[styles.textoC,{color: colorTextoBoton}]}>Personalizar</Text>
                             </View>
                         </TouchableHighlight>
                 </View>
@@ -459,8 +478,8 @@ const styles=StyleSheet.create({
         paddingHorizontal: 10,
       },
     botonS:{
-        height: 50,
-        marginBottom: 15,
+        height: 45,
+        marginBottom: 10,
         marginHorizontal: 10,
         justifyContent: "center",
         alignItems: "center",
@@ -475,7 +494,7 @@ const styles=StyleSheet.create({
     },
     textoC: {
         marginHorizontal: 7,
-        fontSize: 17,
+        fontSize: 16,
         color: 'white',
         fontFamily: 'Inter-Light'
     }

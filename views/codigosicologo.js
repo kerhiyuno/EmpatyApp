@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import {View,StyleSheet,Text,ScrollView,TouchableHighlight,ActivityIndicator} from 'react-native';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -6,10 +6,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
-const codigosicologo = ({navigation,route}) =>{
+const codigosicologo = ({navigation}) =>{
+
+    const {colorb,colorLetra,colorTextoBoton,colorBorderInput,colorPrimaryinput,
+        colorPlaceholderinput,colorIcono,colorFondo} = useContext(EstilosContext);
 
     const [codigo,guardarCodigo] = useState('');
     const [alertacodigo,guardarAlertacodigo] = useState('');
@@ -89,21 +93,21 @@ const codigosicologo = ({navigation,route}) =>{
     }
 
     return (
-        <ScrollView style= {globalStyles.contenedor}>
-            <Text style={styles.texto}>Si tu psicólogo o psicóloga te invitó a esta aplicación y te dió su código, puedes ingresarlo aquí:
+        <ScrollView style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <Text style={[styles.texto,{color: colorLetra}]}>Si tu psicólogo o psicóloga te invitó a esta aplicación y te dió su código, puedes ingresarlo aquí:
             </Text>
             <TextInput
                 label="Código de psicólogo"
                 onChangeText={(texto) => guardarCodigo(texto)}
-                style={globalStyles.input}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                style={[globalStyles.input,{borderColor: colorBorderInput}]}
+                theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
             />
             
             <View style={[{marginTop:5}]}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>enviar()}>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>enviar()}>
                     <View style={{flexDirection:'row'}}>
-                        <Icon name="send" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Enviar</Text>
+                        <Icon name="send" color={colorIcono} size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
                 {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {styles.cargando}/> : null}

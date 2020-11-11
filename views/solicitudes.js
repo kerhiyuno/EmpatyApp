@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useContext} from 'react';
 import {Text,FlatList,View,StyleSheet,TouchableHighlight,ActivityIndicator} from 'react-native';
 import {Paragraph,Dialog, Portal,Button} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -6,10 +6,14 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
-const solicitudes = ({navigation,route}) =>{
+const solicitudes = () =>{
+
+    const {colorb,colorLetra,colorTextoBoton,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
+
     const [solicitudes, guardarSolicitudes] = useState([]);
     const [cargando, guardarCargando] = useState(false);
     const [alertaborrar,guardarAlertaborrar] = useState(false);
@@ -106,10 +110,10 @@ const solicitudes = ({navigation,route}) =>{
     }
 
     return (
-        <View style={globalStyles.contenedor}>
+        <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             {cargando===true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
-            {cargando===false ? <Text style={globalStyles.titulo}>Solicitudes pendientes</Text> : null}
-            {solicitudes.length>0 ? null :  cargando===false ? <View style={{alignItems:'center'}}><Text style={{fontSize:17}}>No tienes solicitudes pendientes</Text></View>: null}
+            {cargando===false ? <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Solicitudes pendientes</Text> : null}
+            {solicitudes.length>0 ? null :  cargando===false ? <View style={{alignItems:'center'}}><Text style={{fontSize:17,color: colorLetra}}>No tienes solicitudes pendientes</Text></View>: null}
             <FlatList
                 data={solicitudes}
                 style={{marginBottom: 20}}
@@ -118,33 +122,33 @@ const solicitudes = ({navigation,route}) =>{
                         <View style={{flex:1,flexDirection: 'column'}}>
                                 <View style={{flex:1,flexDirection: 'row',marginTop:5}}>
                                     <View style={{flex:0.4}}>
-                                        <Text style={[styles.textoC]}>Psicólogo</Text>
+                                        <Text style={[styles.textoC,{color: colorLetra}]}>Psicólogo</Text>
                                     </View>
                                     <View style={{flex:0.6}}>
-                                        <Text style={[styles.textoC]}>{item.psicologo_sol}</Text>
+                                        <Text style={[styles.textoC,{color: colorLetra}]}>{item.psicologo_sol}</Text>
                                     </View>
                                 </View>
                                 <View style={{flex:1,flexDirection: 'row'}}>
                                     <View style={{flex:0.4}}>
-                                        <Text style={[styles.textoC]}>Hora: </Text>
+                                        <Text style={[styles.textoC,{color: colorLetra}]}>Hora: </Text>
                                     </View>
                                     <View style={{flex:0.6}}>
-                                        <Text style={[styles.textoC]}>{item.horario_inicio}</Text>
+                                        <Text style={[styles.textoC,{color: colorLetra}]}>{item.horario_inicio}</Text>
                                     </View>
                                 </View>
                                 <View style={{flex:1,flexDirection: 'row'}}>
                                     <View style={{flex:0.4}}>
-                                        <Text style={[styles.textoC]}>Fecha: </Text>
+                                        <Text style={[styles.textoC,{color: colorLetra}]}>Fecha: </Text>
                                     </View>
                                     <View style={{flex:0.6}}>
-                                        <Text style={[styles.textoC]}>{fechaformateo(item.fecha_reunion)}</Text>
+                                        <Text style={[styles.textoC,{color: colorLetra}]}>{fechaformateo(item.fecha_reunion)}</Text>
                                     </View>
                                 </View>
                         </View>
-                        <TouchableHighlight onPress={ () => {guardarAborrar(item.id);guardarAlertaborrar(true)} } style={styles.botonC}>
+                        <TouchableHighlight onPress={ () => {guardarAborrar(item.id);guardarAlertaborrar(true)} } style={[styles.botonC,{backgroundColor: colorb}]}>
                             <View style={{flexDirection:'row',justifyContent:'center'}}>
-                                <Icon name="delete-outline" color="white" size={20}></Icon>
-                                <Text style={styles.textoB}>Eliminar</Text>
+                                <Icon name="delete-outline" color={colorIcono} size={20}></Icon>
+                                <Text style={[styles.textoB,{color: colorTextoBoton}]}>Eliminar</Text>
                             </View>
                         </TouchableHighlight>
                     </View>

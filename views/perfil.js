@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useContext} from 'react';
 import {Text,View,StyleSheet,TouchableHighlight,ActivityIndicator} from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -7,10 +7,14 @@ import globalStyles from '../styles/global';
 import UserAvatar from 'react-native-user-avatar';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
 const perfil = ({navigation,route}) => {
+
+    const {colorb,colorLetra,colorTextoBoton,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
+
     const [nombre,guardarNombre] = useState('');
     const [email,guardarEmail] = useState('');
     const [telefono,guardarTelefono] = useState('');
@@ -84,7 +88,7 @@ const perfil = ({navigation,route}) => {
         return (<View style={{alignItems: 'center'}}>
                     <UserAvatar size={100} name= {nombre} />
                     <View style={{borderRadius:40,marginTop:10,alignSelf:"center",borderWidth:2, borderColor:"#828282"}}>
-                        <Text style={[styles.textoS,{fontSize:16,color:"black",marginTop:5,marginBottom:5,marginHorizontal:10,marginLeft:5}]}>{nombre}</Text>
+                        <Text style={[styles.textoS,{fontSize:16,color:colorLetra,marginTop:5,marginBottom:5,marginHorizontal:10,marginLeft:5}]}>{nombre}</Text>
                     </View>
                 </View>)
     }
@@ -93,39 +97,39 @@ const perfil = ({navigation,route}) => {
         return (<View style={{alignItems: 'center'}}>
                     <Avatar.Image size={100} source={{uri: imagenperfil}}/>
                     <View style={{borderRadius:40,marginTop:10,alignSelf:"center",borderWidth:2, borderColor:"#828282"}}>
-                        <Text style={[styles.textoS,{fontSize:16,color:"black",marginTop:5,marginBottom:5,marginHorizontal:10,marginLeft:5}]}>{nombre}</Text>
+                        <Text style={[styles.textoS,{fontSize:16,color:colorLetra,marginTop:5,marginBottom:5,marginHorizontal:10,marginLeft:5}]}>{nombre}</Text>
                     </View>
                 </View>)
     }
 
     return (
-        <View style={[globalStyles.contenedor]}>
+        <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
             {cargando===false ?
             <View>
-            <Text style={globalStyles.titulo}>Mi perfil</Text>
+            <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Mi perfil</Text>
             {imagenperfil !== '' && cargando===false ? avatarimagen(): nombre !== '' ? avatar() : console.log('')}
             <View style={styles.perfil}>
                     <View style={{marginVertical:5,marginTop:10}}>
                         <View style={{flexDirection: 'row',marginHorizontal: 10}}>
                             <Icon name="email" color="#515254" size={20}></Icon>
-                            <Text style={styles.textoS}>Correo: {email}</Text>
+                            <Text style={[styles.textoS,{color: colorLetra}]}>Correo: {email}</Text>
                         </View>
                         <View style={{flexDirection: 'row',marginHorizontal: 10}}>
                             <Icon name="phone" color="#515254" size={20}></Icon>
-                            <Text style={styles.textoS}>Teléfono: {telefono}</Text>
+                            <Text style={[styles.textoS,{color: colorLetra}]}>Teléfono: {telefono}</Text>
                         </View>
                         <View style={{flexDirection: 'row',marginHorizontal: 10}}>
                             <Icon name="rhombus-outline" color="#515254" size={20}></Icon>
-                            <Text style={styles.textoS}>Género: {generodescripcion}</Text>
+                            <Text style={[styles.textoS,{color: colorLetra}]}>Género: {generodescripcion}</Text>
                         </View>
                     </View>
                 </View>
                     <View style={[styles.container,{marginTop:40}]}>
-                            <TouchableHighlight style={styles.botonS} onPress={() => editarperfil() }>
+                            <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} onPress={() => editarperfil() }>
                                 <View style={{flexDirection:'row'}}>
-                                    <Icon name="pencil-outline" color="white" size={22}></Icon>
-                                    <Text style={[styles.textoC,{marginLeft:10}]}> Editar Perfil </Text>
+                                    <Icon name="pencil-outline" color={colorIcono} size={22}></Icon>
+                                    <Text style={[styles.textoC,{marginLeft:10,color:colorTextoBoton}]}> Editar Perfil </Text>
                                 </View>
                             </TouchableHighlight>
                     </View>

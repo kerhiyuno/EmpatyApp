@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useContext} from 'react';
 import {Text,View,StyleSheet,TouchableHighlight} from 'react-native';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,10 +7,15 @@ import axios from 'axios';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import {Checkbox} from 'react-native-paper';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
 const Desvinculacion = ({navigation}) => {
+
+    const {colorb,colorLetra,colorTextoBoton,colorBordeInput,colorPlaceholderinput,
+        colorPrimaryinput,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
+
     const [mensaje,guardarMensaje] = useState('');
     const [desvinculacion,guardarDesvinculacion] = useState('no');
     const [desvinculacionautoenviada,guardarDesvinculacionautoenviada] = useState(false);
@@ -23,7 +28,6 @@ const Desvinculacion = ({navigation}) => {
         obtenercorreo();
     },[]
   )
-
 
     const obtenercorreo = async () => {
         try {
@@ -83,6 +87,7 @@ const Desvinculacion = ({navigation}) => {
             desAutomatica = true;
         }
         var envio = {mensaje: mensaje, motivo: "Desvinculacion",forzosa: desAutomatica,psicologo:correopsicologo};
+        console.log(envio);
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.post(host+'/solicitudes/manage/',envio,
@@ -121,10 +126,10 @@ const Desvinculacion = ({navigation}) => {
     }
 
     return(
-        <View style={globalStyles.contenedor}>
+        <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             <View>
-                <Text style={globalStyles.titulo}>Solicitar Desvinculación</Text>
-                <Text style={styles.texto}>Si no selecciona la desvinculación inmediata, su psicologo debera aprobar la solicitud de desvinculación</Text>
+                <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Solicitar Desvinculación</Text>
+                <Text style={[styles.texto,{color: colorLetra}]}>Si no selecciona la desvinculación inmediata, su psicologo debera aprobar la solicitud de desvinculación</Text>
                 <View style={styles.pregunta}>
                 <Checkbox
                     status={desvinculacion === 'si' ? 'checked' : 'unchecked'}
@@ -138,24 +143,24 @@ const Desvinculacion = ({navigation}) => {
                     }}
                     color='black'
                 />
-                <Text style={styles.texto}>Desvinculación inmediata</Text>
+                <Text style={[styles.texto,{color: colorLetra}]}>Desvinculación inmediata</Text>
                 </View>
             </View>
             <View style={{marginTop: 40}}>
-                <Text style={styles.texto}>Describe tu motivo (opcional):</Text>
+                <Text style={[styles.texto,{color: colorLetra}]}>Describe tu motivo (opcional):</Text>
                     <TextInput
                         label="Mensaje"
                         onChangeText={(texto) => guardarMensaje(texto)}
-                        style={[globalStyles.entradaTexto,]}
-                        theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                        style={[globalStyles.entradaTexto,{borderColor:colorBordeInput}]}
+                        theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                         multiline={true}
                     />
             </View>
             <View style={{marginTop:5}}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>enviar()}>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>enviar()}>
                     <View style={{flexDirection:'row'}}>
-                        <Icon name="send" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Enviar</Text>
+                        <Icon name="send" color={colorIcono} size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
             </View>

@@ -1,14 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import {View,StyleSheet,Text,ScrollView,TouchableHighlight } from 'react-native';
 import {Button, Paragraph, Dialog, Portal, RadioButton} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
 const registro4 = ({navigation,route}) =>{
+
+    const {colorb,colorBorderInput,colorTextoBoton,colorLetra,colorIcono,colorFondo} = useContext(EstilosContext);
 
     const [psico_prevS,guardarPsico_prev] = useState('');
     const [psiquia_prevS,guardarPsiquia_prev] = useState('');
@@ -68,12 +72,12 @@ const registro4 = ({navigation,route}) =>{
     }
 
     return (
-        <ScrollView style= {globalStyles.contenedor}>
-            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Para dar información preliminar de utilidad a su psicólogo o psicóloga, responda las siguientes preguntas:</Text>
-            <Text style={styles.texto}>¿Haz recibido tratamiento psicológico con anterioridad?</Text>
+        <ScrollView style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Para dar información preliminar de utilidad a su psicólogo o psicóloga, responda las siguientes preguntas:</Text>
+            <Text style={[styles.texto,{color: colorLetra}]}>¿Haz recibido tratamiento psicológico con anterioridad?</Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
-                    <Text style={styles.sino}>Si</Text>
+                    <Text style={[styles.sino,{color: colorLetra}]}>Si</Text>
                     <RadioButton
                         value="first"
                         status={ psico_prevS === 'Si' ? 'checked' : 'unchecked' }
@@ -82,7 +86,7 @@ const registro4 = ({navigation,route}) =>{
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text style={styles.sino}>No</Text>
+                    <Text style={[styles.sino,{color: colorLetra}]}>No</Text>
                     <RadioButton
                         value="second"
                         status={ psico_prevS === 'No' ? 'checked' : 'unchecked' }
@@ -91,10 +95,10 @@ const registro4 = ({navigation,route}) =>{
                     />
                 </View>
             </View>
-            <Text style={styles.texto}>¿Haz recibido tratamiento psiquiátrico con anterioridad?</Text>
+            <Text style={[styles.texto,{color: colorLetra}]}>¿Haz recibido tratamiento psiquiátrico con anterioridad?</Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
-                    <Text style={styles.sino}>Si</Text>
+                    <Text style={[styles.sino,{color: colorLetra}]}>Si</Text>
                     <RadioButton
                         value="first"
                         status={ psiquia_prevS === 'Si' ? 'checked' : 'unchecked' }
@@ -103,7 +107,7 @@ const registro4 = ({navigation,route}) =>{
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text style={styles.sino}>No</Text>
+                    <Text style={[styles.sino,{color: colorLetra}]}>No</Text>
                     <RadioButton
                         value="second"
                         status={ psiquia_prevS === 'No' ? 'checked' : 'unchecked' }
@@ -112,10 +116,10 @@ const registro4 = ({navigation,route}) =>{
                     />
                 </View>
             </View>
-            <Text style={styles.texto}>¿Estás bajo tratamiento farmacológico/psiquiátrico actualmente?</Text>
+            <Text style={[styles.texto,{color: colorLetra}]}>¿Estás bajo tratamiento farmacológico/psiquiátrico actualmente?</Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
-                    <Text style={styles.sino}>Si</Text>
+                    <Text style={[styles.sino,{color: colorLetra}]}>Si</Text>
                     <RadioButton
                         value="first"
                         status={ tratamiento_vigenteS === 'Si' ? 'checked' : 'unchecked' }
@@ -124,7 +128,7 @@ const registro4 = ({navigation,route}) =>{
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text style={styles.sino}>No</Text>
+                    <Text style={[styles.sino,{color: colorLetra}]}>No</Text>
                     <RadioButton
                         value="second"
                         status={ tratamiento_vigenteS === 'No' ? 'checked' : 'unchecked' }
@@ -134,10 +138,10 @@ const registro4 = ({navigation,route}) =>{
                 </View>
             </View>
             <View style={[styles.container,{marginTop:5}]}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>registrar()}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="greater-than" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Finalizar</Text>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>registrar()}>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Icon name="greater-than" color={colorIcono} size={RFPercentage(3)}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Finalizar</Text>
                     </View>
                 </TouchableHighlight >
             </View>
@@ -173,7 +177,7 @@ const styles=StyleSheet.create({
     },
     texto: {
         marginTop:10,
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         marginLeft:5,
         marginRight:5,
         fontFamily:'Inter-Regular'
@@ -191,13 +195,13 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         textAlign: 'center',
         fontFamily: 'Inter-Light'
     },
     botonS:{
-        height: 35,
+        height:  RFPercentage(5),
         marginBottom: 0,
         marginHorizontal: 4,
         justifyContent: "center",

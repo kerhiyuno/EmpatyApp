@@ -1,11 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import {Button,Paragraph,Dialog, Portal} from 'react-native-paper';
 import {View,StyleSheet,Text,TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import globalStyles from '../styles/global';
+import EstilosContext from '../context/estilosContext';
 
-const BotonSalir = ({navigation,route}) =>{
-    
+const BotonSalir = ({navigation}) =>{
+
+    const {colorSalir,colorTextoBoton,colorIcono} = useContext(EstilosContext);
+
     const [alertaseguro,guardarAlertaseguro] = useState(false);
 
     const salir = async() =>{
@@ -17,10 +20,10 @@ const BotonSalir = ({navigation,route}) =>{
 
     return(
         <View>
-            <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=> guardarAlertaseguro(true)}>
+            <TouchableHighlight  style={[styles.botonS,{backgroundColor:colorSalir}]} underlayColor = {'transparent'} onPress={()=> guardarAlertaseguro(true)}>
                 <View style={{flexDirection:'row',justifyContent:'center',marginHorizontal:8}}>
-                    <Icon name="logout" color="white" size={25}></Icon>
-                    <Text style={styles.textoC}>Salir</Text>
+                    <Icon name="logout" color={colorIcono} size={25}></Icon>
+                    <Text style={[styles.textoC,{color: colorTextoBoton}]}>Salir</Text>
                 </View>
             </TouchableHighlight>
             <Portal>

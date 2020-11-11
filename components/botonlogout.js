@@ -7,13 +7,17 @@ import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from './hosts.js';
 import NotificacionesContext from '../context/notificacionesContext'
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
-const BotonLogout = ({navigation,route}) => {
+const BotonLogout = ({navigation}) => {
 
     const { reiniciarContenido } = useContext(NotificacionesContext);
     const [alertaseguro,guardarAlertaseguro] = useState(false);
+
+    const {colorTextoBoton,colorSalir,colorIcono} = useContext(EstilosContext);
+
 
     const Logout = async () => {
         try {
@@ -69,10 +73,10 @@ const BotonLogout = ({navigation,route}) => {
 
     return(
         <View>
-            <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=> guardarAlertaseguro(true)}>
+            <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorSalir}]} underlayColor = {'transparent'} onPress={()=> guardarAlertaseguro(true)}>
                 <View style={{flexDirection:'row',justifyContent:'center',marginHorizontal:8}}>
-                    <Icon name="logout" color="white" size={25}></Icon>
-                    <Text style={styles.textoC}>Salir</Text>
+                    <Icon name="logout" color={colorIcono} size={25}></Icon>
+                    <Text style={[styles.textoC,{color: colorTextoBoton}]}>Salir</Text>
                 </View>
             </TouchableHighlight>
             

@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import {View,StyleSheet,Text,ScrollView,TouchableHighlight,ActivityIndicator} from 'react-native';
 import { Button, Paragraph, Dialog, Portal, RadioButton,Checkbox} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -6,10 +6,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
-const PreferenciasSicologo = ({navigation,route}) =>{
+const PreferenciasSicologo = ({navigation}) =>{
+    
+    const {colorb,colorLetra,colorTextoBoton,colorIcono,colorFondo} = useContext(EstilosContext);
 
     const [terapia_grupal,guardarTerapia_grupal] = useState('');
     const [grupoapoyo,guardarGrupoapoyo] = useState('no');
@@ -232,13 +235,13 @@ const PreferenciasSicologo = ({navigation,route}) =>{
             {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
             {cargando===false ?
             <View>
-            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Responde las siguientes
-preguntas para brindarte opciones que se acomoden a lo que buscas:
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Responde las siguientes
+            preguntas para brindarte opciones que se acomoden a lo que buscas:
             </Text>
-            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}> ¿Te interesa participar en terapia grupal?</Text>
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}> ¿Te interesa participar en terapia grupal?</Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
-                    <Text>Si</Text>
+                    <Text style={{color: colorLetra}}>Si</Text>
                     <RadioButton
                         value="first"
                         status={ terapia_grupal    === 'Si' ? 'checked' : 'unchecked' }
@@ -247,7 +250,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text>No</Text>
+                    <Text style={{color: colorLetra}}>No</Text>
                     <RadioButton
                         value="second"
                         status={ terapia_grupal === 'No' ? 'checked' : 'unchecked' }
@@ -256,7 +259,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text>Me da igual</Text>
+                    <Text style={{color: colorLetra}}>Me da igual</Text>
                     <RadioButton
                         value="second"
                         status={ terapia_grupal === 'Me da igual' ? 'checked' : 'unchecked' }
@@ -265,7 +268,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     />
                 </View>
             </View>
-            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Selecciona los motivos por los que te interesa participar en terapia grupal:
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Selecciona los motivos por los que te interesa participar en terapia grupal:
 (Si respondiste “No” o “Me da igual” a la pregunta anterior, puedes dejar esto en blanco):</Text>
 
             <View style={styles.pregunta}>
@@ -282,7 +285,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     }}
                     color='black'
                 />
-                <Text style={styles.textopregunta}>Grupo de Apoyo </Text>
+                <Text style={styles.textopregunta,{color: colorLetra}}>Grupo de Apoyo </Text>
             </View>
             <View style={styles.pregunta}>
                 <Checkbox
@@ -298,7 +301,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     }}
                     color='black'
                 />
-                <Text style={styles.textopregunta}>Mejorar habilidades comunicacionales </Text>
+                <Text style={[styles.textopregunta,{color: colorLetra}]}>Mejorar habilidades comunicacionales </Text>
             </View>
             <View style={styles.pregunta}>
                 <Checkbox
@@ -314,7 +317,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     }}
                     color='black'
                 />
-                <Text style={styles.textopregunta}>Conocer gente con mis mismos problemas</Text>
+                <Text style={[styles.textopregunta,{color: colorLetra}]}>Conocer gente con mis mismos problemas</Text>
             </View>
             <View style={styles.pregunta}>
                 <Checkbox
@@ -330,7 +333,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     }}
                     color='black'
                 />
-                <Text style={styles.textopregunta}>Conocer gente con otros problemas</Text>
+                <Text style={[styles.textopregunta,{color: colorLetra}]}>Conocer gente con otros problemas</Text>
             </View>
             <View style={styles.pregunta}>
                 <Checkbox
@@ -346,7 +349,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     }}
                     color='black'
                 />
-                <Text style={styles.textopregunta}>La terapia individual es incómoda para mí y/o no la encuentro útil</Text>
+                <Text style={[styles.textopregunta,{color: colorLetra}]}>La terapia individual es incómoda para mí y/o no la encuentro útil</Text>
             </View>
             <View style={styles.pregunta}>
                 <Checkbox
@@ -362,7 +365,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     }}
                     color='black'
                 />
-                <Text style={styles.textopregunta}>Otro </Text>
+                <Text style={[styles.textopregunta,{color: colorLetra}]}>Otro </Text>
             </View>
             <View style={styles.pregunta}>
                 <Checkbox
@@ -383,12 +386,12 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     }}
                     color='black'
                 />
-                <Text style={styles.texto}>Prefiero no decir</Text>
+                <Text style={[styles.textopregunta,{color: colorLetra}]}>Prefiero no decir</Text>
             </View>
-            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Me gustaría que me atienda un/una profesional: </Text>
+            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Me gustaría que me atienda un/una profesional: </Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
-                    <Text style={styles.texto,styles.texto2}>Masculino</Text>
+                    <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>Masculino</Text>
                     <RadioButton
                         value="first"
                         status={ genero_psicologo === 'Masculino' ? 'checked' : 'unchecked' }
@@ -397,7 +400,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text style={styles.texto,styles.texto2}>Femenino</Text>
+                    <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>Femenino</Text>
                     <RadioButton
                         value="second"
                         status={ genero_psicologo === 'Femenino' ? 'checked' : 'unchecked' }
@@ -406,7 +409,7 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                     />
                 </View>
                 <View style={styles.opciones}>
-                    <Text style={styles.texto,styles.texto2}>No binario</Text>
+                    <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>No binario</Text>
                     <RadioButton
                         value="third"
                         status={ genero_psicologo === 'No binario' ? 'checked' : 'unchecked' }
@@ -416,10 +419,10 @@ preguntas para brindarte opciones que se acomoden a lo que buscas:
                 </View>
             </View>
             <View style={[styles.container,{marginTop:5}]}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>enviarPreferencias()}>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>enviarPreferencias()}>
                     <View style={{flexDirection:'row'}}>
-                        <Icon name="greater-than" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Enviar</Text>
+                        <Icon name="greater-than" color={colorIcono} size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
             </View>

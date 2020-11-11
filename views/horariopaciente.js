@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import {View,StyleSheet,Text,ScrollView,TouchableHighlight,ActivityIndicator} from 'react-native';
 import {Button,Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -6,12 +6,16 @@ import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HorarioDia from '../components/horariodia'
 import AsyncStorage from '@react-native-community/async-storage';
-
+import EstilosContext from '../context/estilosContext';
 import {ipHost} from '../components/hosts.js';
 
 const host = ipHost();
 
 const HorarioPaciente = ({navigation}) =>{
+
+    const {colorb,colorLetra,colorTextoBoton,colorBotonDesactivado,colorTitulo,
+        colorIcono,colorFondo} = useContext(EstilosContext);
+
     const [disponibles,guardarDisponibles] = useState([]);
     const [guardadoenprogreso,guardarGuardadoenprogreso] = useState(false);
     const [alertaexito,guardarAlertaexito] = useState(false);
@@ -603,36 +607,36 @@ const HorarioPaciente = ({navigation}) =>{
     }
 
     return (
-        <ScrollView style= {globalStyles.contenedor}>
+        <ScrollView style= {[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
             {cargando===false ?
             <View>
-                <Text style={globalStyles.titulo}> Horario </Text>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}> Escoge el horario que mas te acomode:</Text>
+                <Text style={[globalStyles.titulo,{color: colorTitulo}]}> Horario </Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}> Escoge el horario que mas te acomode:</Text>
                 <View style={{flexDirection:'column',marginTop:10}}>
                     <View style={{flexDirection:'row',justifyContent:'center'}}>
-                        <TouchableHighlight onPress={() => guardarDia('Lunes')} style={dia==='Lunes'? [styles.opciones,styles.boton] : [styles.opciones,styles.botonno]} onPress={()=> guardarDia('Lunes')}>
-                            <Text style={styles.textboton}>Lunes</Text>
+                        <TouchableHighlight onPress={() => guardarDia('Lunes')} style={dia==='Lunes'? [styles.opciones,styles.boton,{backgroundColor: colorb}] : [styles.opciones,styles.botonno,{backgroundColor:colorBotonDesactivado}]} onPress={()=> guardarDia('Lunes')}>
+                            <Text style={[styles.textboton,{color: colorTextoBoton}]}>Lunes</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight onPress={() => guardarDia('Martes')} style={dia==='Martes'? [styles.opciones,styles.boton] : [styles.opciones,styles.botonno]} onPress={()=> guardarDia('Martes')}>
-                            <Text style={styles.textboton}>Martes</Text>
+                        <TouchableHighlight onPress={() => guardarDia('Martes')} style={dia==='Martes'? [styles.opciones,styles.boton,{backgroundColor: colorb}] : [styles.opciones,styles.botonno,{backgroundColor:colorBotonDesactivado}]} onPress={()=> guardarDia('Martes')}>
+                            <Text style={[styles.textboton,{color: colorTextoBoton}]}>Martes</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight onPress={() => guardarDia('Miércoles')} style={dia==='Miercoles'? [styles.opciones,styles.boton] : [styles.opciones,styles.botonno]} onPress={()=> guardarDia('Miercoles')}>
-                            <Text style={styles.textboton}>Miércoles</Text>
+                        <TouchableHighlight onPress={() => guardarDia('Miércoles')} style={dia==='Miercoles'? [styles.opciones,styles.boton,{backgroundColor: colorb}] : [styles.opciones,styles.botonno,{backgroundColor:colorBotonDesactivado}]} onPress={()=> guardarDia('Miercoles')}>
+                            <Text style={[styles.textboton,{color: colorTextoBoton}]}>Miércoles</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight onPress={() => guardarDia('Jueves')} style={dia==='Jueves'? [styles.opciones,styles.boton] : [styles.opciones,styles.botonno]} onPress={()=> guardarDia('Jueves')}>
-                            <Text style={styles.textboton}>Jueves</Text>
+                        <TouchableHighlight onPress={() => guardarDia('Jueves')} style={dia==='Jueves'? [styles.opciones,styles.boton,{backgroundColor: colorb}] : [styles.opciones,styles.botonno,{backgroundColor:colorBotonDesactivado}]} onPress={()=> guardarDia('Jueves')}>
+                            <Text style={[styles.textboton,{color: colorTextoBoton}]}>Jueves</Text>
                         </TouchableHighlight >
                     </View>
                     <View  style={{flexDirection:'row',justifyContent:'center'}}>
-                        <TouchableHighlight onPress={() => guardarDia('Viernes')} style={dia==='Viernes'? [styles.opciones,styles.boton] : [styles.opciones,styles.botonno]} onPress={()=> guardarDia('Viernes')}>
-                            <Text style={styles.textboton}>Viernes</Text>
+                        <TouchableHighlight onPress={() => guardarDia('Viernes')} style={dia==='Viernes'? [styles.opciones,styles.boton,{backgroundColor: colorb}] : [styles.opciones,styles.botonno,{backgroundColor:colorBotonDesactivado}]} onPress={()=> guardarDia('Viernes')}>
+                            <Text style={[styles.textboton,{color: colorTextoBoton}]}>Viernes</Text>
                         </TouchableHighlight >
-                        <TouchableHighlight onPress={() => guardarDia('Sábado')} style={dia==='Sabado'? [styles.opciones,styles.boton] : [styles.opciones,styles.botonno]} onPress={()=> guardarDia('Sabado')}>
-                            <Text style={styles.textboton}>Sábado</Text>
+                        <TouchableHighlight onPress={() => guardarDia('Sábado')} style={dia==='Sabado'? [styles.opciones,styles.boton,{backgroundColor: colorb}] : [styles.opciones,styles.botonno,{backgroundColor:colorBotonDesactivado}]} onPress={()=> guardarDia('Sabado')}>
+                            <Text style={[styles.textboton,{color: colorTextoBoton}]}>Sábado</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight onPress={() => guardarDia('Domingo')} style={dia==='Domingo'? [styles.opciones,styles.boton] : [styles.opciones,styles.botonno]} onPress={()=> guardarDia('Domingo')}>
-                            <Text style={styles.textboton}>Domingo</Text>
+                        <TouchableHighlight onPress={() => guardarDia('Domingo')} style={dia==='Domingo'? [styles.opciones,styles.boton,{backgroundColor: colorb}] : [styles.opciones,styles.botonno,{backgroundColor:colorBotonDesactivado}]} onPress={()=> guardarDia('Domingo')}>
+                            <Text style={[styles.textboton,{color: colorTextoBoton}]}>Domingo</Text>
                         </TouchableHighlight>
                     </View>
                 </View>
@@ -673,10 +677,10 @@ const HorarioPaciente = ({navigation}) =>{
                 disponibles={disponibles} guardarDisponibles={guardarDisponibles}/> : null }
                 
                 <View style={[styles.container,{marginTop:5}]}>
-                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>registrar()}>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>registrar()}>
                         <View style={{flexDirection:'row'}}>
-                            <Icon name="greater-than" color="white" size={25}></Icon>
-                            <Text style={styles.textoC}>Enviar</Text>
+                            <Icon name="greater-than" color={colorIcono} size={25}></Icon>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
                         </View>
                     </TouchableHighlight >
                 </View>

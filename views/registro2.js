@@ -1,10 +1,17 @@
-import React, {useState} from 'react';
-import {View,StyleSheet,Text,ScrollView ,TouchableHighlight} from 'react-native';
+import React, {useState,useContext} from 'react';
+import {View,StyleSheet,Text,ScrollView ,TouchableHighlight,useWindowDimensions} from 'react-native';
 import {TextInput, Button, Paragraph, Dialog, Portal, RadioButton} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import EstilosContext from '../context/estilosContext';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const registro2 = ({navigation,route}) =>{
+
+    const {colorb,colorBorderInput,colorTextoBoton,colorLetra,colorIcono,colorFondo} = useContext(EstilosContext);
+
+    const {width, height} = useWindowDimensions();
 
     const [genero,guardarGenero] = useState('');
     const [gender_description,guardarGender_description] = useState('');
@@ -32,67 +39,72 @@ const registro2 = ({navigation,route}) =>{
         //limpiar formulario
     }
     return (
-        <ScrollView style= {globalStyles.contenedor}>
-            <Text style={[styles.texto,styles.minTitulo]}>Género:</Text>
-            <View style={styles.pregunta}>
-                <RadioButton
-                    value="first"
-                    status={ genero === 'Masculino' ? 'checked' : 'unchecked' }
-                    onPress={() => guardarGenero('Masculino')}
-                    color='black'
-                />
-                <Text style={styles.texto,styles.texto2}>Masculino</Text>
+        <KeyboardAwareScrollView>
+        <ScrollView style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <View style={{flex: 1}}>
+                <Text style={[styles.texto,styles.minTitulo,{color: colorLetra}]}>Género:</Text>
+                <View style={styles.pregunta}>
+                    <RadioButton
+                        value="first"
+                        status={ genero === 'Masculino' ? 'checked' : 'unchecked' }
+                        onPress={() => guardarGenero('Masculino')}
+                        color='black'
+                    />
+                    <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>Masculino</Text>
+                </View>
+                <View style={styles.pregunta}>
+                    <RadioButton
+                        value="second"
+                        status={ genero === 'Femenino' ? 'checked' : 'unchecked' }
+                        onPress={() => guardarGenero('Femenino')}
+                        color='black'
+                    />
+                    <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>Femenino</Text>
+                </View>
+                <View style={styles.pregunta}>
+                    <RadioButton
+                        value="third"
+                        status={ genero === 'No binario' ? 'checked' : 'unchecked' }
+                        onPress={() => guardarGenero('No binario')}
+                        color='black'
+                    />
+                    <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>No Binario</Text>
+                </View>
+                <View style={styles.pregunta}>
+                    <RadioButton
+                        value="Fourth"
+                        status={ genero === 'Otro' ? 'checked' : 'unchecked' }
+                        onPress={() => guardarGenero('Otro')}
+                        color='black'
+                    />
+                    <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>Otro</Text>
+                </View>
+                <View style={styles.pregunta}>
+                    <RadioButton
+                        value="fifth"
+                        status={ genero === 'Prefiero no decir' ? 'checked' : 'unchecked' }
+                        onPress={() => guardarGenero('Prefiero no decir')}
+                        color='black'
+                    />
+                    <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>Prefiero no decir</Text>
+                </View>
             </View>
-            <View style={styles.pregunta}>
-                <RadioButton
-                    value="second"
-                    status={ genero === 'Femenino' ? 'checked' : 'unchecked' }
-                    onPress={() => guardarGenero('Femenino')}
-                    color='black'
-                />
-                <Text style={styles.texto,styles.texto2}>Femenino</Text>
-            </View>
-            <View style={styles.pregunta}>
-                <RadioButton
-                    value="third"
-                    status={ genero === 'No binario' ? 'checked' : 'unchecked' }
-                    onPress={() => guardarGenero('No binario')}
-                    color='black'
-                />
-                <Text style={styles.texto,styles.texto2}>No Binario</Text>
-            </View>
-            <View style={styles.pregunta}>
-                <RadioButton
-                    value="Fourth"
-                    status={ genero === 'Otro' ? 'checked' : 'unchecked' }
-                    onPress={() => guardarGenero('Otro')}
-                    color='black'
-                />
-                <Text style={styles.texto,styles.texto2}>Otro</Text>
-            </View>
-            <View style={styles.pregunta}>
-                <RadioButton
-                    value="fifth"
-                    status={ genero === 'Prefiero no decir' ? 'checked' : 'unchecked' }
-                    onPress={() => guardarGenero('Prefiero no decir')}
-                    color='black'
-                />
-                <Text style={styles.texto,styles.texto2}>Prefiero no decir</Text>
-            </View>
-            <Text style={[styles.texto,{marginTop: 20,marginBottom:5,fontSize:16}]}>¿Cómo prefieres que te identifiquemos?</Text>
+            <View style={{flex: 4}}>
+            <Text style={[styles.texto,{marginTop: 20,marginBottom:5,color: colorLetra}]}>¿Cómo prefieres que te identifiquemos?</Text>
             <TextInput
                 label="Hombre, Mujer, Otro"
                 onChangeText={(texto) => guardarGender_description(texto) }
-                style={globalStyles.input}
+                style={[globalStyles.input,{borderColor: colorBorderInput}]}
                 theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
             />
             <View style={[styles.container,{marginTop:5}]}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>registrar()}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="greater-than" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Siguiente</Text>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor:colorb,height: height*0.05}]} underlayColor = {'transparent'} onPress={()=>registrar()}>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Icon name="greater-than" color={colorIcono} size={RFPercentage(3)}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Siguiente</Text>
                     </View>
                 </TouchableHighlight >
+            </View>
             </View>
             <Portal>
                 <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)}>
@@ -106,6 +118,7 @@ const registro2 = ({navigation,route}) =>{
                 </Dialog>
             </Portal>
         </ScrollView>
+        </KeyboardAwareScrollView>
     );
 }
 
@@ -113,13 +126,13 @@ const styles=StyleSheet.create({
 
     texto: {
         marginTop:0,
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         marginLeft:5,
         marginRight:5,
         fontFamily: 'Inter-Regular'
     },
     texto2: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         fontFamily: 'Inter-Regular'
     },
     pregunta:{
@@ -132,18 +145,17 @@ const styles=StyleSheet.create({
     minTitulo:{
         marginTop:15,
         fontFamily: "Inter-Bold",
-        fontSize: 20
+        fontSize: RFPercentage(3)
     },
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         textAlign: 'center',
         fontFamily: 'Inter-Light'
     },
     botonS:{
-        height: 35,
         marginBottom: 0,
         marginHorizontal: 4,
         justifyContent: "center",

@@ -1,15 +1,18 @@
-import React,{useEffect,useState} from 'react';
-import {Text,FlatList,View,ScrollView,StyleSheet,TouchableHighlight,ActivityIndicator} from 'react-native';
+import React,{useEffect,useState,useContext} from 'react';
+import {Text,FlatList,View,StyleSheet,TouchableHighlight,ActivityIndicator} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import globalStyles from '../styles/global';
 import {Avatar} from 'react-native-paper';
 import UserAvatar from 'react-native-user-avatar';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
-const elegirsicologo = ({navigation,route}) =>{
+const elegirsicologo = ({navigation}) =>{
+
+    const {colorb,colorLetra,colorTextoBoton,colorTitulo,colorFondo} = useContext(EstilosContext);
 
     const [sicologos, guardarSicologos] = useState([]);
     const [cerosicologos, guardarCerosicologos] = useState(false);
@@ -28,6 +31,7 @@ const elegirsicologo = ({navigation,route}) =>{
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.get(host+'/usuarios/afinidad/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            console.log(respuesta);
             if(respuesta.data.length == 0){
                 guardarCerosicologos(true);
             }else{
@@ -83,35 +87,35 @@ const elegirsicologo = ({navigation,route}) =>{
     }
 
     return (
-        <View style={globalStyles.contenedor}>
+        <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
             {cargando===false ?
             <View>
-                <Text style={globalStyles.titulo}>Elige un psicólogo</Text>
-                <Text style={{fontSize:18,marginHorizontal:15}}>{cerosicologos==true ? 'No se han encontrado psicólogos que coincidan con tu horario':''}</Text>
+                <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Elige un psicólogo</Text>
+                <Text style={{fontSize:18,marginHorizontal:15,color: colorLetra}}>{cerosicologos==true ? 'No se han encontrado psicólogos que coincidan con tu horario':''}</Text>
                 <FlatList
                     data={sicologos}
                     style={{marginBottom: 10}}
                     renderItem={({item,index}) => (
-                        <TouchableHighlight underlayColor = {'transparent'} onPress={  () => irHorarios(item.email)} style={styles.botonC} >
+                        <TouchableHighlight underlayColor = {'transparent'} onPress={  () => irHorarios(item.email)} style={[styles.botonC,{backgroundColor: colorb}]}>
                             <View style={{flex:1,flexDirection: 'row'}}>
                                 <View style={{flex:0.3,flexDirection: 'column'}}>
                                     {imagenperfil !== '' ? avatarimagen(imagenperfil) : item.fullname !== '' ? avatar(item.fullname) : console.log('')}
                                 </View>
                                 <View style={{flex:0.25,flexDirection: 'column',marginVertical:10,marginLeft:0}}>
                                     <View style={{flex:0.6}}>
-                                        <Text style={[styles.textoC]}>Nombre:</Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Nombre:</Text>
                                     </View>
                                     <View style={{flex:0.4}}>
-                                        <Text style={[styles.textoC]}>Género:</Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Género:</Text>
                                     </View>
                                 </View>
                                 <View style={{flex:0.45,flexDirection: 'column',marginVertical:10,marginRight:10}}>
                                     <View style={{flex:0.6}}>
-                                        <Text style={[styles.textoC]}>{item.fullname}</Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>{item.fullname}</Text>
                                     </View>
                                     <View style={{flex:0.4}}>
-                                        <Text style={[styles.textoC]}>{item.genero}</Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>{item.genero}</Text>
                                     </View>
                                 </View>
                             </View>

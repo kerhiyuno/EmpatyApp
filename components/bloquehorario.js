@@ -1,9 +1,12 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import {View,StyleSheet,Text,TouchableHighlight} from 'react-native';
+import EstilosContext from '../context/estilosContext';
 
 const BloqueHorario = (props) => {
 
     var {numeroBloque,numeroDia,bloque,d,guardard,disponibles,guardarDisponibles} = props;
+
+    const {colorb,colorTextoBoton,colorBotonDesactivado} = useContext(EstilosContext);
 
     const eliminar = async (obj) => {
         var lista=disponibles;
@@ -27,9 +30,9 @@ const BloqueHorario = (props) => {
     }
 
     return(
-        <TouchableHighlight style={d==='no'? [styles.opciones,styles.botonno] : [styles.opciones,styles.boton]} onPress={()=> eleccion()} >
+        <TouchableHighlight style={d==='no'? [styles.opciones,styles.botonno,{backgroundColor:colorBotonDesactivado}] : [styles.opciones,styles.boton,{backgroundColor: colorb}]} onPress={()=> eleccion()} >
                 <View>
-                    <Text style={styles.textboton}>{bloque}</Text>
+                    <Text style={[styles.textboton,{color: colorTextoBoton}]}>{bloque}</Text>
                 </View>
         </TouchableHighlight>
     );

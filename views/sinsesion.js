@@ -1,18 +1,36 @@
-import React, {useState,useEffect,useContext} from 'react';
-import {View,StyleSheet,Text,TouchableHighlight,ActivityIndicator,Image} from 'react-native';
+import React, {useState,useContext,useEffect} from 'react';
+import {View,StyleSheet,Text,TouchableHighlight,ActivityIndicator,Image,useWindowDimensions } from 'react-native';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
 import NotificacionesContext from '../context/notificacionesContext'
+import EstilosContext from '../context/estilosContext'
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
 const sinsesion = ({navigation,route}) =>{
 
     const {obtenerTokenFirebase} = useContext(NotificacionesContext);
+    const {obtenerColorBoton,cambiarColorBoton,cambiarColorTextoBoton,cambiarColorSalir,cambiarColorHeader,colorb,colorFondo,colorLetra,
+        colorBordeInput,colorTextoBoton,colorPlaceholderinput,colorPrimaryinput,colorIcono} = useContext(EstilosContext);
+
+    const {width, height} = useWindowDimensions();
+    const textinputsize = height*0.07;
+
+    const [color,guardarColor] = useState("#e35d17")
+     useEffect(() => {
+         console.log(color);
+         guardarColor(obtenerColorBoton());
+     }, [])
+
+    useEffect(() => {
+        guardarColor(colorb);
+     }, [colorb])
 
     const [email,guardarEmail] = useState('');
     const [password,guardarPassword] = useState('');
@@ -21,18 +39,6 @@ const sinsesion = ({navigation,route}) =>{
     const [alertavacio,guardarAlertaVacio] = useState(false);
 
     const [cargando,guardarCargando] = useState(false)
-
-    /*const inicioautomatico = async () => {
-        const token = await AsyncStorage.getItem('datosSesion');
-        if (token !== null) {
-          navigation.navigate('Inicio');
-        } else {
-            return
-        }
-      } */
-    useEffect( () => {
-        //inicioautomatico();
-    })
 
     const resultadoinicio = async (respuesta) => {
         if (respuesta.status==200){
@@ -118,7 +124,6 @@ const sinsesion = ({navigation,route}) =>{
                                 } catch (error) {
                                     console.log(error.response);
                                     console.log("error acaa");
-                                    //navigation.navigate('Home');
                                 }  
                             } catch (error) {
                                 console.log("error aqui");
@@ -165,41 +170,42 @@ const sinsesion = ({navigation,route}) =>{
             return;
         }
    }
-   
+
     return (
-        <View style={[globalStyles.contenedor,{justifyContent:'center',marginBottom:70}]}>
-            <Image
-                style={styles.tinyLogo}
-                source={
-                    require('../images/empaty.png')
-                }
-            />
-            <TextInput
-                label="Correo"
-                onChangeText={(texto) => guardarEmail(texto)}
-                style={globalStyles.input}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
-            />
-            <TextInput
-                label="Contraseña"
-                secureTextEntry={true}
-                onChangeText={(texto) => guardarPassword(texto)}
-                style={globalStyles.input}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+        <KeyboardAwareScrollView>
+        <View style={[globalStyles.contenedor,{backgroundColor:colorFondo}]}>
+            <View style={{justifyContent:'space-around',marginTop: height/20,marginBottom: height/40}}>
+                <Image
+                    style={[styles.tinyLogo,{width: width*0.35,height: 1.2*width*0.35}]}
+                    source={
+                        require('../images/empaty.png')
+                    }
                 />
-            <View style={[styles.container,{marginTop:5}]}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>iniciosesion()}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="login" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Iniciar Sesión</Text>
+            </View>
+            <View style={{justifyContent: 'flex-start'}}>
+                <TextInput
+                    label="Correo"
+                    onChangeText={(texto) => guardarEmail(texto)}
+                    style={[globalStyles.input,{borderColor:colorBordeInput,height: textinputsize}]}
+                    theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
+                />
+                <TextInput
+                    label="Contraseña"
+                    secureTextEntry={true}
+                    onChangeText={(texto) => guardarPassword(texto)}
+                    style={[globalStyles.input,{borderColor:colorBordeInput,height: textinputsize}]}
+                    theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
+                    />
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor:color,height: height/20}]} underlayColor = {'transparent'} onPress={()=>iniciosesion()}>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Icon name="login" color={colorIcono} size={RFPercentage(3)}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Iniciar Sesión</Text>
                     </View>
                 </TouchableHighlight >
                 {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {styles.cargando}/> : null}
-            </View>
-            <View style={[styles.container,{marginTop:70}]}>
-                <TouchableHighlight  style={[styles.botonS,{marginHorizontal:100}]} underlayColor = {'transparent'} onPress={ () => navigation.navigate('Registro 1/7')}>
-                    <View style={{flexDirection:'row'}}>
-                        <Text style={styles.textoC}>Regístrate</Text>
+                <TouchableHighlight  style={[styles.botonS,{marginHorizontal:width/5,backgroundColor:color,height: height/20,marginTop: height/10}]} underlayColor = {'transparent'} onPress={ () => navigation.navigate('Registro 1/7')}>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Regístrate</Text>
                     </View>
                 </TouchableHighlight >
             </View>
@@ -237,6 +243,7 @@ const sinsesion = ({navigation,route}) =>{
                 </Dialog>
             </Portal>
         </View>
+        </KeyboardAwareScrollView>
     );
 }
 
@@ -244,15 +251,15 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         textAlign: 'center',
         fontFamily: 'Inter-Light',
     },
     botonS:{
-        height: 40,
+        height: RFPercentage(5),
         marginBottom: 0,
-        marginHorizontal: 8,
+        marginHorizontal: 13,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#e35d17",
@@ -269,9 +276,9 @@ const styles=StyleSheet.create({
     },
     tinyLogo: {
         alignSelf:'center',
-        width:120,
-        height: 144,
-        marginBottom: 40
+        width:110,
+        height: 132,
+        marginBottom: 35
     },
 })
 

@@ -1,12 +1,21 @@
-import React, {useState} from 'react';
-import {View,StyleSheet,Text,ScrollView,TouchableHighlight} from 'react-native';
+import React, {useState,useContext} from 'react';
+import {View,StyleSheet,Text,useWindowDimensions,TouchableHighlight} from 'react-native';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import EstilosContext from '../context/estilosContext'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const registro = ({navigation}) =>{
-    
+
+    const {colorb,colorBorderInput,colorTextoBoton,colorLetra,colorPrimaryinput,
+        colorPlaceholderinput,colorError,colorIcono,colorFondo,colorTitulo} = useContext(EstilosContext);
+
+    const {width, height} = useWindowDimensions();
+    const textinputsize = height*0.07
+
     const [fullname,guardarFullname] = useState('');
     const [rut,guardarRut] = useState('');
     const [email,guardarEmail] = useState('');
@@ -17,9 +26,9 @@ const registro = ({navigation}) =>{
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     
-    const [dia,guardarDia] = useState(1);
-    const [mes,guardarMes] = useState(1);
-    const [año,guardarAño] = useState(2002);
+    const [dia,guardarDia] = useState("01");
+    const [mes,guardarMes] = useState("01");
+    const [año,guardarAño] = useState("2002");
    
     const [alerta,guardarAlerta] = useState(false);
     const [alertaedad,guardarAlertaedad] = useState(false);
@@ -304,17 +313,18 @@ const registro = ({navigation}) =>{
         return;
     }
     return (
-        <View style= {[globalStyles.contenedor]}>
+        <KeyboardAwareScrollView>
+        <View style={[globalStyles.contenedor,{backgroundColor: colorFondo,justifyContent:'space-around'}]}>
             <TextInput
                 label="Nombre Completo"
                 onChangeText={(texto) => guardarFullname(texto)}
-                style={[globalStyles.input,{marginTop:10}]}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                style={[globalStyles.input,{marginTop:10,borderColor: colorBorderInput,height: textinputsize}]}
+                theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
             />
-            <TouchableHighlight underlayColor = {'transparent'} style={styles.botonC} onPress={showDatePicker} >
-                <View style={{flexDirection:'row',justifyContent:'center'}}>
-                    <Icon name="calendar" color="white" size={25}></Icon>
-                    <Text style={styles.textoC}>Fecha de nacimiento</Text>
+            <TouchableHighlight underlayColor = {'transparent'} style={[styles.botonC,{backgroundColor: colorb,height: height*0.05}]} onPress={showDatePicker} >
+                <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <Icon name="calendar" color={colorIcono} size={RFPercentage(3)}></Icon>
+                    <Text style={[styles.textoC,{color: colorTextoBoton}]}>Fecha de nacimiento</Text>
                 </View>
             </TouchableHighlight>
             <DateTimePickerModal
@@ -322,16 +332,16 @@ const registro = ({navigation}) =>{
                 mode="date"
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
-                date={new Date(año+"-"+mes+"-"+dia)}
+                date={new Date(año+"-"+mes+"-"+dia+"T10:00:00.000Z")}
             />
-            <Text style={{marginBottom:10,marginLeft:10,fontSize:15,marginLeft:15,fontFamily:'Inter-Regular'}}>Fecha seleccionada: {fechaformateo(fecha_nacimiento)}</Text>
+            <Text style={{marginBottom:5,marginLeft:13,fontSize:15,marginLeft:15,fontFamily:'Inter-Regular',color: colorLetra}}>Fecha seleccionada: {fechaformateo(fecha_nacimiento)}</Text>
             <TextInput
                 label="rut (Ej:12345678-9)"
                 onChangeText={(texto) => {guardarRut(texto);verificarRut(texto);}}
-                style={[globalStyles.input,{marginBottom: 0,}]}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                style={[globalStyles.input,{marginBottom:0,borderColor: colorBorderInput,height: textinputsize}]}
+                theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
             />
-            <Text  style={{marginBottom:5,marginLeft:10,fontSize:14,color: '#a12b2b'}}>{errorRut==true ? 'Rut no válido' : ''}</Text>
+            <Text  style={{marginBottom:1,marginLeft:13,fontSize:13,color: colorError}}>{errorRut==true ? 'Rut no válido' : ''}</Text>
                 <TextInput
                     label="Correo"
                     onChangeText={(texto) => {guardarEmail(texto); console.log("cambio",texto); if (!validateEmail(texto)) {
@@ -339,40 +349,38 @@ const registro = ({navigation}) =>{
                         }else{
                             guardarErrorEmail(false);
                         } }}
-                    style={[globalStyles.input,{marginBottom: 0,}]}
-                    theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                    style={[globalStyles.input,{marginBottom:0,borderColor: colorBorderInput,height: textinputsize}]}
+                    theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                 />
-                <Text  style={{marginBottom:5,marginLeft:10,fontSize:14,color: '#a12b2b'}}>{erroremail==true ? 'Correo no válido' : ''}</Text>
+                <Text  style={{marginBottom:0,marginLeft:13,fontSize:13,color: colorError}}>{erroremail==true ? 'Correo no válido' : ''}</Text>
             <TextInput
                 label="Teléfono"
                 onChangeText={(texto) => guardarTelefono(texto) }
-                style={globalStyles.input}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                style={[globalStyles.input,{borderColor: colorBorderInput,height: textinputsize}]}
+                theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                 keyboardType='phone-pad'
             />
             <TextInput
                 label="Contraseña"
                 onChangeText={(texto) => {guardarPassword(texto); contraseñasIguales(password2,texto)}}
-                style={globalStyles.input}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                style={[globalStyles.input,{borderColor: colorBorderInput,height: textinputsize}]}
+                theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                 secureTextEntry={true}
             />
             <TextInput
                 label="Repetir contraseña"
                 onChangeText={(texto) => {guardarPassword2(texto); contraseñasIguales(password,texto)}}
-                style={[globalStyles.input,{marginBottom:0}]}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                style={[globalStyles.input,{marginBottom:0,borderColor: colorBorderInput,height: textinputsize}]}
+                theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                 secureTextEntry={true}
             />
-            <Text  style={{marginBottom:0,marginLeft:10,fontSize:14,color: '#a12b2b'}}>{errorContraseña==true ? 'Las contraseñas deben ser iguales' : ''}</Text>
-            <View style={[styles.container,{marginTop:0}]}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>registrar()}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="greater-than" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Siguiente</Text>
-                    </View>
-                </TouchableHighlight >
-            </View>
+            <Text  style={{marginBottom:1,marginLeft:13,fontSize:14,color: colorError}}>{errorContraseña==true ? 'Las contraseñas deben ser iguales' : ''}</Text>
+            <TouchableHighlight  style={[styles.botonS,{backgroundColor:colorb,height: height*0.05}]} underlayColor = {'transparent'} onPress={()=>registrar()}>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <Icon name="greater-than" color={colorIcono} size={RFPercentage(3)}></Icon>
+                    <Text style={[styles.textoC,{color: colorTextoBoton}]}>Siguiente</Text>
+                </View>
+            </TouchableHighlight >
             <Portal>
                 <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)}>
                     <Dialog.Title>Error</Dialog.Title>
@@ -429,31 +437,34 @@ const registro = ({navigation}) =>{
                 </Dialog>
             </Portal>
         </View>
+        </KeyboardAwareScrollView>
+
     );
 }
 
 const styles=StyleSheet.create({
    
     botonC: {
-        height: 35,
+        height: RFPercentage(5),
         marginBottom: 0,
-        marginHorizontal: 10,
+        marginHorizontal: 15,
         justifyContent: 'center',
+        alignItems: "center",
         backgroundColor: '#e35d17',
         borderRadius: 8
     },
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         textAlign: 'center',
         fontFamily: 'Inter-Light'
     },
     botonS:{
-        height: 35,
+        height: RFPercentage(5),
         marginTop: 5,
-        marginHorizontal: 4,
+        marginHorizontal: 9,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#e35d17",

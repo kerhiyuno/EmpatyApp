@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import {StyleSheet,View,Text,TouchableHighlight} from 'react-native';
 import {Headline, Button,Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -6,10 +6,13 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
-const sesion = ({navigation,route}) =>{
+const sesion = ({navigation}) =>{
+
+    const {colorb,colorTextoBoton,colorLetra,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
  
     const [nombresicologo,guardarNombreSicologo] = useState('Juan');
     const [tienegrupo,guardarTienegrupo] = useState(true);
@@ -108,7 +111,6 @@ const sesion = ({navigation,route}) =>{
                     } catch (error) {
                         console.log(error.response);
                         console.log("error acaa");
-                        //navigation.navigate('Home');
                     }  
                 } catch (error) {
                     console.log("error aqui");
@@ -274,38 +276,38 @@ const sesion = ({navigation,route}) =>{
         }
     }   
     return (
-        <View style={globalStyles.contenedor} >
-            <Headline style={globalStyles.titulo}></Headline>
+        <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]} >
+            <Headline style={[globalStyles.titulo,{color: colorTitulo}]}></Headline>
             <View style={styles.container}>
-                <TouchableHighlight underlayColor = {'transparent'} style={styles.botonS} onPress={() => siguienteCita() }>
+                <TouchableHighlight underlayColor = {'transparent'} style={[styles.botonS,{backgroundColor: colorb}]} onPress={() => siguienteCita() }>
                     <View style={{flexDirection:'row'}}>
-                        <Icon name="page-next-outline" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Siguiente cita</Text>
+                        <Icon name="page-next-outline" color={colorIcono} size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Siguiente cita</Text>
                     </View>
                 </TouchableHighlight>
             </View>
             <View style={styles.container}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Calendario') }>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Calendario') }>
                     <View style={{flexDirection:'row'}}>
-                        <Icon name="calendar-month" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Agenda</Text>
+                        <Icon name="calendar-month" color={colorIcono} size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Agenda</Text>
                     </View>
                 </TouchableHighlight >
             </View>
             <View style={styles.container}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={() => navigation.navigate('Encuestas') }>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Encuestas') }>
                     <View style={{flexDirection:'row'}}>
-                        <Icon name="file-question-outline" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Encuestas pendientes</Text>
+                        <Icon name="file-question-outline" color={colorIcono} size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Encuestas pendientes</Text>
                     </View>
                 </TouchableHighlight >
             </View>
             <View style={{marginTop:20,flexDirection:'row',marginHorizontal: 10}}>
-                <Text style={[styles.textoS,{fontFamily: 'Inter-Bold'}]}>Mi Psicólogo: </Text>
-                <Text style={styles.textoS}>{nombresicologo}</Text>
+                <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}>Mi Psicólogo: </Text>
+                <Text style={[styles.textoS,{color: colorLetra}]}>{nombresicologo}</Text>
             </View>
             <View>
-            {tienegrupo===false ? <Text style={[styles.textoS,{fontFamily: 'Inter-Bold'}]}> 
+            {tienegrupo===false ? <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}> 
             No has sido asignado a un grupo</Text> : null}
             </View>
             <Portal>

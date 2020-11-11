@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import {View, StyleSheet,Text,ScrollView,TouchableHighlight } from 'react-native';
 import {TextInput, Button,RadioButton, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -6,10 +6,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
-const editarperfil = ({navigation,route}) =>{
+const editarperfil = ({route}) =>{
+
+    const {colorb,colorLetra,colorTextoBoton,colorBordeInput,
+        colorPrimaryinput,colorPlaceholderinput,colorIcono,colorFondo} = useContext(EstilosContext);
 
     const nombre = (route.params.datos.nombre);
     const telefono = (route.params.datos.telefono);
@@ -74,23 +78,23 @@ const editarperfil = ({navigation,route}) =>{
     }
 
     return (
-        <ScrollView style= {globalStyles.contenedor}>
-            <Text style={styles.texto}>Nombre:</Text>
+        <ScrollView style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <Text style={[styles.texto,{color: colorLetra}]}>Nombre:</Text>
             <TextInput
                 onChangeText={(texto) => guardarNombrecambio(texto)}
-                style={globalStyles.input}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                style={[globalStyles.input,{borderColor:colorBordeInput}]}
+                theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                 defaultValue = {nombre}
             />
-            <Text style={styles.texto}>Teléfono:</Text>
+            <Text style={[styles.texto,{color: colorLetra}]}>Teléfono:</Text>
             <TextInput
                 onChangeText={(texto) => guardarTelefonocambio(texto)}
-                style={globalStyles.input}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                style={[globalStyles.input,{borderColor:colorBordeInput}]}
+                theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                 defaultValue = {telefono}
                 keyboardType='phone-pad'
             />
-            <Text style={[styles.texto,styles.minTitulo]}>Género:</Text>
+            <Text style={[styles.texto,styles.minTitulo,{color: colorLetra}]}>Género:</Text>
             <View style={styles.pregunta}>
                 <RadioButton
                     value="first"
@@ -98,7 +102,7 @@ const editarperfil = ({navigation,route}) =>{
                     onPress={() => guardarGenerocambio('Masculino')}
                     color='black'
                 />
-                <Text style={styles.texto,styles.texto2}>Masculino</Text>
+                <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>Masculino</Text>
             </View>
             <View style={styles.pregunta}>
                 <RadioButton
@@ -107,7 +111,7 @@ const editarperfil = ({navigation,route}) =>{
                     onPress={() => guardarGenerocambio('Femenino')}
                     color='black'
                 />
-                <Text style={styles.texto,styles.texto2}>Femenino</Text>
+                <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>Femenino</Text>
             </View>
             <View style={styles.pregunta}>
                 <RadioButton
@@ -116,7 +120,7 @@ const editarperfil = ({navigation,route}) =>{
                     onPress={() => guardarGenerocambio('No binario')}
                     color='black'
                 />
-                <Text style={styles.texto,styles.texto2}>No Binario</Text>
+                <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>No Binario</Text>
             </View>
             <View style={styles.pregunta}>
                 <RadioButton
@@ -125,7 +129,7 @@ const editarperfil = ({navigation,route}) =>{
                     onPress={() => guardarGenerocambio('Otro')}
                     color='black'
                 />
-                <Text style={styles.texto,styles.texto2}>Otro</Text>
+                <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>Otro</Text>
             </View>
             <View style={styles.pregunta}>
                 <RadioButton
@@ -134,19 +138,19 @@ const editarperfil = ({navigation,route}) =>{
                     onPress={() => guardarGenerocambio('Prefiero no decir')}
                     color='black'
                 />
-                <Text style={styles.texto,styles.texto2}>Prefiero no decir</Text>
+                <Text style={[styles.texto,styles.texto2,{color: colorLetra}]}>Prefiero no decir</Text>
             </View>
-            <Text style={styles.texto}>Como prefieres que te identifiquemos:</Text>
+            <Text style={[styles.texto,{color: colorLetra}]}>Como prefieres que te identifiquemos:</Text>
             <TextInput
                 onChangeText={(texto) => guardarGenerodescripcioncambio(texto)}
-                style={globalStyles.input}
-                theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                style={[globalStyles.input,{borderColor:colorBordeInput}]}
+                theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                 defaultValue = {generodescripcion}
             />
-            <TouchableHighlight style={styles.botonS} onPress={() => enviar() }>
+            <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} onPress={() => enviar() }>
                 <View style={{flexDirection:'row'}}>
-                    <Icon name="pencil-outline" color="white" size={25}></Icon>
-                    <Text style={[styles.textoC]}> Guardar Cambios</Text>
+                    <Icon name="pencil-outline" color={colorIcono} size={25}></Icon>
+                    <Text style={[styles.textoC,{color: colorTextoBoton}]}> Guardar Cambios</Text>
                 </View>
             </TouchableHighlight>
             <Portal>

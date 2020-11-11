@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Checkbox} from 'react-native-paper';
 import {View,StyleSheet,Text} from 'react-native';
+import EstilosContext from '../context/estilosContext';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const EleccionHobbies = (props) =>{
 
     var { hobbie,sethobbie,texto,hobbies,guardarHobbies,numero} = props;
+
+    const {colorLetra} = useContext(EstilosContext);
 
     const eliminar = (number) => {
         var lista=hobbies;
@@ -33,14 +37,14 @@ const EleccionHobbies = (props) =>{
                 }}
                 color='black'
             />
-            <Text style={styles.texto}>{texto}</Text>
+            <Text style={[styles.texto,{color: colorLetra}]}>{texto}</Text>
         </View>
     );
 }
 
 const styles=StyleSheet.create({
     texto: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         marginLeft:5,
         marginRight:5,
         fontFamily: 'Inter-Regular'
@@ -48,7 +52,7 @@ const styles=StyleSheet.create({
     pregunta:{
         flex: 1,
         flexDirection:'row',
-        marginTop:10,
+        marginTop:8,
         marginLeft:10,
         alignItems:'center'
     }

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
 import {Text,View,StyleSheet,TouchableHighlight,Linking,Alert} from 'react-native';
 import {Paragraph, Dialog, Portal,Button} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -6,10 +6,13 @@ import InAppBrowser from 'react-native-inappbrowser-reborn'
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
-const cita = ({navigation,route}) =>{
+const cita = ({route}) =>{
+
+    const {colorb,colorLetra,colorTextoBoton,colorTitulo,colorFondo} = useContext(EstilosContext);
 
     const [nolink,guardarNolink] = useState(false);
     const [nosubgrupo,guardarNosubgrupo] = useState(false);
@@ -266,22 +269,22 @@ const cita = ({navigation,route}) =>{
         }
     }
     return (
-        <View style={globalStyles.contenedor}>
-            <Text style={globalStyles.titulo}> Datos de la sesión </Text>
+        <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <Text style={[globalStyles.titulo,{color: colorTitulo}]}> Datos de la sesión </Text>
             <View style={{marginTop: 20}}>
                 <View style={{marginBottom:20}}>
-                    <Text style={styles.texto}>Dia: {route.params.dia} de {route.params.mes}  </Text>
-                    <Text style={styles.texto}>Hora: {route.params.hora}</Text>
+                    <Text style={[styles.texto,{color: colorLetra}]}>Dia: {route.params.dia} de {route.params.mes}  </Text>
+                    <Text style={[styles.texto,{color: colorLetra}]}>Hora: {route.params.hora}</Text>
                 </View>
             </View>
-            <TouchableHighlight onPress={  () => funcion(route.params.id)} style={styles.botonC} >
+            <TouchableHighlight onPress={  () => funcion(route.params.id)} style={[styles.botonC,{backgroundColor: colorb}]} >
                         <View>
-                        <Text style={styles.textoC}>Unirse a la sesión</Text>
+                        <Text style={[styles.texto,{color: colorTextoBoton}]}>Unirse a la sesión</Text>
                         </View>
             </TouchableHighlight>
-            <TouchableHighlight onPress={  () => funcion2(route.params.id)} style={styles.botonC} >
+            <TouchableHighlight onPress={  () => funcion2(route.params.id)} style={[styles.botonC,{backgroundColor: colorb}]} >
                         <View>
-                        <Text style={styles.textoC}>Unirse al sub-grupo</Text>
+                        <Text style={[styles.texto,{color: colorTextoBoton}]}>Unirse al sub-grupo</Text>
                         </View>
             </TouchableHighlight>
 

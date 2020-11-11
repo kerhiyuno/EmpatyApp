@@ -6,6 +6,8 @@ import {DefaultTheme} from 'react-native-paper';
 import Notificaciones from '../views/notificaciones';
 import {createStackNavigator} from '@react-navigation/stack';
 import NotificacionesContext from '../context/notificacionesContext'
+import EstilosContext from '../context/estilosContext'
+import { color } from 'react-native-reanimated';
 
 const theme= {
     ...DefaultTheme,
@@ -21,17 +23,19 @@ const theme= {
 const notificacionesStack = createStackNavigator();
 
 const notificacionesStackScreen = () => {
+const {colorHeader,colorTextoHeader} = useContext(EstilosContext);
 return (
   <notificacionesStack.Navigator
     initialRouteName="Notificaciones"
     screenOptions={{
       headerStyle:{
-        backgroundColor: theme.colors.primary
+        backgroundColor: colorHeader
       },
       headerTintColor: theme.colors.surface,
       headerTitleStyle:{
         fontFamily: "Inter-SemiBold",
-        fontSize:17
+        fontSize:17,
+        color: colorTextoHeader
       }
     }}
   >
@@ -45,7 +49,7 @@ const Tab = createBottomTabNavigator();
 const TabScreen =  () => {
 
     const { cantidad, obtenerCantidad,reiniciarCantidad } = useContext(NotificacionesContext);
-
+    const {colorHeader,colorTextoHeader} = useContext(EstilosContext);
     useEffect(() => {
         obtenerCantidad();
     },[]);
@@ -69,13 +73,13 @@ const TabScreen =  () => {
          }
         })}
         tabBarOptions={{
-        activeTintColor: 'white',
+        activeTintColor: colorTextoHeader,
         inactiveTintColor: 'black',
         labelStyle: {
           fontSize: 17,
         },
         tabStyle: {
-          backgroundColor: '#f58b2f'
+          backgroundColor: colorHeader,
         },
         }}>
         <Tab.Screen name="Inicio" component={StackScreen} />

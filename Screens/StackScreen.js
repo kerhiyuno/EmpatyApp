@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import {View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {DefaultTheme} from 'react-native-paper';
@@ -24,7 +24,9 @@ import Desvinculacion from '../views/desvinculacion';
 import encuestas from '../views/encuestas';
 import encuesta from '../views/encuesta';
 import Sentimiento from '../views/sentimiento';
-
+import Personalizar from '../views/personalizar';
+import Panico from '../views/panico';
+import EstilosContext from '../context/estilosContext'
 
 import BotonLogout from '../components/botonlogout';
 import BotonInfo from '../components/botoninfo';
@@ -44,17 +46,20 @@ const theme= {
 
 
 const StackScreen = () => {
+
+  const {colorHeader,colorTextoHeader} = useContext(EstilosContext);
     return (
       <Stack.Navigator
       initialRouteName="Home"
       screenOptions={{
         headerStyle:{
-          backgroundColor: theme.colors.primary
+          backgroundColor: colorHeader
         },
-        headerTintColor: theme.colors.surface,
+        headerTintColor: colorTextoHeader,
         headerTitleStyle:{
           fontFamily: "Inter-SemiBold",
-          fontSize:17
+          fontSize:17,
+          color: colorTextoHeader
         }
       }}
     >
@@ -313,6 +318,32 @@ const StackScreen = () => {
               <BotonLogout {...props} navigation={navigation} route={route}/>
             </View>,
             headerTitle: 'Sentimientos'
+        })}
+      >
+      </Stack.Screen>
+      <Stack.Screen
+        name= 'Personalizar'
+        component={Personalizar}
+        options={ ({navigation,route}) => ({
+          headerRight: (props)=>
+            <View style={{flexDirection:'row'}}>
+              <BotonInfo {...props} navigation={navigation} route={route}/>
+              <BotonLogout {...props} navigation={navigation} route={route}/>
+            </View>,
+            headerTitle: 'Personalizar'
+        })}
+      >
+      </Stack.Screen>
+      <Stack.Screen
+        name= 'Panico'
+        component={Panico}
+        options={ ({navigation,route}) => ({
+          headerRight: (props)=>
+            <View style={{flexDirection:'row'}}>
+              <BotonInfo {...props} navigation={navigation} route={route}/>
+              <BotonLogout {...props} navigation={navigation} route={route}/>
+            </View>,
+            headerTitle: 'Botón de pánico'
         })}
       >
       </Stack.Screen>

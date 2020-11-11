@@ -1,9 +1,9 @@
-import React, {useReducer, useEffect} from 'react';
+import React, {useReducer} from 'react';
 import NotificacionesContext from './notificacionesContext';
 import NotificacionesReducer from './notificacionesReducer';
 
-import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,
-    REINICIAR_CONTENIDO,GUARDAR_TOKEN_FIREBASE,GUARDAR_MENSAJES,GUARDAR_CHATROOM,NUEVO_MENSAJE} from '../types';
+import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,REINICIAR_CONTENIDO,
+    GUARDAR_TOKEN_FIREBASE,GUARDAR_MENSAJES,GUARDAR_CHATROOM,NUEVO_MENSAJE,A_FOREGROUND} from '../types';
 
 const NotificacionesState = (props) => {
 
@@ -13,10 +13,19 @@ const NotificacionesState = (props) => {
         token_firebase: '',
         mensajes: [],
         chatRoom: 0,
-        nuevomensaje:0
+        nuevomensaje:0,
+        aforeground: 0
     }
 
     const [state,dispatch] = useReducer(NotificacionesReducer,initialState);
+
+
+    const cambioaForeground = (numero) => {
+        dispatch({
+            type: A_FOREGROUND,
+            payload: numero
+        })
+    }
 
     const hayNuevomensaje = (numero) => {
         console.log(state.nuevomensaje);
@@ -101,7 +110,9 @@ const NotificacionesState = (props) => {
                 guardarChatroom,
                 obtenerChatroom,
                 hayNuevomensaje,
-                nuevomensaje: state.nuevomensaje
+                cambioaForeground,
+                nuevomensaje: state.nuevomensaje,
+                aforeground: state.aforeground
             }}
         >
             {props.children}

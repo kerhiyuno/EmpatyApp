@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import {View,StyleSheet,Text,ScrollView,TouchableHighlight} from 'react-native';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EleccionHobbies from '../components/checkbox';
+import EstilosContext from '../context/estilosContext';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const registro3 = ({navigation,route}) =>{
+
+    const {colorb,colorBorderInput,colorTextoBoton,colorLetra,colorIcono,colorFondo,colorTitulo} = useContext(EstilosContext);
 
     const [musica,guardarMusica] = useState('no');
     const [videojuegos,guardarVideojuegos] = useState('no');
@@ -38,8 +42,8 @@ const registro3 = ({navigation,route}) =>{
     }
     
     return (
-        <ScrollView style= {globalStyles.contenedor}>
-            <Text style={globalStyles.titulo}>Hobbies</Text>
+        <ScrollView style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Hobbies</Text>
             <EleccionHobbies hobbie={musica} sethobbie={guardarMusica} texto={'Musica'} hobbies={hobbies} guardarHobbies={guardarHobbies} numero={1}/>
             <EleccionHobbies hobbie={videojuegos} sethobbie={guardarVideojuegos} texto={'Videojuegos'} hobbies={hobbies} guardarHobbies={guardarHobbies} numero={2}/>
             <EleccionHobbies hobbie={lectura} sethobbie={guardarLectura} texto={'Lectura'} hobbies={hobbies} guardarHobbies={guardarHobbies} numero={3}/>
@@ -50,10 +54,10 @@ const registro3 = ({navigation,route}) =>{
             <EleccionHobbies hobbie={otros} sethobbie={guardarOtros} texto={'Otros'} hobbies={hobbies} guardarHobbies={guardarHobbies} numero={8}/>
 
             <View style={[styles.container,{marginTop:5}]}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>registrar()}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="greater-than" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Siguiente</Text>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor:colorb}]} underlayColor = {'transparent'} onPress={()=>registrar()}>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Icon name="greater-than" color={colorIcono} size={RFPercentage(3)}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Siguiente</Text>
                     </View>
                 </TouchableHighlight >
             </View>
@@ -66,13 +70,13 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         textAlign: 'center',
         fontFamily:'Inter-Light'
     },
     botonS:{
-        height: 35,
+        height: RFPercentage(5),
         marginTop: 15,
         marginHorizontal: 4,
         justifyContent: "center",

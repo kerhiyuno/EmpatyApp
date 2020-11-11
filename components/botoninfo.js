@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import {View,StyleSheet,TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import EstilosContext from '../context/estilosContext';
 
 const BotonInfo = ({navigation}) =>{
+
+    const {colorb,colorIcono} = useContext(EstilosContext);
     
     const salir = async() =>{
         navigation.navigate('Informacion');
@@ -10,8 +13,8 @@ const BotonInfo = ({navigation}) =>{
 
     return(
         <View style={{justifyContent:"center",marginRight: 20}}>
-            <TouchableHighlight style={styles.botonS} onPress={() => salir() }>
-                    <Icon name="information-outline" color="white" size={30}></Icon>
+            <TouchableHighlight style={[styles.botonS,{color: colorb}]} onPress={() => salir() }>
+                    <Icon name="information-outline" color={colorIcono} size={30}></Icon>
             </TouchableHighlight>
         </View>
     );

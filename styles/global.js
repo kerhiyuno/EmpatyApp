@@ -1,17 +1,17 @@
 import {StyleSheet} from 'react-native';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const globalStyles = StyleSheet.create({
     contenedor: {
         flex: 1,
-        marginTop: 5,
-        marginHorizontal: '2.5%',
-        marginBottom: 5
+        paddingTop:10,
+        paddingHorizontal:10
     },
     titulo: {
         textAlign: 'center',
         marginTop: 8,
         marginBottom: 16,
-        fontSize: 20,
+        fontSize: RFPercentage(3.5),
         fontFamily: "Inter-Bold",
         color: '#141414'
     },
@@ -31,8 +31,8 @@ const globalStyles = StyleSheet.create({
         borderColor: '#357870',
         borderWidth: 1,
         height: 45,
-        marginHorizontal: 8,
-        fontSize:14
+        marginHorizontal: 13,
+        fontSize:RFPercentage(2)
     },
     entradaTexto:{
         marginTop: 15,

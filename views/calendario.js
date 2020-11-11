@@ -1,14 +1,16 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useContext} from 'react';
 import {Text,FlatList,View,StyleSheet,TouchableHighlight,ScrollView,ActivityIndicator} from 'react-native';
-import {Headline} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ipHost} from '../components/hosts.js';
+import EstilosContext from '../context/estilosContext'
 
 const host = ipHost();
 
-const calendario = ({navigation,route}) =>{
+const calendario = ({navigation}) =>{
+
+    const {colorb,colorTextoBoton,colorTitulo,colorFondo} = useContext(EstilosContext);
 
     const prueba = [{id: '1',grupo: '1',bloque:'1', fecha_sesion: '2002-07-11',linkmeet:'google.com',ha_terminado:true},{id: '2',grupo: '1',bloque:'3', fecha_sesion: '2002-07-15',linkmeet:'google.com',ha_terminado:true}]
     const [sesiones,guardarSesiones] = useState([]);
@@ -165,32 +167,32 @@ const traductorhora = (bloque) =>{
         navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
     }
     return (
-        <ScrollView style={globalStyles.contenedor}>
+        <ScrollView style={[globalStyles.contenedor,{backgroundColor:colorFondo}]}>
             {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
             {cargando===false ?
             <View>
-                <Text style={[globalStyles.titulo,{marginBottom:0}]}> Agenda de sesiones</Text>
+                <Text style={[globalStyles.titulo,{marginBottom:0,color:colorTitulo}]}> Agenda de sesiones</Text>
                 {sesiones.length>0 ? <Text></Text> : <View style={{alignItems:'center',marginTop:20}}><Text style={{fontSize:17,fontFamily: "Inter-Regular"}}> No tienes sesiones agendadas </Text></View>}
                 <FlatList
                     data={sesiones}
                     style={{marginBottom: 10}}
                     renderItem={({item,index}) => (
-                        <TouchableHighlight underlayColor = {'transparent'} onPress={ () => irCita(item.id,item.fecha_sesion,item.bloque.id) } style={styles.botonC}>
+                        <TouchableHighlight underlayColor = {'transparent'} onPress={ () => irCita(item.id,item.fecha_sesion,item.bloque.id) } style={[styles.botonC,{backgroundColor: colorb}]}>
                         <View style={{flex:1,flexDirection: 'column'}}>
                                 <View style={{flex:1,flexDirection: 'row',marginTop:5}}>
                                     <View style={{flex:0.3}}>
-                                        <Text style={[styles.textoC]}>Día:  </Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Día:  </Text>
                                     </View>
                                     <View style={{flex:0.7}}>
-                                        <Text style={[styles.textoC]}>{extraerdia(item.fecha_sesion)} de {mespalabra(item.fecha_sesion)}</Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>{extraerdia(item.fecha_sesion)} de {mespalabra(item.fecha_sesion)}</Text>
                                     </View>
                                 </View>
                                 <View style={{flex:1,flexDirection: 'row'}}>
                                     <View style={{flex:0.3}}>
-                                        <Text style={[styles.textoC]}>Hora:  </Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Hora:  </Text>
                                     </View>
                                     <View style={{flex:0.7}}>
-                                        <Text style={[styles.textoC]}>{traductorhora(item.bloque.id)}</Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>{traductorhora(item.bloque.id)}</Text>
                                     </View>
                                 </View>
                             </View>

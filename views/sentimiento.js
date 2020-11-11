@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import {Text,View,StyleSheet,TouchableHighlight,ActivityIndicator} from 'react-native';
 import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -7,10 +7,14 @@ import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import {ipHost} from '../components/hosts.js';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Slider } from "@miblanchard/react-native-slider";
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
-const Sentimiento = ({navigation,route}) => {
+const Sentimiento = ({navigation}) => {
+
+    const {colorb,colorBorderInput,colorTextoBoton,colorLetra,colorPrimaryinput,
+        colorPlaceholderinput,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
 
     const [mensaje,guardarMensaje] = useState('');
     const [valorslider,guardarValorslider] = useState(0);
@@ -64,9 +68,9 @@ const Sentimiento = ({navigation,route}) => {
     }
 
     return(
-        <View style={globalStyles.contenedor}>
-            <Text style={globalStyles.titulo}>Sentimientos</Text>
-            <Text style={styles.texto}>¿Cómo te sientes?</Text>
+        <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Sentimientos</Text>
+            <Text style={[styles.texto,{color: colorLetra}]}>¿Cómo te sientes?</Text>
             <View style={styles.slider}>
                 <Slider
                 value= {valorslider}
@@ -83,20 +87,20 @@ const Sentimiento = ({navigation,route}) => {
                 </View>
             </View>
             <View style={{marginTop: 40}}>
-                <Text style={styles.texto}>Exprésate (esto no será visto por nadie):</Text>
+                <Text style={[styles.texto,{color: colorLetra}]}>Exprésate (esto no será visto por nadie):</Text>
                     <TextInput
                         label="Mensaje"
                         onChangeText={(texto) => guardarMensaje(texto)}
-                        style={[globalStyles.entradaTexto,]}
-                        theme={{colors: {text: '#3c2c18', primary: '#3c2c18'}}}
+                        style={[globalStyles.input,{borderColor: colorBorderInput}]}
+                        theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                         multiline={true}
                     />
             </View>
             <View style={{marginTop:5}}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>enviar()}>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>enviar()}>
                     <View style={{flexDirection:'row'}}>
-                        <Icon name="send" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Enviar</Text>
+                        <Icon name="send" color={colorIcono} size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
             </View>

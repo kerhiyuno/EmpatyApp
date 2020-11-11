@@ -1,8 +1,9 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import {Checkbox} from 'react-native-paper';
 import {View,StyleSheet,Text,TouchableHighlight} from 'react-native';
 import globalStyles from '../styles/global';
 import BloqueHorario from '../components/bloquehorario';
+import EstilosContext from '../context/estilosContext';
 
 const HorarioDia = (props) =>{
 
@@ -10,9 +11,11 @@ const HorarioDia = (props) =>{
         guardard6,guardard7,guardard8,guardard9,guardard10,guardard11,guardard12,
         guardard13,disponibles,guardarDisponibles} = props;
 
+    const {colorTitulo} = useContext(EstilosContext);
+
     return(
         <View>
-            <Text style={[globalStyles.titulo,{fontSize:19,marginTop:15}]} >{dia}</Text>
+            <Text style={[globalStyles.titulo,{fontSize:19,marginTop:15,color: colorTitulo}]} >{dia}</Text>
             <View style={styles.fila}>
                 <BloqueHorario numeroBloque={1} numeroDia={numeroDia} bloque={'8 a 9'} d={d1} guardard={guardard1} disponibles={disponibles} guardarDisponibles={guardarDisponibles}/>
                 <BloqueHorario numeroBloque={2} numeroDia={numeroDia} bloque={'9 a 10'} d={d2} guardard={guardard2} disponibles={disponibles} guardarDisponibles={guardarDisponibles}/>

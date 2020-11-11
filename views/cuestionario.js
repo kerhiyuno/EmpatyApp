@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import {View,StyleSheet,Text,ScrollView,TouchableHighlight} from 'react-native';
 import {Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
@@ -7,10 +7,13 @@ import PreguntaTest from '../components/preguntatest';
 import {ipHost} from '../components/hosts.js';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
-const Cuestionario = ({navigation,route}) =>{
+const Cuestionario = ({navigation}) =>{
+
+    const {colorb,colorLetra,colorTextoBoton,colorIcono,colorFondo} = useContext(EstilosContext);
 
     const [pregunta1,guardarPregunta1] = useState('');
     const [pregunta2,guardarPregunta2] = useState('');
@@ -132,35 +135,35 @@ const Cuestionario = ({navigation,route}) =>{
         guardarParte(parte+1);
     }
     return (
-        <ScrollView style= {globalStyles.contenedor}>
+        <ScrollView style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             {parte===1 ?
             <View style={{flex:1,flexDirection:'column'}}>
                 <View style={{flex:0.5}}>
-                    <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>El siguiente cuestionario aborda temas que pueden haberle 
+                    <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>El siguiente cuestionario aborda temas que pueden haberle 
                     afectado en las últimas dos semanas. Debe responder según la escala asignada.
                     </Text>
-                    <Text style={styles.escala}>
+                    <Text style={[styles.escala,{color: colorLetra}]}>
                     0 - Nada
                     </Text>
-                    <Text style={styles.escala}>
+                    <Text style={[styles.escala,{color: colorLetra}]}>
                     1 - Un Poco
                     </Text>
-                    <Text style={styles.escala}>
+                    <Text style={[styles.escala,{color: colorLetra}]}>
                     2 - Moderadamente
                     </Text>
-                    <Text style={styles.escala}>
+                    <Text style={[styles.escala,{color: colorLetra}]}>
                     3 - Bastante
                     </Text>
-                    <Text style={styles.escala}>
+                    <Text style={[styles.escala,{color: colorLetra}]}>
                     4 - Extremadamente
                     </Text>
                 </View>
                 <View style={{flex:0.5}}>
                     <View style={[styles.container,{marginTop:40}]}>
-                        <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarParte(2)}>
+                        <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>guardarParte(2)}>
                             <View style={{flexDirection:'row'}}>
-                                <Icon name="greater-than" color="white" size={25}></Icon>
-                                <Text style={styles.textoC}>Siguiente</Text>
+                                <Icon name="greater-than" color={colorIcono} size={25}></Icon>
+                                <Text style={[styles.textoC,{color: colorTextoBoton}]}>Siguiente</Text>
                             </View>
                         </TouchableHighlight >
                     </View>
@@ -170,9 +173,9 @@ const Cuestionario = ({navigation,route}) =>{
             {parte===2 ?
             <View style={{flex:1,flexDirection:'column'}}>
                 <View style={{flex:0.1}}>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Parte 1 de 4</Text>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>0 - Nada    4 - Extremadamente</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>Parte 1 de 4</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>0 - Nada    4 - Extremadamente</Text>
                 </View>
                     <View style={{flex:0.1}}>
                         <PreguntaTest pregunta={pregunta1} setpregunta={guardarPregunta1} texto={'Tener que esforzarme para recordar las cosas:'} />
@@ -192,16 +195,16 @@ const Cuestionario = ({navigation,route}) =>{
                 <View style={{flex:0.1}}>
                     <View style={{flexDirection:'row'}}>
                         <View style={[styles.container,{marginTop:5, flex:0.5}]}>
-                            <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarParte(1)}>
+                            <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>guardarParte(1)}>
                                 <View style={{flexDirection:'row'}}>
-                                    <Text style={styles.textoC}>Volver</Text>
+                                    <Text style={[styles.textoC,{color: colorTextoBoton}]}>Volver</Text>
                                 </View>
                             </TouchableHighlight >
                         </View>
                         <View style={[styles.container,{marginTop:5, flex:0.5}]}>
-                            <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>{validacionVacio(2)}}>
+                            <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>{validacionVacio(2)}}>
                                 <View style={{flexDirection:'row'}}>
-                                    <Text style={styles.textoC}>Siguiente</Text>
+                                    <Text style={[styles.textoC,{color: colorTextoBoton}]}>Siguiente</Text>
                                 </View>
                             </TouchableHighlight >
                         </View>
@@ -211,9 +214,9 @@ const Cuestionario = ({navigation,route}) =>{
             :null}
             {parte===3 ?
             <View style={{flex:1,flexDirection:'column'}}>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Parte 2 de 4</Text>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>0 - Nada    4 - Extremadamente</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>Parte 2 de 4</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>0 - Nada    4 - Extremadamente</Text>
                 <PreguntaTest pregunta={pregunta6} setpregunta={guardarPregunta6} texto={'No ser capaz de ponerme en marcha (acción):'} />
                 <PreguntaTest pregunta={pregunta7} setpregunta={guardarPregunta7} texto={'Encontrar difícil concentrarme:'} />
                 <PreguntaTest pregunta={pregunta8} setpregunta={guardarPregunta8} texto={'Querer hacerme daño:'} />
@@ -221,16 +224,16 @@ const Cuestionario = ({navigation,route}) =>{
                 <PreguntaTest pregunta={pregunta10} setpregunta={guardarPregunta10} texto={'Sentirme inútil:'} />
                 <View style={{flexDirection:'row'}}>
                 <View style={[styles.container,{marginTop:5, flex:0.5}]}>
-                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarParte(2)}>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>guardarParte(2)}>
                         <View style={{flexDirection:'row'}}>
-                            <Text style={styles.textoC}>Volver</Text>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Volver</Text>
                         </View>
                     </TouchableHighlight >
                 </View>
                 <View style={[styles.container,{marginTop:5, flex:0.5}]}>
-                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>{validacionVacio(3)}}>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>{validacionVacio(3)}}>
                         <View style={{flexDirection:'row'}}>
-                            <Text style={styles.textoC}>Siguiente</Text>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Siguiente</Text>
                         </View>
                     </TouchableHighlight >
                 </View>
@@ -239,9 +242,9 @@ const Cuestionario = ({navigation,route}) =>{
             : null}
             {parte===4?
             <View style={{flex:1,flexDirection:'column'}}>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Parte 3 de 4</Text>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>0 - Nada    4 - Extremadamente</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>Parte 3 de 4</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>0 - Nada    4 - Extremadamente</Text>
                 <PreguntaTest pregunta={pregunta11} setpregunta={guardarPregunta11} texto={'Sentirme temeroso de salir de casa:'} />
                 <PreguntaTest pregunta={pregunta12} setpregunta={guardarPregunta12} texto={'Sentirme cansado la mayor parte del tiempo:'} />
                 <PreguntaTest pregunta={pregunta13} setpregunta={guardarPregunta13} texto={'Sentirme confundido (al pensar, recordar, etc):'} />
@@ -249,16 +252,16 @@ const Cuestionario = ({navigation,route}) =>{
                 <PreguntaTest pregunta={pregunta15} setpregunta={guardarPregunta15} texto={'Sentirme tenso:'} />
                 <View style={{flexDirection:'row'}}>
                 <View style={[styles.container,{marginTop:5, flex:0.5}]}>
-                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarParte(3)}>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>guardarParte(3)}>
                         <View style={{flexDirection:'row'}}>
-                            <Text style={styles.textoC}>Volver</Text>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Volver</Text>
                         </View>
                     </TouchableHighlight >
                 </View>
                 <View style={[styles.container,{marginTop:5, flex:0.5}]}>
-                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>{validacionVacio(4)}}>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>{validacionVacio(4)}}>
                         <View style={{flexDirection:'row'}}>
-                            <Text style={styles.textoC}>Siguiente</Text>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Siguiente</Text>
                         </View>
                     </TouchableHighlight >
                 </View>
@@ -266,9 +269,9 @@ const Cuestionario = ({navigation,route}) =>{
             </View> : null}
             {parte===5 ?
             <View style={{flex:1,flexDirection:'column'}}>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Parte 4 de 4</Text>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
-                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold"}]}>0 - Nada    4 - Extremadamente</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>Parte 4 de 4</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>Durante las última dos semanas ¿Cuánto te afectó….?</Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold", color: colorLetra}]}>0 - Nada    4 - Extremadamente</Text>
                 <PreguntaTest pregunta={pregunta16} setpregunta={guardarPregunta16} texto={'Sentir que la vida no tiene sentido:'} />
                 <PreguntaTest pregunta={pregunta17} setpregunta={guardarPregunta17} texto={'Sentirme ansioso dentro de una multitud:'} />
                 <PreguntaTest pregunta={pregunta18} setpregunta={guardarPregunta18} texto={'No tener energía:'} />
@@ -276,17 +279,17 @@ const Cuestionario = ({navigation,route}) =>{
 
                 <View style={{flexDirection:'row'}}>
                 <View style={[styles.container,{marginTop:5, flex:0.5}]}>
-                    <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>guardarParte(4)}>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>guardarParte(4)}>
                         <View style={{flexDirection:'row'}}>
-                            <Text style={styles.textoC}>Volver</Text>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Volver</Text>
                         </View>
                     </TouchableHighlight >
                 </View>
                 <View style={[styles.container,{marginTop:5, flex:0.5}]}>
-                <TouchableHighlight  style={styles.botonS} underlayColor = {'transparent'} onPress={()=>enviarCuestionario()}>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>enviarCuestionario()}>
                     <View style={{flexDirection:'row'}}>
-                        <Icon name="greater-than" color="white" size={25}></Icon>
-                        <Text style={styles.textoC}>Enviar</Text>
+                        <Icon name="greater-than" color={colorIcono} size={25}></Icon>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
             </View>

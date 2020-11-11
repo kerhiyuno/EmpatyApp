@@ -1,24 +1,25 @@
 import React,{useState,useEffect,useContext} from 'react';
 import {View,StyleSheet,Text,ActivityIndicator,TouchableHighlight} from 'react-native';
 import { GiftedChat,Bubble,Send } from 'react-native-gifted-chat';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { IconButton } from 'react-native-paper';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ipHost} from '../components/hosts.js';
 import NotificacionesContext from '../context/notificacionesContext'
-
+import EstilosContext from '../context/estilosContext';
 
 const host = ipHost();
 
 const Chat = () => {
 
+  const {colorb,colorTextoBoton,colorIcono,colorFondo} = useContext(EstilosContext);
+
   useEffect( () => {
-    pedirmensajes();
+    pedirmensajes(messages);
   }
   ,[])
 
-  const {obtenerChatroom, nuevomensaje} = useContext(NotificacionesContext);
+  const {obtenerChatroom, nuevomensaje,aforeground} = useContext(NotificacionesContext);
 
   useEffect( () => {
     console.log("nuevo mensajexD");
@@ -27,6 +28,11 @@ const Chat = () => {
     }
   }
   ,[nuevomensaje])
+
+  useEffect( () => {
+    pedirmensajes([]);
+  }
+  ,[aforeground])
 
   const pedirnuevomensaje = async () => {
     console.log("entrado");
@@ -71,14 +77,14 @@ const Chat = () => {
       }
   }
 
-  const pedirmensajes = async () => {
+  const pedirmensajes = async (anteriores) => {
     var chatRoom = obtenerChatroom();
     console.log(chatRoom);
         try {
           const nombre = await AsyncStorage.getItem('datosSesion');
           const respuesta = await axios.post(host+'/chat/fetch/',{chatroom:chatRoom,cantidad:10,offset:0},
           {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
-          var mensajes = messages.concat(respuesta.data);
+          var mensajes = anteriores.concat(respuesta.data);
           setMessages(GiftedChat.append([], mensajes));
       } catch (error){
           console.log("error");
@@ -112,7 +118,7 @@ const Chat = () => {
   }
 
     const [messages, setMessages] = useState([
-       /* {
+        /*{
           _id: 101,
           text: 'Henlo1!',
           createdAt: new Date().getTime(),
@@ -187,12 +193,12 @@ const Chat = () => {
             {...props}
             wrapperStyle={{
               right: {
-                backgroundColor: '#e35d17'
+                backgroundColor: colorb
               }
             }}
             textStyle={{
               right: {
-                color: '#fff'
+                color: colorTextoBoton
               }
             }}
           />
@@ -202,7 +208,7 @@ const Chat = () => {
         return (
           <Send {...props}>
             <View style={styles.sendingContainer}>
-            <IconButton icon='send-circle' size={32} color='#e35d17' />
+            <IconButton icon='send-circle' size={32} color={colorIcono} />
             </View>
           </Send>
         );
@@ -210,7 +216,7 @@ const Chat = () => {
       const scrollToBottomComponent = () => {
         return (
           <View style={styles.bottomComponentContainer}>
-            <IconButton icon='chevron-double-down' size={36} color='#e35d17' />
+            <IconButton icon='chevron-double-down' size={36} color={colorIcono} />
           </View>
         );
       }
@@ -285,6 +291,11 @@ const Chat = () => {
         renderLoadEarlier ={renderLoadEarlier}
         infiniteScroll
         onLoadEarlier={cargarAnteriores}
+        listViewProps={{
+          style: {
+            backgroundColor: colorFondo,
+          },
+        }}
         />
     )
 }
