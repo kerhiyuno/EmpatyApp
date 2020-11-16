@@ -7,6 +7,7 @@ import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -280,7 +281,7 @@ const sesion = ({navigation}) =>{
             <Headline style={[globalStyles.titulo,{color: colorTitulo}]}></Headline>
             <View style={styles.container}>
                 <TouchableHighlight underlayColor = {'transparent'} style={[styles.botonS,{backgroundColor: colorb}]} onPress={() => siguienteCita() }>
-                    <View style={{flexDirection:'row'}}>
+                    <View style={{flexDirection:'row',alignItems:"center"}}>
                         <Icon name="page-next-outline" color={colorIcono} size={25}></Icon>
                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Siguiente cita</Text>
                     </View>
@@ -288,7 +289,7 @@ const sesion = ({navigation}) =>{
             </View>
             <View style={styles.container}>
                 <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Calendario') }>
-                    <View style={{flexDirection:'row'}}>
+                    <View style={{flexDirection:'row',alignItems:"center"}}>
                         <Icon name="calendar-month" color={colorIcono} size={25}></Icon>
                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Agenda</Text>
                     </View>
@@ -296,13 +297,13 @@ const sesion = ({navigation}) =>{
             </View>
             <View style={styles.container}>
                 <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Encuestas') }>
-                    <View style={{flexDirection:'row'}}>
+                    <View style={{flexDirection:'row',alignItems:"center"}}>
                         <Icon name="file-question-outline" color={colorIcono} size={25}></Icon>
                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Encuestas pendientes</Text>
                     </View>
                 </TouchableHighlight >
             </View>
-            <View style={{marginTop:20,flexDirection:'row',marginHorizontal: 10}}>
+            <View style={{marginTop:20,flexDirection:'row'}}>
                 <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}>Mi Psicólogo: </Text>
                 <Text style={[styles.textoS,{color: colorLetra}]}>{nombresicologo}</Text>
             </View>
@@ -330,10 +331,9 @@ const sesion = ({navigation}) =>{
 const styles=StyleSheet.create({
     container: {
         justifyContent: "center",
-        paddingHorizontal: 10
       },
     botonS:{
-        height: 60,
+        height: RFPercentage(6),
         marginBottom: 20,
         marginHorizontal: 10,
         justifyContent: "center",
@@ -344,14 +344,14 @@ const styles=StyleSheet.create({
     textoS:{
         marginBottom: 10,
         marginHorizontal: 10,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'black',
         fontFamily: 'Inter-Regular'
     },
     textoC: {
         marginBottom: 0,
         marginHorizontal: 10,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         fontFamily: 'Inter-Light'
     }

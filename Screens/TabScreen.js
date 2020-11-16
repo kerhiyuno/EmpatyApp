@@ -7,7 +7,7 @@ import Notificaciones from '../views/notificaciones';
 import {createStackNavigator} from '@react-navigation/stack';
 import NotificacionesContext from '../context/notificacionesContext'
 import EstilosContext from '../context/estilosContext'
-import { color } from 'react-native-reanimated';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const theme= {
     ...DefaultTheme,
@@ -34,7 +34,7 @@ return (
       headerTintColor: theme.colors.surface,
       headerTitleStyle:{
         fontFamily: "Inter-SemiBold",
-        fontSize:17,
+        fontSize:RFPercentage(2.5),
         color: colorTextoHeader
       }
     }}
@@ -60,6 +60,7 @@ const TabScreen =  () => {
        screenOptions={({route }) => ({
         tabBarIcon:({color, size})=>{
           let iconName;
+          size=RFPercentage(4)
           if (route.name=='Inicio') {
         
             iconName='home'
@@ -76,7 +77,7 @@ const TabScreen =  () => {
         activeTintColor: colorTextoHeader,
         inactiveTintColor: 'black',
         labelStyle: {
-          fontSize: 17,
+          fontSize: RFPercentage(2.4),
         },
         tabStyle: {
           backgroundColor: colorHeader,

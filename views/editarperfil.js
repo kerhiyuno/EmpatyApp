@@ -7,6 +7,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -148,8 +149,8 @@ const editarperfil = ({route}) =>{
                 defaultValue = {generodescripcion}
             />
             <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} onPress={() => enviar() }>
-                <View style={{flexDirection:'row'}}>
-                    <Icon name="pencil-outline" color={colorIcono} size={25}></Icon>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <Icon name="pencil-outline" color={colorIcono} size={RFPercentage(3)}></Icon>
                     <Text style={[styles.textoC,{color: colorTextoBoton}]}> Guardar Cambios</Text>
                 </View>
             </TouchableHighlight>
@@ -172,8 +173,7 @@ const editarperfil = ({route}) =>{
 
 const styles=StyleSheet.create({
     texto: {
-        marginTop:10,
-        fontSize: 16,
+        fontSize:  RFPercentage(2),
         marginLeft:8,
         marginRight:0,
         fontFamily: 'Inter-Regular'
@@ -184,13 +184,13 @@ const styles=StyleSheet.create({
     },
     textoC:{
         marginBottom: 2,
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         alignSelf: 'center',
         fontFamily: 'Inter-Light'
     },
     botonS:{
-        height: 40,
+        height: RFPercentage(6),
         marginTop: 5,
         marginHorizontal: 4,
         justifyContent: "center",
@@ -199,20 +199,19 @@ const styles=StyleSheet.create({
         borderRadius: 8
     },
     texto2: {
-        fontSize: 16,
+        fontSize: RFPercentage(2),
         fontFamily: 'Inter-Regular'
     },
     pregunta:{
         flex: 1,
         flexDirection:'row',
-        marginTop:2,
         marginLeft:10,
         alignItems:'center'
     },
     minTitulo:{
         marginTop:0,
         fontFamily: "Inter-Bold",
-        fontSize:18
+        fontSize:RFPercentage(2.5)
     },
 })
 

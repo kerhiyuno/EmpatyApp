@@ -8,6 +8,8 @@ import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import {Checkbox} from 'react-native-paper';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const host = ipHost();
 
@@ -126,6 +128,7 @@ const Desvinculacion = ({navigation}) => {
     }
 
     return(
+        <KeyboardAwareScrollView>
         <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             <View>
                 <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Solicitar Desvinculación</Text>
@@ -146,7 +149,7 @@ const Desvinculacion = ({navigation}) => {
                 <Text style={[styles.texto,{color: colorLetra}]}>Desvinculación inmediata</Text>
                 </View>
             </View>
-            <View style={{marginTop: 40}}>
+            <View style={{marginTop: RFPercentage(5)}}>
                 <Text style={[styles.texto,{color: colorLetra}]}>Describe tu motivo (opcional):</Text>
                     <TextInput
                         label="Mensaje"
@@ -158,8 +161,8 @@ const Desvinculacion = ({navigation}) => {
             </View>
             <View style={{marginTop:5}}>
                 <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>enviar()}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="send" color={colorIcono} size={25}></Icon>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Icon name="send" color={colorIcono} size={RFPercentage(3)}></Icon>
                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
@@ -210,12 +213,13 @@ const Desvinculacion = ({navigation}) => {
                 </Dialog>
             </Portal>
         </View>
+        </KeyboardAwareScrollView>
     )
 }
 
 const styles=StyleSheet.create({
     texto: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.3),
         marginLeft:7,
         marginRight:7,
         fontFamily: 'Inter-Regular',
@@ -224,13 +228,13 @@ const styles=StyleSheet.create({
     pregunta:{
         flex: 1,
         flexDirection:'row',
-        marginTop:50,
+        marginTop:RFPercentage(3),
         marginLeft:10,
-        marginBottom:20,
+        marginBottom:RFPercentage(0.5),
         alignItems:'center'
     },
     botonS:{
-        height: 40,
+        height: RFPercentage(5),
         marginBottom: 20,
         marginHorizontal: 10,
         justifyContent: "center",
@@ -241,7 +245,7 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 0,
         marginHorizontal: 10,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         fontFamily: 'Inter-Light'
     }

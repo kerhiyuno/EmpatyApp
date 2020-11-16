@@ -8,6 +8,7 @@ import {ipHost} from '../components/hosts.js';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Slider } from "@miblanchard/react-native-slider";
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -80,10 +81,10 @@ const Sentimiento = ({navigation}) => {
             </View>
             <View style={{flexDirection:'row'}}>
                 <View style={{flex:0.9}}>
-                    <Icon name="emoticon-sad-outline" color="black" size={35}></Icon>
+                    <Icon name="emoticon-sad-outline" color="black" size={RFPercentage(5)}></Icon>
                 </View>
                 <View style={{flex:0.1}}>
-                    <Icon name="emoticon-happy-outline" color="black" size={35}></Icon>
+                    <Icon name="emoticon-happy-outline" color="black" size={RFPercentage(5)}></Icon>
                 </View>
             </View>
             <View style={{marginTop: 40}}>
@@ -98,8 +99,8 @@ const Sentimiento = ({navigation}) => {
             </View>
             <View style={{marginTop:5}}>
                 <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>enviar()}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="send" color={colorIcono} size={25}></Icon>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Icon name="send" color={colorIcono} size={RFPercentage(3)}></Icon>
                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
@@ -127,7 +128,7 @@ export default Sentimiento;
 
 const styles=StyleSheet.create({
     texto: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         marginLeft:7,
         marginRight:7,
         fontFamily: 'Inter-Regular',
@@ -137,13 +138,13 @@ const styles=StyleSheet.create({
         marginBottom: 8,
         marginHorizontal: 0,
         marginLeft: 1,
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         color: 'black',
         fontFamily: 'Inter-Regular',
         textAlign:'justify'
     },
     botonS:{
-        height: 40,
+        height: RFPercentage(6),
         marginBottom: 20,
         marginHorizontal: 10,
         justifyContent: "center",
@@ -154,7 +155,7 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 0,
         marginHorizontal: 10,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         fontFamily: 'Inter-Light'
     },

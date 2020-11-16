@@ -2,6 +2,7 @@ import React, {useState,useContext} from 'react';
 import {View,StyleSheet,TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const BotonInfo = ({navigation}) =>{
 
@@ -13,24 +14,15 @@ const BotonInfo = ({navigation}) =>{
 
     return(
         <View style={{justifyContent:"center",marginRight: 20}}>
-            <TouchableHighlight style={[styles.botonS,{color: colorb}]} onPress={() => salir() }>
-                    <Icon name="information-outline" color={colorIcono} size={30}></Icon>
+            <TouchableHighlight style={{color: colorb}} onPress={() => salir() } underlayColor = {'transparent'}>
+                    <Icon name="information-outline" color={colorIcono} size={RFPercentage(4.7)}></Icon>
             </TouchableHighlight>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    botonC:{
-        marginTop: 0,
-        height: 10,
-        marginBottom: 0,
-        marginHorizontal: 0,
-        justifyContent: 'center',
-        backgroundColor: '#e35d17',
-        alignItems: 'center',
-        borderRadius: 8,
-    },
+
 })
 
 export default BotonInfo;

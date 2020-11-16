@@ -1,11 +1,10 @@
-import React,{useEffect,useState,useContext} from 'react';
+import React,{useContext} from 'react';
 import {Text,View,StyleSheet,TouchableHighlight,ActivityIndicator} from 'react-native';
-import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -75,24 +74,24 @@ const Personalizar = ({navigation,route}) => {
             <Text style={[globalStyles.titulo,{marginBottom:10,color: colorTitulo}]}>Cambiar Colores</Text>
             <View style={[styles.container,{marginTop:5}]}>
                         <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => original() }>
-                            <View style={{flexDirection:'row'}}>
-                                <Icon name="fountain-pen" color={colorIcono} size={25}></Icon>
+                            <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <Icon name="fountain-pen" color={colorIcono} size={RFPercentage(3)}></Icon>
                                 <Text style={[styles.textoC,{color: colorTextoBoton}]}>Original</Text>
                             </View>
                         </TouchableHighlight>
             </View>
             <View style={[styles.container,{marginTop:5}]}>
                         <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => estilo1() }>
-                            <View style={{flexDirection:'row'}}>
-                                <Icon name="fountain-pen" color={colorIcono} size={25}></Icon>
+                            <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <Icon name="fountain-pen" color={colorIcono} size={RFPercentage(3)}></Icon>
                                 <Text style={[styles.textoC,{color: colorTextoBoton}]}>Estilo1</Text>
                             </View>
                         </TouchableHighlight>
             </View>
             <View style={[styles.container,{marginTop:5}]}>
                         <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => estilo2() }>
-                            <View style={{flexDirection:'row'}}>
-                                <Icon name="fountain-pen" color={colorIcono} size={25}></Icon>
+                            <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <Icon name="fountain-pen" color={colorIcono} size={RFPercentage(3)}></Icon>
                                 <Text style={[styles.textoC,{color: colorTextoBoton}]}>Estilo2</Text>
                             </View>
                         </TouchableHighlight>
@@ -103,7 +102,7 @@ const Personalizar = ({navigation,route}) => {
 
 const styles=StyleSheet.create({
     botonS:{
-        height: 50,
+        height: RFPercentage(8),
         marginBottom: 10,
         marginHorizontal: 10,
         justifyContent: "center",
@@ -113,7 +112,7 @@ const styles=StyleSheet.create({
     },
     textoC: {
         marginHorizontal: 7,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         fontFamily: 'Inter-Light'
     }

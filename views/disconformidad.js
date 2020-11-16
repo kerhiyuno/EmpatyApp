@@ -7,6 +7,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const host = ipHost();
 
@@ -107,6 +109,7 @@ const Disconformidad = ({navigation}) => {
     }
 
     return(
+        <KeyboardAwareScrollView>
         <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Notificar disconformidad</Text>
             <View style={{marginTop:10}}>
@@ -120,8 +123,8 @@ const Disconformidad = ({navigation}) => {
                 />
                 <View style={{marginTop:5}}>
                     <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>guardarAlertaMensaje(true)}>
-                        <View style={{flexDirection:'row'}}>
-                            <Icon name="send" color={colorIcono} size={25}></Icon>
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                            <Icon name="send" color={colorIcono} size={RFPercentage(3)}></Icon>
                             <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
                         </View>
                     </TouchableHighlight >
@@ -157,19 +160,20 @@ const Disconformidad = ({navigation}) => {
                 </Dialog>
             </Portal>
         </View>
+        </KeyboardAwareScrollView>
     )
 }
 
 const styles=StyleSheet.create({
     texto: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.3),
         marginLeft:7,
         marginRight:7,
         fontFamily: 'Inter-Regular',
         textAlign:'justify'
     },
     botonS:{
-        height: 40,
+        height: RFPercentage(6),
         marginBottom: 20,
         marginHorizontal: 10,
         justifyContent: "center",
@@ -180,7 +184,7 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 0,
         marginHorizontal: 10,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         fontFamily: 'Inter-Light'
     }

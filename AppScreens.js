@@ -14,6 +14,7 @@ import Informacion from './views/informacion';
 import {createStackNavigator} from '@react-navigation/stack';
 import TabScreen from './Screens/TabScreen';
 import EstilosContext from './context/estilosContext'
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 
 const Stack2= createStackNavigator();
@@ -44,7 +45,7 @@ const AppScreens = () => {
         headerTintColor: theme.colors.surface,
         headerTitleStyle:{
           fontFamily: "Inter-SemiBold",
-          fontSize:17,
+          fontSize:RFPercentage(2.5),
           color: colorTextoHeader
         }
       }}

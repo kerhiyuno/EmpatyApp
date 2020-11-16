@@ -1,11 +1,10 @@
 import React, {useState,useContext} from 'react';
 import {Text,View,StyleSheet,TouchableHighlight} from 'react-native';
 import globalStyles from '../styles/global';
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
 import {Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -110,7 +109,7 @@ const Panico = ({navigation}) => {
 
 const styles=StyleSheet.create({
     texto: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         marginLeft:7,
         marginRight:7,
         fontFamily: 'Inter-Regular',
@@ -128,7 +127,7 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 0,
         marginHorizontal: 10,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         fontFamily: 'Inter-Light'
     }

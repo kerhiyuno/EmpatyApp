@@ -8,6 +8,7 @@ import UserAvatar from 'react-native-user-avatar';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -86,18 +87,18 @@ const perfil = ({navigation,route}) => {
 
     const avatar = () => {
         return (<View style={{alignItems: 'center'}}>
-                    <UserAvatar size={100} name= {nombre} />
+                    <UserAvatar size={RFPercentage(18)} name= {nombre} />
                     <View style={{borderRadius:40,marginTop:10,alignSelf:"center",borderWidth:2, borderColor:"#828282"}}>
-                        <Text style={[styles.textoS,{fontSize:16,color:colorLetra,marginTop:5,marginBottom:5,marginHorizontal:10,marginLeft:5}]}>{nombre}</Text>
+                        <Text style={[styles.textoS,{fontSize:RFPercentage(2.5),color:colorLetra,marginTop:5,marginBottom:5,marginHorizontal:10,marginLeft:5}]}>{nombre}</Text>
                     </View>
                 </View>)
     }
 
     const avatarimagen = () => {
         return (<View style={{alignItems: 'center'}}>
-                    <Avatar.Image size={100} source={{uri: imagenperfil}}/>
+                    <Avatar.Image size={RFPercentage(18)} source={{uri: imagenperfil}}/>
                     <View style={{borderRadius:40,marginTop:10,alignSelf:"center",borderWidth:2, borderColor:"#828282"}}>
-                        <Text style={[styles.textoS,{fontSize:16,color:colorLetra,marginTop:5,marginBottom:5,marginHorizontal:10,marginLeft:5}]}>{nombre}</Text>
+                        <Text style={[styles.textoS,{fontSize:RFPercentage(2.5),color:colorLetra,marginTop:5,marginBottom:5,marginHorizontal:10,marginLeft:5}]}>{nombre}</Text>
                     </View>
                 </View>)
     }
@@ -112,23 +113,23 @@ const perfil = ({navigation,route}) => {
             <View style={styles.perfil}>
                     <View style={{marginVertical:5,marginTop:10}}>
                         <View style={{flexDirection: 'row',marginHorizontal: 10}}>
-                            <Icon name="email" color="#515254" size={20}></Icon>
+                            <Icon name="email" color="#515254" size={RFPercentage(3)}></Icon>
                             <Text style={[styles.textoS,{color: colorLetra}]}>Correo: {email}</Text>
                         </View>
                         <View style={{flexDirection: 'row',marginHorizontal: 10}}>
-                            <Icon name="phone" color="#515254" size={20}></Icon>
+                            <Icon name="phone" color="#515254" size={RFPercentage(3)}></Icon>
                             <Text style={[styles.textoS,{color: colorLetra}]}>Teléfono: {telefono}</Text>
                         </View>
                         <View style={{flexDirection: 'row',marginHorizontal: 10}}>
-                            <Icon name="rhombus-outline" color="#515254" size={20}></Icon>
+                            <Icon name="rhombus-outline" color="#515254" size={RFPercentage(3)}></Icon>
                             <Text style={[styles.textoS,{color: colorLetra}]}>Género: {generodescripcion}</Text>
                         </View>
                     </View>
                 </View>
                     <View style={[styles.container,{marginTop:40}]}>
                             <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} onPress={() => editarperfil() }>
-                                <View style={{flexDirection:'row'}}>
-                                    <Icon name="pencil-outline" color={colorIcono} size={22}></Icon>
+                                <View style={{flexDirection:'row',alignItems:'center'}}>
+                                    <Icon name="pencil-outline" color={colorIcono} size={RFPercentage(3)}></Icon>
                                     <Text style={[styles.textoC,{marginLeft:10,color:colorTextoBoton}]}> Editar Perfil </Text>
                                 </View>
                             </TouchableHighlight>
@@ -147,26 +148,16 @@ const styles=StyleSheet.create({
         marginHorizontal:10,
         borderRadius: 10
     },
-    botonC:{
-        marginTop: 5,
-        height: 40,
-        marginBottom: 5,
-        marginHorizontal: 30,
-        justifyContent: 'center',
-        backgroundColor: '#e35d17',
-        alignItems: 'center',
-        borderRadius: 8,
-    },
     textoS:{
         marginBottom: 8,
         marginHorizontal: 0,
         marginLeft: 1,
-        fontSize: 16,
+        fontSize: RFPercentage(2),
         color: 'black',
         fontFamily: 'Inter-Regular'
     },
     botonS:{
-        height: 45,
+        height: RFPercentage(6),
         marginBottom: 20,
         marginHorizontal: 80,
         justifyContent: "center",
@@ -175,7 +166,7 @@ const styles=StyleSheet.create({
         borderRadius: 8
     },
     textoC:{
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         alignSelf: 'center',
         fontFamily: 'Inter-Light'

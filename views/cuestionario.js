@@ -8,6 +8,7 @@ import {ipHost} from '../components/hosts.js';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -161,8 +162,8 @@ const Cuestionario = ({navigation}) =>{
                 <View style={{flex:0.5}}>
                     <View style={[styles.container,{marginTop:40}]}>
                         <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>guardarParte(2)}>
-                            <View style={{flexDirection:'row'}}>
-                                <Icon name="greater-than" color={colorIcono} size={25}></Icon>
+                            <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <Icon name="greater-than" color={colorIcono} size={RFPercentage(3)}></Icon>
                                 <Text style={[styles.textoC,{color: colorTextoBoton}]}>Siguiente</Text>
                             </View>
                         </TouchableHighlight >
@@ -287,8 +288,8 @@ const Cuestionario = ({navigation}) =>{
                 </View>
                 <View style={[styles.container,{marginTop:5, flex:0.5}]}>
                 <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>enviarCuestionario()}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="greater-than" color={colorIcono} size={25}></Icon>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Icon name="greater-than" color={colorIcono} size={RFPercentage(3)}></Icon>
                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
@@ -328,7 +329,7 @@ const styles=StyleSheet.create({
     texto: {
         marginTop:4,
         marginBottom:4,
-        fontSize: 15,
+        fontSize: RFPercentage(2),
         marginLeft:5,
         marginRight:5,
         fontFamily:'Inter-Regular',
@@ -336,7 +337,7 @@ const styles=StyleSheet.create({
     },
     escala: {
         marginTop:7,
-        fontSize: 15,
+        fontSize: RFPercentage(2),
         marginLeft:5,
         marginRight:5,
         fontFamily:'Inter-Regular'
@@ -344,13 +345,13 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         textAlign: 'center',
         fontFamily:'Inter-Light'
     },
     botonS:{
-        height: 40,
+        height:  RFPercentage(6),
         marginBottom: 0,
         marginHorizontal: 4,
         justifyContent: "center",

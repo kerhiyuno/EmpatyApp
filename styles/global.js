@@ -11,7 +11,7 @@ const globalStyles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 8,
         marginBottom: 16,
-        fontSize: RFPercentage(3.5),
+        fontSize: RFPercentage(3.4),
         fontFamily: "Inter-Bold",
         color: '#141414'
     },
@@ -25,7 +25,7 @@ const globalStyles = StyleSheet.create({
         fontSize: 50,
     },
     input:{
-        marginBottom: 10,
+        marginBottom: RFPercentage(1),
         backgroundColor: 'transparent',
         borderStyle: 'solid',
         borderColor: '#357870',
@@ -41,7 +41,7 @@ const globalStyles = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: '#357870',
         borderWidth: 1,
-        height: 170,
+        height: RFPercentage(28),
         marginHorizontal: 8
     },
     textoAlerta:{

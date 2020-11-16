@@ -4,6 +4,7 @@ import {View,StyleSheet,Text,TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import globalStyles from '../styles/global';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const BotonSalir = ({navigation}) =>{
 
@@ -21,8 +22,8 @@ const BotonSalir = ({navigation}) =>{
     return(
         <View>
             <TouchableHighlight  style={[styles.botonS,{backgroundColor:colorSalir}]} underlayColor = {'transparent'} onPress={()=> guardarAlertaseguro(true)}>
-                <View style={{flexDirection:'row',justifyContent:'center',marginHorizontal:8}}>
-                    <Icon name="logout" color={colorIcono} size={25}></Icon>
+                <View style={{flexDirection:'row',alignItems:'center',marginHorizontal:8}}>
+                    <Icon name="logout" color={colorIcono} size={RFPercentage(3)}></Icon>
                     <Text style={[styles.textoC,{color: colorTextoBoton}]}>Salir</Text>
                 </View>
             </TouchableHighlight>
@@ -48,7 +49,7 @@ const BotonSalir = ({navigation}) =>{
 
 const styles=StyleSheet.create({
     botonS:{
-        height: 35,
+        height: RFPercentage(5.5),
         marginRight:10,
         justifyContent: "center",
         alignItems: "center",
@@ -57,7 +58,7 @@ const styles=StyleSheet.create({
     },
     textoC: {
         marginHorizontal: 5,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         fontFamily: 'Inter-Light'
     }

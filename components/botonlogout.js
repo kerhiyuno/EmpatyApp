@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from './hosts.js';
 import NotificacionesContext from '../context/notificacionesContext'
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -74,8 +75,8 @@ const BotonLogout = ({navigation}) => {
     return(
         <View>
             <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorSalir}]} underlayColor = {'transparent'} onPress={()=> guardarAlertaseguro(true)}>
-                <View style={{flexDirection:'row',justifyContent:'center',marginHorizontal:8}}>
-                    <Icon name="logout" color={colorIcono} size={25}></Icon>
+                <View style={{flexDirection:'row',alignItems:'center',marginHorizontal:8}}>
+                    <Icon name="logout" color={colorIcono} size={RFPercentage(3)}></Icon>
                     <Text style={[styles.textoC,{color: colorTextoBoton}]}>Salir</Text>
                 </View>
             </TouchableHighlight>
@@ -102,7 +103,7 @@ const BotonLogout = ({navigation}) => {
 
 const styles=StyleSheet.create({
     botonS:{
-        height: 35,
+        height: RFPercentage(5.5),
         marginHorizontal: 0,
         marginRight:10,
         justifyContent: "center",
@@ -112,7 +113,7 @@ const styles=StyleSheet.create({
     },
     textoC: {
         marginHorizontal: 5,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         fontFamily: 'Inter-Light'
     }

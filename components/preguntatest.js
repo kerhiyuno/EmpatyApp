@@ -2,6 +2,7 @@ import React,{useContext} from 'react';
 import {RadioButton} from 'react-native-paper';
 import {View,StyleSheet,Text} from 'react-native';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const PreguntaTest = (props) =>{
 
@@ -66,11 +67,11 @@ const PreguntaTest = (props) =>{
 const styles=StyleSheet.create({
     numero:{
         fontFamily: 'Inter-Regular',
-        fontSize: 14
+        fontSize: RFPercentage(2)
     },
     texto: {
         marginTop:0,
-        fontSize: 15,
+        fontSize: RFPercentage(2),
         marginLeft:5,
         marginRight:5,
         fontFamily: 'Inter-Regular'
@@ -78,7 +79,6 @@ const styles=StyleSheet.create({
     pregunta:{
         flex: 1,
         flexDirection:'row',
-        marginTop:2,
         marginLeft:10
     },
     opciones:{

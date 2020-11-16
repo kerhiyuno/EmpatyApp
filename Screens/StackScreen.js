@@ -30,6 +30,7 @@ import EstilosContext from '../context/estilosContext'
 
 import BotonLogout from '../components/botonlogout';
 import BotonInfo from '../components/botoninfo';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 
 const Stack= createStackNavigator();
@@ -58,7 +59,7 @@ const StackScreen = () => {
         headerTintColor: colorTextoHeader,
         headerTitleStyle:{
           fontFamily: "Inter-SemiBold",
-          fontSize:17,
+          fontSize:RFPercentage(2.5),
           color: colorTextoHeader
         }
       }}

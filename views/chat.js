@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {ipHost} from '../components/hosts.js';
 import NotificacionesContext from '../context/notificacionesContext'
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -208,7 +209,7 @@ const Chat = () => {
         return (
           <Send {...props}>
             <View style={styles.sendingContainer}>
-            <IconButton icon='send-circle' size={32} color={colorIcono} />
+            <IconButton icon='send-circle' size={32} color={colorb} />
             </View>
           </Send>
         );
@@ -315,7 +316,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     botonS:{
-      height: 40,
+      height: RFPercentage(6),
       marginBottom: 15,
       marginHorizontal: 10,
       justifyContent: "center",
@@ -325,7 +326,7 @@ const styles = StyleSheet.create({
   },
   textoC: {
     marginHorizontal: 7,
-    fontSize: 17,
+    fontSize: RFPercentage(2.5),
     color: 'white',
     fontFamily: 'Inter-Light'
 }
