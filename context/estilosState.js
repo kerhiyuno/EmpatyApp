@@ -157,7 +157,7 @@ const EstilosState = (props) => {
                 colorError: state.colorError,
                 colorTextoHeader: state.colorTextoHeader,
                 colorTitulo: state.colorTitulo,
-                colorBotonDesactivado: state.colorDesactivado,
+                colorBotonDesactivado: state.colorBotonDesactivado,
                 colorNotificacionesBorder: state.colorNotificacionesBorder
             }}
         >

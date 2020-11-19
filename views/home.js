@@ -30,7 +30,7 @@ const home = ({navigation}) =>{
     var timer;
 
     useEffect(() => {
-        timer = setInterval(async() => consultar(), 5000);
+        timer = setInterval(async() => consultar(), 20000);
         return () => clearInterval(timer);
       });
 
@@ -333,7 +333,7 @@ const home = ({navigation}) =>{
                 <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Cuestionario')}>
                     <View style={{flexDirection:'row',alignItems:"center"}}>
                         <Icon name="book-outline" color={colorIcono}  size={RFPercentage(3)}></Icon>
-                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Cuestionario de Sintomatología</Text>
+                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Encuesta personal</Text>
                     </View>
                 </TouchableHighlight >
                 
@@ -394,7 +394,7 @@ const home = ({navigation}) =>{
                     <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate('Cuestionario')}>
                         <View style={{flexDirection:'row',alignItems:"center"}}>
                             <Icon name="book-outline" color={colorIcono} size={RFPercentage(3)}></Icon>
-                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Cuestionario de Sintomatología</Text>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Encuesta personal</Text>
                         </View>
                     </TouchableHighlight >
                 </View>
@@ -439,8 +439,8 @@ const home = ({navigation}) =>{
                     <Dialog visible={alertacuestionario} onDismiss={() => {guardarAlertacuestionario(false);}}>
                         <Dialog.Title>Aviso</Dialog.Title>
                         <Dialog.Content>
-                            <Paragraph style={globalStyles.textoAlerta}>Para continuar, debe haber respondido el 
-                            cuestionario de sintomatología
+                            <Paragraph style={globalStyles.textoAlerta}>Para continuar, debe haber respondido la Encuesta
+                            Personal
                             </Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>

@@ -7,6 +7,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -31,6 +32,8 @@ const PreferenciasSicologo = ({navigation}) =>{
     const [cargando,guardarCargando] = useState(false);
     const [alertaexito,guardarAlertaexito] = useState(false);
     const [guardadoenprogreso,guardarGuardadoenprogreso] = useState(false);
+
+    const [parte,guardarParte] = useState(1);
 
     useEffect(() => {
         consultar();
@@ -233,161 +236,194 @@ const PreferenciasSicologo = ({navigation}) =>{
     return (
         <ScrollView style= {globalStyles.contenedor}>
             {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
-            {cargando===false ?
+            {cargando===false && parte===1 ?
             <View>
-            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Responde las siguientes
-            preguntas para brindarte opciones que se acomoden a lo que buscas:
-            </Text>
-            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}> ¿Te interesa participar en terapia grupal?</Text>
-            <View style={styles.pregunta}>
-                <View style={styles.opciones}>
-                    <Text style={{color: colorLetra}}>Si</Text>
-                    <RadioButton
-                        value="first"
-                        status={ terapia_grupal    === 'Si' ? 'checked' : 'unchecked' }
-                        onPress={() => guardarTerapia_grupal('Si')}
-                        color='black'
-                    />
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Responde las siguientes
+                preguntas para brindarte opciones que se acomoden a lo que buscas:
+                </Text>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}> ¿Te interesa participar en terapia grupal?</Text>
+                <View style={styles.pregunta}>
+                    <View style={styles.opciones}>
+                        <Text style={{color: colorLetra}}>Si</Text>
+                        <RadioButton
+                            value="first"
+                            status={ terapia_grupal    === 'Si' ? 'checked' : 'unchecked' }
+                            onPress={() => guardarTerapia_grupal('Si')}
+                            color='black'
+                        />
+                    </View>
+                    <View style={styles.opciones}>
+                        <Text style={{color: colorLetra}}>No</Text>
+                        <RadioButton
+                            value="second"
+                            status={ terapia_grupal === 'No' ? 'checked' : 'unchecked' }
+                            onPress={() => guardarTerapia_grupal('No')}
+                            color='black'
+                        />
+                    </View>
+                    <View style={styles.opciones}>
+                        <Text style={{color: colorLetra}}>Me da igual</Text>
+                        <RadioButton
+                            value="second"
+                            status={ terapia_grupal === 'Me da igual' ? 'checked' : 'unchecked' }
+                            onPress={() => guardarTerapia_grupal('Me da igual')}
+                            color='black'
+                        />
+                    </View>
                 </View>
-                <View style={styles.opciones}>
-                    <Text style={{color: colorLetra}}>No</Text>
-                    <RadioButton
-                        value="second"
-                        status={ terapia_grupal === 'No' ? 'checked' : 'unchecked' }
-                        onPress={() => guardarTerapia_grupal('No')}
-                        color='black'
-                    />
-                </View>
-                <View style={styles.opciones}>
-                    <Text style={{color: colorLetra}}>Me da igual</Text>
-                    <RadioButton
-                        value="second"
-                        status={ terapia_grupal === 'Me da igual' ? 'checked' : 'unchecked' }
-                        onPress={() => guardarTerapia_grupal('Me da igual')}
-                        color='black'
-                    />
+                <View style={[styles.container,{marginTop:5}]}>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>guardarParte(2)}>
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                            <Icon name="greater-than" color={colorIcono} size={RFPercentage(3)}></Icon>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Siguiente</Text>
+                        </View>
+                    </TouchableHighlight >
                 </View>
             </View>
-            <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Selecciona los motivos por los que te interesa participar en terapia grupal:
-(Si respondiste “No” o “Me da igual” a la pregunta anterior, puedes dejar esto en blanco):</Text>
+                : null}
+             {cargando===false && parte===2 ?
+             <View>
+                <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Selecciona los motivos por los que te interesa participar en terapia grupal:
+    (Si respondiste “No” o “Me da igual” a la pregunta anterior, puedes dejar esto en blanco):</Text>
 
-            <View style={styles.pregunta}>
-                <Checkbox   
-                    status={grupoapoyo === 'si' ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                        if (grupoapoyo==='si'){
-                            guardarGrupoapoyo('no');
-                        }
-                        else if (grupoapoyo==='no'){
-                            guardarGrupoapoyo('si');
-                            guardarNodecir('no');
-                        }
-                    }}
-                    color='black'
-                />
-                <Text style={styles.textopregunta,{color: colorLetra}}>Grupo de Apoyo </Text>
+                <View style={styles.pregunta}>
+                    <Checkbox   
+                        status={grupoapoyo === 'si' ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            if (grupoapoyo==='si'){
+                                guardarGrupoapoyo('no');
+                            }
+                            else if (grupoapoyo==='no'){
+                                guardarGrupoapoyo('si');
+                                guardarNodecir('no');
+                            }
+                        }}
+                        color='black'
+                    />
+                    <Text style={[styles.textopregunta,{color: colorLetra}]}>Grupo de Apoyo </Text>
+                </View>
+                <View style={styles.pregunta}>
+                    <Checkbox
+                        status={habcomunicacion === 'si' ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            if (habcomunicacion==='si'){
+                                guardarHabcomunicacion('no');
+                            }
+                            else if (habcomunicacion==='no'){
+                                guardarHabcomunicacion('si');
+                                guardarNodecir('no');
+                            }
+                        }}
+                        color='black'
+                    />
+                    <Text style={[styles.textopregunta,{color: colorLetra}]}>Mejorar habilidades comunicacionales </Text>
+                </View>
+                <View style={styles.pregunta}>
+                    <Checkbox
+                        status={mismosproblemas === 'si' ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            if (mismosproblemas==='si'){
+                                guardarMismosproblemas('no');
+                            }
+                            else if (mismosproblemas==='no'){
+                                guardarMismosproblemas('si');
+                                guardarNodecir('no');
+                            }
+                        }}
+                        color='black'
+                    />
+                    <Text style={[styles.textopregunta,{color: colorLetra}]}>Conocer gente con mis mismos problemas</Text>
+                </View>
+                <View style={styles.pregunta}>
+                    <Checkbox
+                        status={otrosproblemas === 'si' ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            if (otrosproblemas==='si'){
+                                guardarOtrosproblemas('no');
+                            }
+                            else if (otrosproblemas==='no'){
+                                guardarOtrosproblemas('si');
+                                guardarNodecir('no');
+                            }
+                        }}
+                        color='black'
+                    />
+                    <Text style={[styles.textopregunta,{color: colorLetra}]}>Conocer gente con otros problemas</Text>
+                </View>
+                <View style={styles.pregunta}>
+                    <Checkbox
+                        status={individualincomodo === 'si' ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            if (individualincomodo==='si'){
+                                guardarIndividualincomodo('no');
+                            }
+                            else if (individualincomodo==='no'){
+                                guardarIndividualincomodo('si');
+                                guardarNodecir('no');
+                            }
+                        }}
+                        color='black'
+                    />
+                    <Text style={[styles.textopregunta,{color: colorLetra}]}>La terapia individual es incómoda para mí y/o no la encuentro útil</Text>
+                </View>
+                <View style={styles.pregunta}>
+                    <Checkbox
+                        status={otro === 'si' ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            if (otro==='si'){
+                                guardarOtro('no');
+                            }
+                            else if (otro==='no'){
+                                guardarOtro('si');
+                                guardarNodecir('no');
+                            }
+                        }}
+                        color='black'
+                    />
+                    <Text style={[styles.textopregunta,{color: colorLetra}]}>Otro </Text>
+                </View>
+                <View style={styles.pregunta}>
+                    <Checkbox
+                        status={nodecir === 'si' ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            if (nodecir==='si'){
+                                guardarNodecir('no');
+                            }
+                            else if (nodecir==='no'){
+                                guardarNodecir('si');
+                                guardarGrupoapoyo('no');
+                                guardarHabcomunicacion('no');
+                                guardarMismosproblemas('no');
+                                guardarOtrosproblemas('no');
+                                guardarIndividualincomodo('no');
+                                guardarOtro('no');
+                            }
+                        }}
+                        color='black'
+                    />
+                    <Text style={[styles.textopregunta,{color: colorLetra}]}>Prefiero no decir</Text>
+                </View>
+                <View style={{flexDirection:'row'}}>
+                    <View style={[styles.container,{marginTop:5, flex:0.5}]}>
+                            <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>guardarParte(1)}>
+                                <View style={{flexDirection:'row'}}>
+                                    <Text style={[styles.textoC,{color: colorTextoBoton}]}>Volver</Text>
+                                </View>
+                            </TouchableHighlight >
+                    </View>
+                    <View style={[styles.container,{marginTop:5,flex:0.5}]}>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>guardarParte(3)}>
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                            <Icon name="greater-than" color={colorIcono} size={RFPercentage(3)}></Icon>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Siguiente</Text>
+                        </View>
+                    </TouchableHighlight >
+                    </View>
+                </View>
             </View>
-            <View style={styles.pregunta}>
-                <Checkbox
-                    status={habcomunicacion === 'si' ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                        if (habcomunicacion==='si'){
-                            guardarHabcomunicacion('no');
-                        }
-                        else if (habcomunicacion==='no'){
-                            guardarHabcomunicacion('si');
-                            guardarNodecir('no');
-                        }
-                    }}
-                    color='black'
-                />
-                <Text style={[styles.textopregunta,{color: colorLetra}]}>Mejorar habilidades comunicacionales </Text>
-            </View>
-            <View style={styles.pregunta}>
-                <Checkbox
-                    status={mismosproblemas === 'si' ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                        if (mismosproblemas==='si'){
-                            guardarMismosproblemas('no');
-                        }
-                        else if (mismosproblemas==='no'){
-                            guardarMismosproblemas('si');
-                            guardarNodecir('no');
-                        }
-                    }}
-                    color='black'
-                />
-                <Text style={[styles.textopregunta,{color: colorLetra}]}>Conocer gente con mis mismos problemas</Text>
-            </View>
-            <View style={styles.pregunta}>
-                <Checkbox
-                    status={otrosproblemas === 'si' ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                        if (otrosproblemas==='si'){
-                            guardarOtrosproblemas('no');
-                        }
-                        else if (otrosproblemas==='no'){
-                            guardarOtrosproblemas('si');
-                            guardarNodecir('no');
-                        }
-                    }}
-                    color='black'
-                />
-                <Text style={[styles.textopregunta,{color: colorLetra}]}>Conocer gente con otros problemas</Text>
-            </View>
-            <View style={styles.pregunta}>
-                <Checkbox
-                    status={individualincomodo === 'si' ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                        if (individualincomodo==='si'){
-                            guardarIndividualincomodo('no');
-                        }
-                        else if (individualincomodo==='no'){
-                            guardarIndividualincomodo('si');
-                            guardarNodecir('no');
-                        }
-                    }}
-                    color='black'
-                />
-                <Text style={[styles.textopregunta,{color: colorLetra}]}>La terapia individual es incómoda para mí y/o no la encuentro útil</Text>
-            </View>
-            <View style={styles.pregunta}>
-                <Checkbox
-                    status={otro === 'si' ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                        if (otro==='si'){
-                            guardarOtro('no');
-                        }
-                        else if (otro==='no'){
-                            guardarOtro('si');
-                            guardarNodecir('no');
-                        }
-                    }}
-                    color='black'
-                />
-                <Text style={[styles.textopregunta,{color: colorLetra}]}>Otro </Text>
-            </View>
-            <View style={styles.pregunta}>
-                <Checkbox
-                    status={nodecir === 'si' ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                        if (nodecir==='si'){
-                            guardarNodecir('no');
-                        }
-                        else if (nodecir==='no'){
-                            guardarNodecir('si');
-                            guardarGrupoapoyo('no');
-                            guardarHabcomunicacion('no');
-                            guardarMismosproblemas('no');
-                            guardarOtrosproblemas('no');
-                            guardarIndividualincomodo('no');
-                            guardarOtro('no');
-                        }
-                    }}
-                    color='black'
-                />
-                <Text style={[styles.textopregunta,{color: colorLetra}]}>Prefiero no decir</Text>
-            </View>
+            : null}
+            {cargando===false && parte===3 ?
+            <View>
             <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Me gustaría que me atienda un/una profesional: </Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
@@ -418,13 +454,22 @@ const PreferenciasSicologo = ({navigation}) =>{
                     />
                 </View>
             </View>
-            <View style={[styles.container,{marginTop:5}]}>
-                <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>enviarPreferencias()}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="greater-than" color={colorIcono} size={25}></Icon>
-                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
-                    </View>
-                </TouchableHighlight >
+            <View style={{flexDirection:'row'}}>
+                <View style={[styles.container,{marginTop:5, flex:0.5}]}>
+                        <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>guardarParte(1)}>
+                            <View style={{flexDirection:'row'}}>
+                                <Text style={[styles.textoC,{color: colorTextoBoton}]}>Volver</Text>
+                            </View>
+                        </TouchableHighlight >
+                </View>
+                <View style={[styles.container,{marginTop:5, flex:0.5}]}>
+                    <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>enviarPreferencias()}>
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                            <Icon name="greater-than" color={colorIcono} size={RFPercentage(3)}></Icon>
+                            <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
+                        </View>
+                    </TouchableHighlight >
+                </View>
             </View>
             </View> : null}
             <Portal>
@@ -479,19 +524,19 @@ const PreferenciasSicologo = ({navigation}) =>{
 
 const styles=StyleSheet.create({
     texto2:{
-        fontSize: 14,
+        fontSize: RFPercentage(2.2),
         fontFamily: 'Inter-Regular'
     },
     texto:{
-        fontSize: 16,
+        fontSize: RFPercentage(2.2),
         marginLeft:5,
         marginRight:10,
-        marginVertical:7,
+        marginVertical: 5,
         fontFamily: 'Inter-Regular',
         textAlign:'justify'
     },
     textopregunta: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.2),
         marginLeft:5,
         marginRight:10,
         fontFamily: 'Inter-Regular'
@@ -499,7 +544,7 @@ const styles=StyleSheet.create({
     pregunta:{
         flex: 1,
         flexDirection:'row',
-        marginTop: 5,
+        marginTop: 0,
         marginHorizontal:10,
         alignItems:'center',
         marginRight:25
@@ -514,20 +559,20 @@ const styles=StyleSheet.create({
     textoC: {
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         textAlign: 'center',
         fontFamily:'Inter-Light'
     },
     botonS:{
-        height: 40,
+        height: RFPercentage(5),
         marginBottom: 0,
         marginHorizontal: 4,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#e35d17",
         borderRadius: 8,
-        marginTop: 15
+        marginTop: 10
     }
 })
 

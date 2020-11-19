@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -326,8 +327,8 @@ const horariosicologo = ({navigation,route}) => {
         <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Elige un horario para tu primera sesión</Text>            
             <TouchableHighlight  underlayColor = {'transparent'} style={[styles.botonC,{backgroundColor: colorb}]} onPress={showDatePicker} >
-                <View style={{flexDirection:'row',justifyContent:'center'}}>
-                    <Icon name="calendar" color={colorIcono} size={25}></Icon>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <Icon name="calendar" color={colorIcono} size={RFPercentage(3)}></Icon>
                     <Text style={[styles.textoC,{color: colorTextoBoton}]}>Seleccionar fecha</Text>
                 </View>
             </TouchableHighlight>
@@ -339,12 +340,12 @@ const horariosicologo = ({navigation,route}) => {
                 date={new Date(año+"-"+mes+"-"+dia)}
             />
             <View style={{alignItems:'center',marginTop:10,marginBottom:40}}> 
-                <Text style={{marginBottom:30,marginLeft:10,fontSize:17,fontFamily:'Inter-Regular',color: colorLetra}}>Fecha seleccionada: {fechaformateo(fecha)}</Text>
+                <Text style={{marginLeft:10,fontSize:RFPercentage(2.3),fontFamily:'Inter-Regular',color: colorLetra}}>Fecha seleccionada: {fechaformateo(fecha)}</Text>
             </View>
-            <View style={{alignItems:'center',marginBottom:15}}>
-                <Text style={{marginLeft:10,fontSize:21,fontFamily:'Inter-Bold',color: colorLetra}}>Seleccione una hora:</Text>
+            <View style={{alignItems:'center',marginBottom:RFPercentage(1)}}>
+                <Text style={{marginLeft:10,fontSize:RFPercentage(3),fontFamily:'Inter-Bold',color: colorLetra}}>Seleccione una hora:</Text>
             </View>
-            {horarios.length>0 ? <Text></Text> : <View style={{alignItems:'center',alignContent:'center',marginHorizontal:30}}><Text style={{fontSize:17,fontFamily:'Inter-Regular',color: colorLetra}}>No hay horarios disponibles el día seleccionado</Text></View>}
+            {horarios.length>0 ? <Text></Text> : <View style={{alignItems:'center',alignContent:'center',marginHorizontal:30,marginTop:5}}><Text style={{fontSize:RFPercentage(2.3),fontFamily:'Inter-Regular',color: colorLetra}}>No hay horarios disponibles el día seleccionado</Text></View>}
             <FlatList
                 data={horarios}
                 style={{marginBottom: 10}}
@@ -394,7 +395,7 @@ const horariosicologo = ({navigation,route}) => {
 const styles=StyleSheet.create({
     botonC:{
         marginTop: 5,
-        height: 40,
+        height: RFPercentage(5),
         marginBottom: 5,
         marginHorizontal: 30,
         justifyContent: 'center',
@@ -405,7 +406,7 @@ const styles=StyleSheet.create({
     textoC:{
         marginBottom: 0,
         marginHorizontal: 10,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         fontFamily: 'Inter-Light'
     }

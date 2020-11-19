@@ -351,8 +351,8 @@ const styles=StyleSheet.create({
         fontFamily:'Inter-Light'
     },
     botonS:{
-        height:  RFPercentage(6),
-        marginBottom: 0,
+        height:  RFPercentage(5),
+        marginTop: 3,
         marginHorizontal: 4,
         justifyContent: "center",
         alignItems: "center",

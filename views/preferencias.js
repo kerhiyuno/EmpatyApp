@@ -5,6 +5,7 @@ import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ScrollView } from 'react-native-gesture-handler';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const Preferencias = ({navigation}) => {
 
@@ -42,9 +43,8 @@ const styles=StyleSheet.create({
         paddingHorizontal: 10,
       },
     botonS:{
-        height: 70,
+        height:  RFPercentage(10),
         marginBottom: 20,
-        marginHorizontal: 10,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#e35d17",
@@ -53,14 +53,14 @@ const styles=StyleSheet.create({
     textoS:{
         marginBottom: 10,
         marginHorizontal: 10,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'black',
         fontFamily: 'Inter-Regular'
     },
     textoC: {
         marginBottom: 0,
         marginHorizontal: 7,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         fontFamily: 'Inter-Light'
     }

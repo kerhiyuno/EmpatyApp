@@ -204,7 +204,7 @@ const registro = ({navigation}) =>{
     //registra el cliente
     const registrar= async () =>{
         //validar
-        if (fullname === '' || rut === '' || email === '' || telefono === '' || fecha_nacimiento ===''|| password === '' || password2 === ''){
+        if (fullname === '' || rut === '' || email === '' || telefono === '' || fecha_nacimiento ==='-'|| password === '' || password2 === ''){
             guardarAlerta(true);
             if(errorContraseña==true){
                 guardarAlertacontra(true);

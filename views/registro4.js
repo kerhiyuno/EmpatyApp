@@ -58,13 +58,16 @@ const registro4 = ({navigation,route}) =>{
             //guardar en api
             try {
                 console.log(usuario);
-                await axios.post(host+'/usuarios/paciente/registro/',usuario);
-            } catch (error){
+                const respuesta=await axios.post(host+'/usuarios/paciente/registro/',usuario);
+                if (respuesta.status===200){
+                    guardarRegistrolisto(true);
+                }
+            }
+             catch (error){
             console.log(error);
             console.log(error.response);
             }
             //limpiar formulario
-            guardarRegistrolisto(true);
         }
         else{
             console.log("registro en progreso");

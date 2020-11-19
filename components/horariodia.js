@@ -4,6 +4,7 @@ import {View,StyleSheet,Text,TouchableHighlight} from 'react-native';
 import globalStyles from '../styles/global';
 import BloqueHorario from '../components/bloquehorario';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const HorarioDia = (props) =>{
 
@@ -15,7 +16,7 @@ const HorarioDia = (props) =>{
 
     return(
         <View>
-            <Text style={[globalStyles.titulo,{fontSize:19,marginTop:15,color: colorTitulo}]} >{dia}</Text>
+            <Text style={[globalStyles.titulo,{fontSize:RFPercentage(3),marginTop:15,color: colorTitulo}]} >{dia}</Text>
             <View style={styles.fila}>
                 <BloqueHorario numeroBloque={1} numeroDia={numeroDia} bloque={'8 a 9'} d={d1} guardard={guardard1} disponibles={disponibles} guardarDisponibles={guardarDisponibles}/>
                 <BloqueHorario numeroBloque={2} numeroDia={numeroDia} bloque={'9 a 10'} d={d2} guardard={guardard2} disponibles={disponibles} guardarDisponibles={guardarDisponibles}/>
@@ -53,7 +54,7 @@ const styles=StyleSheet.create({
     },
     boton: {
         marginTop: 2,
-        height: 35,
+        height: RFPercentage(5),
         marginBottom: 2,
         marginHorizontal: 2,
         backgroundColor: '#e35d17',
@@ -62,7 +63,7 @@ const styles=StyleSheet.create({
     },
     botonno: {
         marginTop: 2,
-        height: 35,
+        height: RFPercentage(5),
         marginBottom: 2,
         marginHorizontal: 2,
         backgroundColor: '#5e5e5e',

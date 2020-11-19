@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -105,8 +106,8 @@ const codigosicologo = ({navigation}) =>{
             
             <View style={[{marginTop:5}]}>
                 <TouchableHighlight  style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={()=>enviar()}>
-                    <View style={{flexDirection:'row'}}>
-                        <Icon name="send" color={colorIcono} size={25}></Icon>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Icon name="send" color={colorIcono} size={RFPercentage(3)}></Icon>
                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Enviar</Text>
                     </View>
                 </TouchableHighlight >
@@ -159,31 +160,29 @@ const styles=StyleSheet.create({
 
     texto: {
         marginTop:150,
-        fontSize: 17,
-        marginLeft:5,
-        marginRight:5,
+        fontSize: RFPercentage(2.3),
         marginBottom:15,
         fontFamily: 'Inter-Regular',
-        textAlign:'justify'
+        textAlign:'justify',
+        marginHorizontal: 10
     },
-
     opciones:{
         flex: 0.25,
         alignItems: 'center'
     },
     botonS:{
-        height: 40,
+        height: RFPercentage(5),
         marginBottom: 20,
-        marginHorizontal: 10,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#e35d17",
-        borderRadius: 8
+        borderRadius: 8,
+        marginHorizontal: 10
     },
     textoC: {
         marginBottom: 0,
         marginHorizontal: 10,
-        fontSize: 17,
+        fontSize:  RFPercentage(2.5),
         color: 'white',
         fontFamily: 'Inter-Light'
     },

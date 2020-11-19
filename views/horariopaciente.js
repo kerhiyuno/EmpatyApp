@@ -8,6 +8,7 @@ import HorarioDia from '../components/horariodia'
 import AsyncStorage from '@react-native-community/async-storage';
 import EstilosContext from '../context/estilosContext';
 import {ipHost} from '../components/hosts.js';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -705,7 +706,7 @@ const HorarioPaciente = ({navigation}) =>{
 const styles=StyleSheet.create({
     texto:{
         marginTop:0,
-        fontSize: 17,
+        fontSize: RFPercentage(2.3),
         marginLeft:5,
         marginRight:5,
         fontFamily:'Inter-Regular'
@@ -721,7 +722,7 @@ const styles=StyleSheet.create({
     },
     boton:{
         marginTop: 2,
-        height: 35,
+        height: RFPercentage(5),
         marginBottom: 2,
         marginHorizontal: 2,
         backgroundColor: '#e35d17',
@@ -731,7 +732,7 @@ const styles=StyleSheet.create({
     },
     botonno:{
         marginTop: 2,
-        height: 35,
+        height: RFPercentage(5),
         marginBottom: 2,
         marginHorizontal: 2,
         backgroundColor: '#5e5e5e',
@@ -741,18 +742,18 @@ const styles=StyleSheet.create({
     },
     textboton:{
         color: 'white',
-        fontFamily:'Inter-Light'
+        fontFamily:'Inter-Light',
     },
     textoC:{
         marginBottom: 2,
         marginHorizontal: 5,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         textAlign: 'center',
         fontFamily:'Inter-Light'
     },
     botonS:{
-        height: 40,
+        height: RFPercentage(5),
         marginBottom: 0,
         marginHorizontal: 4,
         justifyContent: "center",

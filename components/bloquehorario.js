@@ -1,6 +1,7 @@
 import React,{useContext} from 'react';
 import {View,StyleSheet,Text,TouchableHighlight} from 'react-native';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const BloqueHorario = (props) => {
 
@@ -50,7 +51,7 @@ const styles=StyleSheet.create({
     },
     boton: {
         marginTop: 2,
-        height: 35,
+        height: RFPercentage(5),
         marginBottom: 2,
         marginHorizontal: 2,
         backgroundColor: '#e35d17',
@@ -59,7 +60,7 @@ const styles=StyleSheet.create({
     },
     botonno: {
         marginTop: 2,
-        height: 35,
+        height: RFPercentage(5),
         marginBottom: 2,
         marginHorizontal: 2,
         backgroundColor: '#5e5e5e',
@@ -68,7 +69,8 @@ const styles=StyleSheet.create({
     },
     textboton:{
         color: 'white',
-        fontFamily:'Inter-Light'
+        fontFamily:'Inter-Light',
+        fontSize: RFPercentage(2)
     },
 })
 

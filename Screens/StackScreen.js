@@ -136,7 +136,7 @@ const StackScreen = () => {
               <BotonInfo {...props} navigation={navigation} route={route}/>
               <BotonLogout {...props} navigation={navigation} route={route}/>
             </View>,
-            headerTitle: 'Cuestionario'
+            headerTitle: 'Encuesta personal'
         })}
       >
       </Stack.Screen>

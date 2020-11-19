@@ -7,6 +7,7 @@ import {Avatar} from 'react-native-paper';
 import UserAvatar from 'react-native-user-avatar';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -133,8 +134,8 @@ const elegirsicologo = ({navigation}) =>{
 const styles=StyleSheet.create({
     botonC:{
         marginTop: 0,
-        height: 90,
-        marginBottom: 20,
+        height: RFPercentage(13),
+        marginBottom: RFPercentage(2),
         marginHorizontal: 20,
         justifyContent: 'center',
         backgroundColor: '#e35d17',
@@ -143,7 +144,7 @@ const styles=StyleSheet.create({
     textoC:{
         marginTop:0,
         marginHorizontal: 0,
-        fontSize: 16,
+        fontSize: RFPercentage(2.3),
         color: 'white',
         fontFamily: 'Inter-Light'
     }

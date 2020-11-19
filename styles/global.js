@@ -11,7 +11,7 @@ const globalStyles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 8,
         marginBottom: 16,
-        fontSize: RFPercentage(3.4),
+        fontSize: RFPercentage(3.2),
         fontFamily: "Inter-Bold",
         color: '#141414'
     },

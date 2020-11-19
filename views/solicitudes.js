@@ -35,6 +35,7 @@ const solicitudes = () =>{
             console.log(respuesta.data);
             guardarCargando(false);
         } catch (error) {
+            console.log(error);
             console.log(error.response);
             if(error.response.data.code==='token_not_valid'){
                 console.log('token_not_valid');
@@ -65,6 +66,9 @@ const solicitudes = () =>{
     const fechaformateo=(fecha)=>{
         if(fecha==='-'){
             return '-';
+        }
+        if(!fecha){
+            return fecha
         }
         var f=fecha.split('-');
         fecha = f[2]+"-"+f[1]+"-"+f[0];
