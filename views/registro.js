@@ -6,15 +6,15 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EstilosContext from '../context/estilosContext'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const registro = ({navigation}) =>{
 
     const {colorb,colorBorderInput,colorTextoBoton,colorLetra,colorPrimaryinput,
-        colorPlaceholderinput,colorError,colorIcono,colorFondo,colorTitulo} = useContext(EstilosContext);
+        colorPlaceholderinput,colorError,colorIcono,colorFondo} = useContext(EstilosContext);
 
-    const {width, height} = useWindowDimensions();
-    const textinputsize = height*0.07
+    const {height} = useWindowDimensions();
+    const textinputsize = height*0.07;
 
     const [fullname,guardarFullname] = useState('');
     const [rut,guardarRut] = useState('');
@@ -170,23 +170,23 @@ const registro = ({navigation}) =>{
             } else { 
                 multiplo = 2; 
             }
+        }
+        
+        // Calcular Dígito Verificador en base al Módulo 11
+        var dvEsperado = 11 - (suma % 11);
+        
+        // Casos Especiales (0 y K)
+        dv = (dv == 'K')?10:dv;
+        dv = (dv == 0)?11:dv;
+        
+        // Validar que el Cuerpo coincide con su Dígito Verificador
+        if(dvEsperado != dv) { 
+            guardarErrorRut(true); 
+            console.log("error digito verificador"); 
+            return false;
+        }
+        guardarErrorRut(false);
     }
-    
-    // Calcular Dígito Verificador en base al Módulo 11
-    var dvEsperado = 11 - (suma % 11);
-    
-    // Casos Especiales (0 y K)
-    dv = (dv == 'K')?10:dv;
-    dv = (dv == 0)?11:dv;
-    
-    // Validar que el Cuerpo coincide con su Dígito Verificador
-    if(dvEsperado != dv) { 
-        guardarErrorRut(true); 
-        console.log("error digito verificador"); 
-        return false;
-    }
-    guardarErrorRut(false);
-}
 
     const contraseñasIguales = (password,password2) => {
         if(password==='' || password2===''){
@@ -229,7 +229,6 @@ const registro = ({navigation}) =>{
                     }
                     return
                 }
-                return
                 if (erroremail==true){
                     guardarAlertaEmail(true);
                     if (errorRut==true){
@@ -242,6 +241,7 @@ const registro = ({navigation}) =>{
                     guardarAlertaRut(true);
                     return
                 }
+                return
             }
             if (mayor18(año,mes,dia)==='no'){
                 console.log("debe ser mayor de 18 años");

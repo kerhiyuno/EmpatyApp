@@ -6,13 +6,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
 const registro4 = ({navigation,route}) =>{
 
-    const {colorb,colorBorderInput,colorTextoBoton,colorLetra,colorIcono,colorFondo} = useContext(EstilosContext);
+    const {colorb,colorTextoBoton,colorLetra,colorIcono,colorFondo} = useContext(EstilosContext);
 
     const [psico_prevS,guardarPsico_prev] = useState('');
     const [psiquia_prevS,guardarPsiquia_prev] = useState('');

@@ -173,6 +173,11 @@ const sesion = ({navigation}) =>{
         console.log(separado);
         return separado[2];
     }
+    const extraerAnio = (fecha) =>{
+        var separado = fecha.split('-');
+        console.log(separado);
+        return separado[0];
+    }
     const mespalabra = (fecha)=>{
         var separado=fecha.split('-');
         console.log(separado);
@@ -222,48 +227,182 @@ const sesion = ({navigation}) =>{
             const respuesta = await axios.get(host +'/grupal/sesiones/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta);
-            if (respuesta.data.length<1){
-                console.log("gola");
-                guardarSinsesiones(true);
+            const respuesta2 = await axios.get(host +'/grupal/individuales/', 
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            console.log(respuesta);
+            console.log(respuesta2);
+            if (respuesta.data.length < 1 && respuesta2.data.length > 0){
+                var item= respuesta2.data[0]['id'];
+                var fecha=respuesta2.data[0]['fecha_sesion'];
+                var dia= extraerdia(fecha) ;
+                var mes= mespalabra(fecha);
+                var hora=traductorhora(respuesta2.data[0].bloque.id);
+                navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
             }
-            else{
-                console.log(respuesta.data[0]);
-                console.log(respuesta.data[0]['id']);
+            else if (respuesta.data.length > 0 && respuesta2.data.length < 1){
                 var item= respuesta.data[0]['id'];
                 var fecha=respuesta.data[0]['fecha_sesion'];
                 var dia= extraerdia(fecha) ;
                 var mes= mespalabra(fecha);
-                var hora=traductorhora(respuesta.data[0].bloque.id);
-                console.log(hora,dia,mes);
+                var hora=traductorhora(respuesta2.data[0].bloque.id);
                 navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
             }
-        } catch (error) {
-            console.log("error");
-            console.log(error);
-            console.log(error.response);
-            if(error.response.data.code==='token_not_valid'){
-                console.log('token_not_valid');
-                try {
-                    const refresh0 = await AsyncStorage.getItem('datosSesion')
-                    var refresh = JSON.parse(refresh0).refresh;
-                    refresh = {refresh}
-                    var respuesta = await axios.post('http://10.0.2.2:8000/account/token/refresh/',refresh);
-                    refresh=JSON.parse(refresh0).refresh;
-                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
-                    try {
-                        var name= await AsyncStorage.getItem('datosSesion');
-                        const respuesta = await axios.get('http://10.0.2.2:8000/grupal/sesiones/',
-                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
-                        console.log(respuesta.data[0]); 
-                        if (respuesta.data.length<1){
-                            guardarSinsesiones(true);
+            else if (respuesta.data.length > 0 && respuesta2.data.length > 0){
+                var item1 = respuesta.data[0]['id'];
+                var fecha1 = respuesta.data[0]['fecha_sesion'];
+                var dia1 = extraerdia(fecha1);
+                var mes1 = mespalabra(fecha1);
+                var anio1= extraerAnio(fecha1);
+                var hora1 = traductorhora(respuesta.data[0].bloque.id);
+
+                var item2 = respuesta2.data[0]['id'];
+                var fecha2 = respuesta2.data[0]['fecha_sesion'];
+                var dia2 = extraerdia(fecha2) ;
+                var mes2 = mespalabra(fecha2);
+                var anio2= extraerAnio(fecha2);
+                var hora2 = traductorhora(respuesta2.data[0].bloque.id);
+
+                if (parseInt(anio1) < parseInt(anio2)){
+                    navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
+                    console.log("sesion grupal");
+                }
+                else if (parseInt(anio2) < parseInt(anio1)){
+                    navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
+                    console.log("sesion individual");
+                }
+                else{
+                    if (parseInt(mes1) < parseInt(mes2)){
+                        navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
+                        console.log("sesion grupal");
+                    }
+                    else if (parseInt(mes2) < parseInt(mes1)){
+                        navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
+                        console.log("sesion individual");
+                    }
+                    else{
+                        if (parseInt(dia1) < parseInt(dia2)){
+                            navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
+                            console.log("sesion grupal");
+                        }
+                        else if (parseInt(dia2) < parseInt(dia1)){
+                            navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
+                            console.log("sesion individual");
                         }
                         else{
-                            console.log(respuesta.data[0]);
-                            console.log(respuesta.data[0]['id']);
-                            var id= respuesta.data[0]['id'];
-                            navigation.navigate('Cita',{id});
-                        }  
+                            if (hora1 < hora2){
+                                navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
+                                console.log("sesion grupal");
+                            }
+                            else{
+                                navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
+                                console.log("sesion individual");
+                            }
+                        }
+                    }
+                }
+                navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
+            }
+            else{
+                guardarSinsesiones(true);
+            }
+        } catch (error) {
+                console.log("error");
+                console.log(error);
+                console.log(error.response);
+                if(error.response.data.code==='token_not_valid'){
+                    console.log('token_not_valid');
+                    try {
+                        const refresh0 = await AsyncStorage.getItem('datosSesion');
+                        var refresh = JSON.parse(refresh0).refresh;
+                        refresh = {refresh}
+                        var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                        refresh=JSON.parse(refresh0).refresh;
+                        await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                        try {
+                            console.log("df");
+                const nombre = await AsyncStorage.getItem('datosSesion');
+                const respuesta = await axios.get(host +'/grupal/sesiones/',
+                {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+                console.log(respuesta);
+                const respuesta2 = await axios.get(host +'/grupal/individuales/', 
+                {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+                console.log(respuesta);
+                console.log(respuesta2);
+                if (respuesta.data.length < 1 && respuesta2.data.length > 0){
+                    var item= respuesta2.data[0]['id'];
+                    var fecha=respuesta2.data[0]['fecha_sesion'];
+                    var dia= extraerdia(fecha) ;
+                    var mes= mespalabra(fecha);
+                    var hora=traductorhora(respuesta2.data[0].bloque.id);
+                    navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
+                }
+                else if (respuesta.data.length > 0 && respuesta2.data.length < 1){
+                    var item= respuesta.data[0]['id'];
+                    var fecha=respuesta.data[0]['fecha_sesion'];
+                    var dia= extraerdia(fecha) ;
+                    var mes= mespalabra(fecha);
+                    var hora=traductorhora(respuesta2.data[0].bloque.id);
+                    navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
+                }
+                else if (respuesta.data.length > 0 && respuesta2.data.length > 0){
+                    var item1 = respuesta.data[0]['id'];
+                    var fecha1 = respuesta.data[0]['fecha_sesion'];
+                    var dia1 = extraerdia(fecha1);
+                    var mes1 = mespalabra(fecha1);
+                    var anio1= extraerAnio(fecha1);
+                    var hora1 = traductorhora(respuesta.data[0].bloque.id);
+
+                    var item2 = respuesta2.data[0]['id'];
+                    var fecha2 = respuesta2.data[0]['fecha_sesion'];
+                    var dia2 = extraerdia(fecha2) ;
+                    var mes2 = mespalabra(fecha2);
+                    var anio2= extraerAnio(fecha2);
+                    var hora2 = traductorhora(respuesta2.data[0].bloque.id);
+
+                    if (parseInt(anio1) < parseInt(anio2)){
+                        navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
+                        console.log("sesion grupal");
+                    }
+                    else if (parseInt(anio2) < parseInt(anio1)){
+                        navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
+                        console.log("sesion individual");
+                    }
+                    else{
+                        if (parseInt(mes1) < parseInt(mes2)){
+                            navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
+                            console.log("sesion grupal");
+                        }
+                        else if (parseInt(mes2) < parseInt(mes1)){
+                            navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
+                            console.log("sesion individual");
+                        }
+                        else{
+                            if (parseInt(dia1) < parseInt(dia2)){
+                                navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
+                                console.log("sesion grupal");
+                            }
+                            else if (parseInt(dia2) < parseInt(dia1)){
+                                navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
+                                console.log("sesion individual");
+                            }
+                            else{
+                                if (hora1 < hora2){
+                                    navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
+                                    console.log("sesion grupal");
+                                }
+                                else{
+                                    navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
+                                    console.log("sesion individual");
+                                }
+                            }
+                        }
+                    }
+                    navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
+                }
+                else{
+                    guardarSinsesiones(true);
+                }
+
                     } catch (error) {
                         console.log(error.response);
                         console.log("error acaa");

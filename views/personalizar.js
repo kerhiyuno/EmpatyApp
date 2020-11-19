@@ -1,14 +1,12 @@
 import React,{useContext} from 'react';
-import {Text,View,StyleSheet,TouchableHighlight,ActivityIndicator} from 'react-native';
+import {Text,View,StyleSheet,TouchableHighlight} from 'react-native';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
 import { RFPercentage } from "react-native-responsive-fontsize";
 
-const host = ipHost();
 
-const Personalizar = ({navigation,route}) => {
+const Personalizar = () => {
 
     const {colorb,colorLetra,colorTextoBoton,colorTitulo,colorIcono,
         cambiarColorBoton,cambiarColorHeader,cambiarColorLetra,cambiarColorFondo,cambiarColorSalir,

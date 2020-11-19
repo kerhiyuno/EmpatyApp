@@ -7,7 +7,7 @@ import NotificacionesContext from '../context/notificacionesContext'
 const ManejarNotificaciones = () => {
 
     const { aumentarCantidad,obtenerNotificaciones, guardarTokenFirebase,
-      guardarMensajes,hayNuevomensaje,cambioaForeground } = useContext(NotificacionesContext);
+      hayNuevomensaje,cambioaForeground } = useContext(NotificacionesContext);
 
     const appState = useRef(AppState.currentState);
     const [appStateVisible, guardarAppStateVisible] = useState(appState.current);
@@ -34,13 +34,11 @@ const ManejarNotificaciones = () => {
   
   
     useEffect( () => {
-      console.log("dassdasdasad");
       gettoken();
       const unsubscribe = messaging().onMessage(async remoteMessage => {
         console.log("Push notificacion recibida",remoteMessage);
         console.log(remoteMessage.notification.title);
         if(remoteMessage.notification.title == "Mensaje Nuevo"){
-          console.log("hahhasdffs")
           hayNuevomensaje(1);
           hayNuevomensaje(0);
         }

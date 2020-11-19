@@ -234,7 +234,7 @@ const PreferenciasSicologo = ({navigation}) =>{
         }
     }
     return (
-        <ScrollView style= {globalStyles.contenedor}>
+        <ScrollView style= {[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
             {cargando===false && parte===1 ?
             <View>

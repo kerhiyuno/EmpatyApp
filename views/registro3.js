@@ -4,7 +4,7 @@ import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EleccionHobbies from '../components/checkbox';
 import EstilosContext from '../context/estilosContext';
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const registro3 = ({navigation,route}) =>{
 

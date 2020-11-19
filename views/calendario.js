@@ -5,6 +5,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext'
+import moment from 'moment';
 
 const host = ipHost();
 
@@ -123,8 +124,13 @@ const traductorhora = (bloque) =>{
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.get(host+'/grupal/sesiones/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
-            guardarSesiones(respuesta.data);
-            console.log(respuesta.data);
+            const respuesta2 = await axios.get(host+'/grupal/individuales/',
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            let sesiones = respuesta.data;
+            sesiones = [...sesiones,...respuesta2.data]
+            sesiones = sesiones.sort((a,b)=> (moment(a.fecha_sesion)-moment(b.fecha_sesion)));
+            guardarSesiones(sesiones);
+            console.log(sesiones);
             guardarCargando(false);
         } catch (error){
             console.log("error");

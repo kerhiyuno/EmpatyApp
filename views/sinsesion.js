@@ -1,4 +1,4 @@
-import React, {useState,useContext,useEffect} from 'react';
+import React, {useState,useContext} from 'react';
 import {View,StyleSheet,Text,TouchableHighlight,ActivityIndicator,Image,useWindowDimensions } from 'react-native';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -9,28 +9,19 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
 import NotificacionesContext from '../context/notificacionesContext'
 import EstilosContext from '../context/estilosContext'
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
-const sinsesion = ({navigation,route}) =>{
+const sinsesion = ({navigation}) =>{
 
     const {obtenerTokenFirebase} = useContext(NotificacionesContext);
-    const {obtenerColorBoton,cambiarColorBoton,cambiarColorTextoBoton,cambiarColorSalir,cambiarColorHeader,colorb,colorFondo,colorLetra,
+    const {colorb,colorFondo,colorLetra,
         colorBordeInput,colorTextoBoton,colorPlaceholderinput,colorPrimaryinput,colorIcono} = useContext(EstilosContext);
 
     const {width, height} = useWindowDimensions();
     const textinputsize = height*0.07;
 
-    const [color,guardarColor] = useState("#e35d17")
-     useEffect(() => {
-         console.log(color);
-         guardarColor(obtenerColorBoton());
-     }, [])
-
-    useEffect(() => {
-        guardarColor(colorb);
-     }, [colorb])
 
     const [email,guardarEmail] = useState('');
     const [password,guardarPassword] = useState('');
@@ -196,14 +187,14 @@ const sinsesion = ({navigation,route}) =>{
                     style={[globalStyles.input,{borderColor:colorBordeInput,height: textinputsize}]}
                     theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                     />
-                <TouchableHighlight  style={[styles.botonS,{backgroundColor:color,height: height/20}]} underlayColor = {'transparent'} onPress={()=>iniciosesion()}>
+                <TouchableHighlight  style={[styles.botonS,{backgroundColor:colorb,height: height/20}]} underlayColor = {'transparent'} onPress={()=>iniciosesion()}>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                         <Icon name="login" color={colorIcono} size={RFPercentage(3)}></Icon>
                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Iniciar Sesión</Text>
                     </View>
                 </TouchableHighlight >
                 {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {styles.cargando}/> : null}
-                <TouchableHighlight  style={[styles.botonS,{marginHorizontal:width/5,backgroundColor:color,height: height/20,marginTop: height/10}]} underlayColor = {'transparent'} onPress={ () => navigation.navigate('Registro 1/7')}>
+                <TouchableHighlight  style={[styles.botonS,{marginHorizontal:width/5,backgroundColor:colorb,height: height/20,marginTop: height/10}]} underlayColor = {'transparent'} onPress={ () => navigation.navigate('Registro 1/7')}>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Regístrate</Text>
                     </View>

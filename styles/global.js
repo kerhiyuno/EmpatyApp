@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const globalStyles = StyleSheet.create({
     contenedor: {
