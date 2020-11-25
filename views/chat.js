@@ -195,11 +195,17 @@ const Chat = () => {
             wrapperStyle={{
               right: {
                 backgroundColor: colorb
+              },
+              left:{
+                backgroundColor: 'gray'
               }
             }}
             textStyle={{
               right: {
                 color: colorTextoBoton
+              },
+              left: {
+                color: 'white'
               }
             }}
           />

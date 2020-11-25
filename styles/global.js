@@ -5,7 +5,8 @@ const globalStyles = StyleSheet.create({
     contenedor: {
         flex: 1,
         paddingTop:10,
-        paddingHorizontal:10
+        paddingHorizontal:10,
+        marginBottom:0
     },
     titulo: {
         textAlign: 'center',

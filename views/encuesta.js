@@ -491,13 +491,13 @@ const encuesta = ({navigation,route}) => {
                     </View>
                 </TouchableHighlight>
                 <Portal>
-                    <Dialog visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);navigation.navigate('Iniciar Sesion')}}>
-                        <Dialog.Title>Éxito</Dialog.Title>
+                    <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);navigation.navigate('Iniciar Sesion')}}>
+                        <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                         <Dialog.Content>
-                            <Paragraph style={globalStyles.textoAlerta}>Las respuestas han sido guardadas correctamente</Paragraph>
+                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Las respuestas han sido guardadas correctamente</Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
-                            <Button onPress={()=>{guardarAlertaexito(false);navigation.reset({index: 1,routes: [{ name: 'Inicio' },{name: 'Sesion'}],});}} color='#3c2c18'>Ok</Button>
+                            <Button onPress={()=>{guardarAlertaexito(false);navigation.reset({index: 1,routes: [{ name: 'Inicio' },{name: 'Sesion'}],});}} color={colorLetra}>Ok</Button>
                         </Dialog.Actions>
                     </Dialog>
                 </Portal>

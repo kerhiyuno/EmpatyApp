@@ -149,8 +149,8 @@ const registro4 = ({navigation,route}) =>{
                 </TouchableHighlight >
             </View>
             <Portal>
-                <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)}>
-                    <Dialog.Title>Error</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alerta} onDismiss={() => guardarAlerta(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
                         <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios</Paragraph>
                     </Dialog.Content>
@@ -160,13 +160,13 @@ const registro4 = ({navigation,route}) =>{
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={registrolisto} onDismiss={() => {guardarRegistrolisto(false);guardarRegistroenprogreso(false);navigation.navigate('Iniciar Sesion')}}>
-                    <Dialog.Title>Registro completado</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={registrolisto} onDismiss={() => {guardarRegistrolisto(false);guardarRegistroenprogreso(false);navigation.navigate('Iniciar Sesion')}}>
+                    <Dialog.Title style={{color: colorLetra}}>Registro completado</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Se ha registrado exitosamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Se ha registrado exitosamente</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>{guardarRegistrolisto(false);guardarRegistroenprogreso(false);navigation.navigate('Iniciar Sesion')}} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>{guardarRegistrolisto(false);guardarRegistroenprogreso(false);navigation.navigate('Iniciar Sesion')}} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

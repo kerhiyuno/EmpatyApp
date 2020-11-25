@@ -16,7 +16,6 @@ const Notificaciones = () => {
 
     useEffect(() => {
         guardarMostrarnotificaciones(obtenerCantidad());
-        console.log("hola");
     },[notificaciones]);
 
     useEffect(() => {

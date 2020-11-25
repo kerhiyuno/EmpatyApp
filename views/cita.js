@@ -302,35 +302,35 @@ const cita = ({route}) =>{
             </TouchableHighlight>
 
             <Portal>
-                <Dialog visible={nolink} onDismiss={() => guardarNolink(false)} >
-                    <Dialog.Title>Aviso</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={nolink} onDismiss={() => guardarNolink(false)} >
+                    <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>La sesión no se encuentra disponible</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La sesión no se encuentra disponible</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>guardarNolink(false)} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>guardarNolink(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={nosubgrupo} onDismiss={() => guardarNosubgrupo(false)} >
-                    <Dialog.Title>Aviso</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={nosubgrupo} onDismiss={() => guardarNosubgrupo(false)} >
+                    <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>No has sido asignado a un sub-grupo</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>No has sido asignado a un sub-grupo</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>guardarNosubgrupo(false)} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>guardarNosubgrupo(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={sesionfinalizada} onDismiss={() => guardarSesionfinalizada(false)} >
-                    <Dialog.Title>Aviso</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={sesionfinalizada} onDismiss={() => guardarSesionfinalizada(false)} >
+                    <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>La sesión ha finalizado</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La sesión ha finalizado</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>guardarSesionfinalizada(false)} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>guardarSesionfinalizada(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

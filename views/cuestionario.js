@@ -297,25 +297,25 @@ const Cuestionario = ({navigation}) =>{
             </View>
             </View> : null}
             <Portal>
-                <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)}>
-                    <Dialog.Title>Error</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alerta} onDismiss={() => guardarAlerta(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Todos los campos son obligatorios</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>guardarAlerta(false)} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>guardarAlerta(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}}>
-                    <Dialog.Title>Éxito</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}}>
+                    <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>El formulario ha sido enviado correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El formulario ha sido enviado correctamente</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}} color='#3c2c18'>Ok</Button>
+                                <Button onPress={()=> {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}} color={colorLetra}>Ok</Button>
                             </View>
                         </Dialog.Actions>
                 </Dialog>

@@ -5,7 +5,8 @@ import EstilosReducer from './estilosReducer';
 import {CAMBIAR_COLOR,CAMBIAR_COLOR_PRIMARYINPUT,CAMBIAR_COLOR_PLACEHOLDERINPUT,CAMBIAR_COLOR_TEXTOBOTON,
     CAMBIAR_COLOR_HEADER,CAMBIAR_COLOR_BORDEINPUT,CAMBIAR_COLOR_LETRA,CAMBIAR_COLOR_FONDO,
     CAMBIAR_COLOR_SALIR,CAMBIAR_COLOR_ICONO,CAMBIAR_COLOR_ERROR,CAMBIAR_COLOR_TEXTOHEADER,
-    CAMBIAR_COLOR_TITULO,CAMBIAR_COLOR_BOTONDESACTIVADO,CAMBIAR_COLOR_NOTIFICACIONESBORDER} from '../types';
+    CAMBIAR_COLOR_TITULO,CAMBIAR_COLOR_BOTONDESACTIVADO,CAMBIAR_COLOR_NOTIFICACIONESBORDER,
+    CAMBIAR_COLOR_RADIO,CAMBIAR_COLOR_ICONO_LIBRE,CAMBIAR_FONDO_INPUT,CAMBIAR_TEXTO_INPUT} from '../types';
 
 
 const EstilosState = (props) => {
@@ -25,14 +26,44 @@ const EstilosState = (props) => {
         colorTitulo:'#141414',
         colorTextoHeader: 'white',
         colorError: '#a12b2b',
-        colorIcono: 'white'
+        colorIcono: 'white',
+        colorRadio: 'black',
+        colorIconoLibre: 'black',
+        colorFondoInput:'white',
+        colorTextoInput:'black'
     }
 
     const [state,dispatch] = useReducer(EstilosReducer,initialState);
 
-    const obtenerColorBoton = (color) => {
+    const obtenerColorBoton = () => {
         console.log(state.colorBoton)
         return state.colorBoton
+    }
+    const cambiarTextoInput = (color) => {
+        dispatch({
+            type: CAMBIAR_TEXTO_INPUT,
+            payload: color
+        }
+        );
+    }
+    const cambiarFondoInput = (color) => {
+        dispatch({
+            type: CAMBIAR_FONDO_INPUT,
+            payload: color
+        }
+        );
+    }
+    const cambiarColorIconoLibre = (color) => {
+        dispatch({
+            type: CAMBIAR_COLOR_ICONO_LIBRE,
+            payload: color
+        });
+    }
+    const cambiarColorRadio = (color) => {
+        dispatch({
+            type: CAMBIAR_COLOR_RADIO,
+            payload: color
+        });
     }
     const cambiarColorIcono = (color) => {
         dispatch({
@@ -143,6 +174,12 @@ const EstilosState = (props) => {
                 cambiarColorTitulo,
                 cambiarColorBotonDesactivado,
                 cambiarColorNotificacionesBorder,
+                cambiarColorRadio,
+                cambiarColorIconoLibre,
+                cambiarFondoInput,
+                cambiarTextoInput,
+                colorIconoLibre: state.colorIconoLibre,
+                colorRadio: state.colorRadio,
                 colorb: state.colorBoton,
                 colorHeader: state.colorHeader,
                 colorLetra: state.colorLetra,
@@ -157,7 +194,9 @@ const EstilosState = (props) => {
                 colorTextoHeader: state.colorTextoHeader,
                 colorTitulo: state.colorTitulo,
                 colorBotonDesactivado: state.colorBotonDesactivado,
-                colorNotificacionesBorder: state.colorNotificacionesBorder
+                colorNotificacionesBorder: state.colorNotificacionesBorder,
+                colorFondoInput: state.colorFondoInput,
+                colorTextoInput: state.colorTextoInput
             }}
         >
             {props.children}

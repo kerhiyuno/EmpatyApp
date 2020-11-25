@@ -8,7 +8,7 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 
 const BotonSalir = ({navigation}) =>{
 
-    const {colorSalir,colorTextoBoton,colorIcono} = useContext(EstilosContext);
+    const {colorSalir,colorTextoBoton,colorIcono,colorLetra,colorFondo} = useContext(EstilosContext);
 
     const [alertaseguro,guardarAlertaseguro] = useState(false);
 
@@ -28,17 +28,17 @@ const BotonSalir = ({navigation}) =>{
                 </View>
             </TouchableHighlight>
             <Portal>
-                <Dialog visible={alertaseguro} onDismiss={() => guardarAlertaseguro(false)}>
-                    <Dialog.Title>Salir</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaseguro} onDismiss={() => guardarAlertaseguro(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Salir</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>¿Está seguro que desea salir del registro?</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>¿Está seguro que desea salir del registro?</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:30}}>
-                            <Button onPress={()=>{guardarAlertaseguro(false); salir();}} color='#0f4866'>Si</Button>
+                            <Button onPress={()=>{guardarAlertaseguro(false); salir();}} color={colorLetra}>Si</Button>
                         </View>
                         <View style={{marginRight:10}}>
-                            <Button onPress={()=>guardarAlertaseguro(false)} color='#0f4866'>No</Button>
+                            <Button onPress={()=>guardarAlertaseguro(false)} color={colorLetra}>No</Button>
                         </View>
                     </Dialog.Actions>
                 </Dialog>

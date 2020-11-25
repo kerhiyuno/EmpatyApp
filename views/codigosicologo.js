@@ -14,7 +14,7 @@ const host = ipHost();
 const codigosicologo = ({navigation}) =>{
 
     const {colorb,colorLetra,colorTextoBoton,colorBorderInput,colorPrimaryinput,
-        colorPlaceholderinput,colorIcono,colorFondo} = useContext(EstilosContext);
+        colorPlaceholderinput,colorIcono,colorFondo,colorTextoInput,colorFondoInput} = useContext(EstilosContext);
 
     const [codigo,guardarCodigo] = useState('');
     const [alertacodigo,guardarAlertacodigo] = useState('');
@@ -100,8 +100,8 @@ const codigosicologo = ({navigation}) =>{
             <TextInput
                 label="Código de psicólogo"
                 onChangeText={(texto) => guardarCodigo(texto)}
-                style={[globalStyles.input,{borderColor: colorBorderInput}]}
-                theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
+                style={[globalStyles.input,{borderColor: colorBorderInput, backgroundColor:colorFondoInput}]}
+                theme={{colors: {text: colorTextoInput, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
             />
             
             <View style={[{marginTop:5}]}>
@@ -114,40 +114,40 @@ const codigosicologo = ({navigation}) =>{
                 {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {styles.cargando}/> : null}
             </View>
             <Portal>
-                <Dialog visible={alertacodigo} onDismiss={() => {guardarEnvioenprogreso(false);guardarAlertacodigo(false);}}>
-                 <Dialog.Title>Error</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertacodigo} onDismiss={() => {guardarEnvioenprogreso(false);guardarAlertacodigo(false);}}>
+                 <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                  <Dialog.Content>
-                     <Paragraph style={globalStyles.textoAlerta}>Debe ingresar un código</Paragraph>
+                     <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Debe ingresar un código</Paragraph>
                  </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>
-                            <Button onPress={()=>{guardarEnvioenprogreso(false);guardarAlertacodigo(false);}} color='#3c2c18'>Ok</Button>
+                            <Button onPress={()=>{guardarEnvioenprogreso(false);guardarAlertacodigo(false);}} color={colorLetra}>Ok</Button>
                         </View>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertasicologo} onDismiss={() => encontrado()}>
-                 <Dialog.Title>Psicólogo encontrado</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertasicologo} onDismiss={() => encontrado()}>
+                 <Dialog.Title style={{color: colorLetra}}>Psicólogo encontrado</Dialog.Title>
                  <Dialog.Content>
-                     <Paragraph style={globalStyles.textoAlerta}>Ha sido vinculado con su psicólogo</Paragraph>
+                     <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Ha sido vinculado con su psicólogo</Paragraph>
                  </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>
-                            <Button onPress={()=> encontrado()} color='#3c2c18'>Ok</Button>
+                            <Button onPress={()=> encontrado()} color={colorLetra}>Ok</Button>
                         </View>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertaerrorenvio} onDismiss={() => {guardarEnvioenprogreso(false);guardarAlertaErrorenvio(false);}}>
-                 <Dialog.Title>Error</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaerrorenvio} onDismiss={() => {guardarEnvioenprogreso(false);guardarAlertaErrorenvio(false);}}>
+                 <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                  <Dialog.Content>
-                    <Paragraph style={globalStyles.textoAlerta}>{mensajeerrorenvio}</Paragraph>
+                    <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>{mensajeerrorenvio}</Paragraph>
                  </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>
-                            <Button onPress={()=> {guardarEnvioenprogreso(false);guardarAlertaErrorenvio(false);}} color='#3c2c18'>Ok</Button>
+                            <Button onPress={()=> {guardarEnvioenprogreso(false);guardarAlertaErrorenvio(false);}} color={colorLetra}>Ok</Button>
                         </View>
                     </Dialog.Actions>
                 </Dialog>

@@ -17,7 +17,7 @@ const BotonLogout = ({navigation}) => {
     const { reiniciarContenido } = useContext(NotificacionesContext);
     const [alertaseguro,guardarAlertaseguro] = useState(false);
 
-    const {colorTextoBoton,colorSalir,colorIcono} = useContext(EstilosContext);
+    const {colorTextoBoton,colorSalir,colorIcono,colorLetra,colorFondo} = useContext(EstilosContext);
 
 
     const Logout = async () => {
@@ -82,17 +82,17 @@ const BotonLogout = ({navigation}) => {
             </TouchableHighlight>
             
             <Portal>
-                <Dialog visible={alertaseguro} onDismiss={() => guardarAlertaseguro(false)}>
-                    <Dialog.Title>Salir</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaseguro} onDismiss={() => guardarAlertaseguro(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Salir</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>¿Está seguro que desea cerrar sesión?</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>¿Está seguro que desea cerrar sesión?</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:30}}>
-                            <Button onPress={()=>{guardarAlertaseguro(false); Logout();}} color='#3c2c18'>Si</Button>
+                            <Button onPress={()=>{guardarAlertaseguro(false); Logout();}} color={colorLetra}>Si</Button>
                         </View>
                         <View style={{marginRight:10}}>
-                            <Button onPress={()=>guardarAlertaseguro(false)} color='#3c2c18'>No</Button>
+                            <Button onPress={()=>guardarAlertaseguro(false)} color={colorLetra}>No</Button>
                         </View>
                     </Dialog.Actions>
                 </Dialog>

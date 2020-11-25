@@ -139,7 +139,6 @@ const horariosicologo = ({navigation,route}) => {
                     var name = await AsyncStorage.getItem('datosSesion');
                     const respuesta = await axios.get(host+'/usuarios/afinidad/',
                     {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
-                        console.log(hola);          
                 } catch (error) {
                     console.log(error.response);
                     console.log("error acaa");
@@ -360,30 +359,30 @@ const horariosicologo = ({navigation,route}) => {
                 keyExtractor={(item, index) => index.toString()}
             />
             <Portal>
-                <Dialog visible={alertaeleccion} onDismiss={() => guardarAlertaeleccion(false)}>
-                    <Dialog.Title>Elegir horario</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaeleccion} onDismiss={() => guardarAlertaeleccion(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Elegir horario</Dialog.Title>
                     <Dialog.Content>
-                    <Paragraph style={[globalStyles.textoAlerta,{fontSize:16}]}>¿Está seguro de elegir este horario?  {dia} de {fechapalabras} a las {hora}</Paragraph>
+                    <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>¿Está seguro de elegir este horario?  {dia} de {fechapalabras} a las {hora}</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:30}}>
-                            <Button onPress={() => finalizar()} color='#3c2c18'>Si</Button>
+                            <Button onPress={() => finalizar()} color={colorLetra}>Si</Button>
                         </View>
                         <View style={{marginRight:10}}>
-                            <Button onPress={() => guardarAlertaeleccion(false)} color='#3c2c18'>No</Button>
+                            <Button onPress={() => guardarAlertaeleccion(false)} color={colorLetra}>No</Button>
                         </View>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});}}>
-                    <Dialog.Title>Elegir horario</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});}}>
+                    <Dialog.Title style={{color: colorLetra}}>Elegir horario</Dialog.Title>
                     <Dialog.Content>
-                    <Paragraph style={[globalStyles.textoAlerta,{fontSize:16}]}>La solicitud ha sido enviada correctamente</Paragraph>
+                    <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La solicitud ha sido enviada correctamente</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>
-                            <Button onPress={() => {guardarAlertaexito(false);navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});}} color='#3c2c18'>Ok</Button>
+                            <Button onPress={() => {guardarAlertaexito(false);navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});}} color={colorLetra}>Ok</Button>
                         </View>
                     </Dialog.Actions>
                 </Dialog>

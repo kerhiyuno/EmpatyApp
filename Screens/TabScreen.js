@@ -49,7 +49,7 @@ const Tab = createBottomTabNavigator();
 const TabScreen =  () => {
 
     const { cantidad, obtenerCantidad,reiniciarCantidad } = useContext(NotificacionesContext);
-    const {colorHeader,colorTextoHeader} = useContext(EstilosContext);
+    const {colorHeader,colorTextoHeader,colorFondoInput} = useContext(EstilosContext);
     useEffect(() => {
         obtenerCantidad();
     },[]);
@@ -74,14 +74,15 @@ const TabScreen =  () => {
          }
         })}
         tabBarOptions={{
-        activeTintColor: colorTextoHeader,
+        activeTintColor: 'white',
         inactiveTintColor: 'black',
         labelStyle: {
           fontSize: RFPercentage(2.4),
         },
         tabStyle: {
-          backgroundColor: colorHeader,
+          backgroundColor: colorHeader
         },
+        style: {borderTopWidth: 0},
         }}>
         <Tab.Screen name="Inicio" component={StackScreen} />
         {cantidad >0 ?

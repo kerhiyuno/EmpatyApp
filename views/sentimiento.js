@@ -9,13 +9,15 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Slider } from "@miblanchard/react-native-slider";
 import EstilosContext from '../context/estilosContext';
 import { RFPercentage } from "react-native-responsive-fontsize";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const host = ipHost();
 
 const Sentimiento = ({navigation}) => {
 
     const {colorb,colorBorderInput,colorTextoBoton,colorLetra,colorPrimaryinput,
-        colorPlaceholderinput,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
+        colorPlaceholderinput,colorTitulo,colorIcono,colorFondo,colorIconoLibre,
+        colorFondoInput,colorTextoInput} = useContext(EstilosContext);
 
     const [mensaje,guardarMensaje] = useState('');
     const [valorslider,guardarValorslider] = useState(0);
@@ -70,6 +72,7 @@ const Sentimiento = ({navigation}) => {
 
     return(
         <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <KeyboardAwareScrollView>
             <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Sentimientos</Text>
             <Text style={[styles.texto,{color: colorLetra}]}>¿Cómo te sientes?</Text>
             <View style={styles.slider}>
@@ -77,14 +80,17 @@ const Sentimiento = ({navigation}) => {
                 value= {valorslider}
                 onValueChange={value => guardarValorslider(value)}
                 maximumValue = {100}
+                thumbTintColor={colorb}
+                maximumTrackTintColor="#b7b7b7"
+                minimumTrackTintColor={colorb}
                 />
             </View>
             <View style={{flexDirection:'row'}}>
                 <View style={{flex:0.9}}>
-                    <Icon name="emoticon-sad-outline" color="black" size={RFPercentage(5)}></Icon>
+                    <Icon name="emoticon-sad-outline" color={colorIconoLibre} size={RFPercentage(5)}></Icon>
                 </View>
                 <View style={{flex:0.1}}>
-                    <Icon name="emoticon-happy-outline" color="black" size={RFPercentage(5)}></Icon>
+                    <Icon name="emoticon-happy-outline" color={colorIconoLibre} size={RFPercentage(5)}></Icon>
                 </View>
             </View>
             <View style={{marginTop: 40}}>
@@ -92,8 +98,8 @@ const Sentimiento = ({navigation}) => {
                     <TextInput
                         label="Mensaje"
                         onChangeText={(texto) => guardarMensaje(texto)}
-                        style={[globalStyles.input,{borderColor: colorBorderInput}]}
-                        theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
+                        style={[globalStyles.input,{borderColor: colorBorderInput,backgroundColor: colorFondoInput}]}
+                        theme={{colors: {text: colorTextoInput, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                         multiline={true}
                     />
             </View>
@@ -107,19 +113,20 @@ const Sentimiento = ({navigation}) => {
             </View>
             {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} /> : null}
             <Portal>
-                    <Dialog visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);volver()}}>
-                        <Dialog.Title>Éxito</Dialog.Title>
+                    <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);volver()}}>
+                        <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                         <Dialog.Content>
-                            <Paragraph style={globalStyles.textoAlerta}>Se ha enviado correctamente
+                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Se ha enviado correctamente
                             </Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=>{guardarAlertaexito(false);volver()}} color='#3c2c18'>Ok</Button>
+                                <Button onPress={()=>{guardarAlertaexito(false);volver()}} color={colorLetra}>Ok</Button>
                             </View>
                         </Dialog.Actions>
                     </Dialog>
                 </Portal>
+            </KeyboardAwareScrollView>
         </View>
     )
 }

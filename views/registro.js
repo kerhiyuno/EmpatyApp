@@ -84,7 +84,6 @@ const registro = ({navigation}) =>{
                 console.log(dia);
                 console.log(diaactual<=dia);
                 if(diaactual>=dia){
-                    console.log("hola");
                     return 'si';
                 }
             }
@@ -313,8 +312,8 @@ const registro = ({navigation}) =>{
         return;
     }
     return (
-        <KeyboardAwareScrollView>
         <View style={[globalStyles.contenedor,{backgroundColor: colorFondo,justifyContent:'space-around'}]}>
+        <KeyboardAwareScrollView>
             <TextInput
                 label="Nombre Completo"
                 onChangeText={(texto) => guardarFullname(texto)}
@@ -383,7 +382,7 @@ const registro = ({navigation}) =>{
             </TouchableHighlight >
             <Portal>
                 <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)}>
-                    <Dialog.Title>Error</Dialog.Title>
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
                         <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios</Paragraph>
                     </Dialog.Content>
@@ -393,8 +392,8 @@ const registro = ({navigation}) =>{
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertaedad} onDismiss={() => guardarAlertaedad(false)}>
-                    <Dialog.Title>Error</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaedad} onDismiss={() => guardarAlertaedad(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
                         <Paragraph style={globalStyles.textoAlerta}>Debes ser mayor de 18 años</Paragraph>
                     </Dialog.Content>
@@ -404,40 +403,40 @@ const registro = ({navigation}) =>{
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertacontra} onDismiss={() => guardarAlertacontra(false)}>
-                    <Dialog.Title>Error</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertacontra} onDismiss={() => guardarAlertacontra(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Las contraseñas deben ser iguales</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Las contraseñas deben ser iguales</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>guardarAlertacontra(false)} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>guardarAlertacontra(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertaemail} onDismiss={() => guardarAlertaEmail(false)}>
-                    <Dialog.Title>Error</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaemail} onDismiss={() => guardarAlertaEmail(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>El correo ingresado no es válido</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El correo ingresado no es válido</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>guardarAlertaEmail(false)} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>guardarAlertaEmail(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertarut} onDismiss={() => guardarAlertaRut(false)}>
-                    <Dialog.Title>Error</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertarut} onDismiss={() => guardarAlertaRut(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>El rut ingresado no es válido</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El rut ingresado no es válido</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>guardarAlertaRut(false)} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>guardarAlertaRut(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
-        </View>
         </KeyboardAwareScrollView>
+        </View>
 
     );
 }

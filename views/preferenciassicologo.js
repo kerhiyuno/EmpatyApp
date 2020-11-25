@@ -13,7 +13,7 @@ const host = ipHost();
 
 const PreferenciasSicologo = ({navigation}) =>{
     
-    const {colorb,colorLetra,colorTextoBoton,colorIcono,colorFondo} = useContext(EstilosContext);
+    const {colorb,colorLetra,colorTextoBoton,colorIcono,colorFondo,colorRadio} = useContext(EstilosContext);
 
     const [terapia_grupal,guardarTerapia_grupal] = useState('');
     const [grupoapoyo,guardarGrupoapoyo] = useState('no');
@@ -249,7 +249,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                             value="first"
                             status={ terapia_grupal    === 'Si' ? 'checked' : 'unchecked' }
                             onPress={() => guardarTerapia_grupal('Si')}
-                            color='black'
+                            color={colorRadio}
                         />
                     </View>
                     <View style={styles.opciones}>
@@ -258,7 +258,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                             value="second"
                             status={ terapia_grupal === 'No' ? 'checked' : 'unchecked' }
                             onPress={() => guardarTerapia_grupal('No')}
-                            color='black'
+                            color={colorRadio}
                         />
                     </View>
                     <View style={styles.opciones}>
@@ -267,7 +267,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                             value="second"
                             status={ terapia_grupal === 'Me da igual' ? 'checked' : 'unchecked' }
                             onPress={() => guardarTerapia_grupal('Me da igual')}
-                            color='black'
+                            color={colorRadio}
                         />
                     </View>
                 </View>
@@ -298,7 +298,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                                 guardarNodecir('no');
                             }
                         }}
-                        color='black'
+                        color={colorRadio}
                     />
                     <Text style={[styles.textopregunta,{color: colorLetra}]}>Grupo de Apoyo </Text>
                 </View>
@@ -314,7 +314,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                                 guardarNodecir('no');
                             }
                         }}
-                        color='black'
+                        color={colorRadio}
                     />
                     <Text style={[styles.textopregunta,{color: colorLetra}]}>Mejorar habilidades comunicacionales </Text>
                 </View>
@@ -346,7 +346,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                                 guardarNodecir('no');
                             }
                         }}
-                        color='black'
+                        color={colorRadio}
                     />
                     <Text style={[styles.textopregunta,{color: colorLetra}]}>Conocer gente con otros problemas</Text>
                 </View>
@@ -362,7 +362,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                                 guardarNodecir('no');
                             }
                         }}
-                        color='black'
+                        color={colorRadio}
                     />
                     <Text style={[styles.textopregunta,{color: colorLetra}]}>La terapia individual es incómoda para mí y/o no la encuentro útil</Text>
                 </View>
@@ -378,7 +378,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                                 guardarNodecir('no');
                             }
                         }}
-                        color='black'
+                        color={colorRadio}
                     />
                     <Text style={[styles.textopregunta,{color: colorLetra}]}>Otro </Text>
                 </View>
@@ -399,7 +399,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                                 guardarOtro('no');
                             }
                         }}
-                        color='black'
+                        color={colorRadio}
                     />
                     <Text style={[styles.textopregunta,{color: colorLetra}]}>Prefiero no decir</Text>
                 </View>
@@ -432,7 +432,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                         value="first"
                         status={ genero_psicologo === 'Masculino' ? 'checked' : 'unchecked' }
                         onPress={() => guardarGenero_psicologo('Masculino')}
-                        color='black'
+                        color={colorRadio}
                     />
                 </View>
                 <View style={styles.opciones}>
@@ -441,7 +441,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                         value="second"
                         status={ genero_psicologo === 'Femenino' ? 'checked' : 'unchecked' }
                         onPress={() => guardarGenero_psicologo('Femenino')}
-                        color='black'
+                        color={colorRadio}
                     />
                 </View>
                 <View style={styles.opciones}>
@@ -450,7 +450,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                         value="third"
                         status={ genero_psicologo === 'No binario' ? 'checked' : 'unchecked' }
                         onPress={() => guardarGenero_psicologo('No binario')}
-                        color='black'
+                        color={colorRadio}
                     />
                 </View>
             </View>
@@ -484,36 +484,36 @@ const PreferenciasSicologo = ({navigation}) =>{
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertainteres} onDismiss={() => guardarAlertainteres(false)}>
-                    <Dialog.Title>Error</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertainteres} onDismiss={() => guardarAlertainteres(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Debe seleccionar al menos un motivo</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Debe seleccionar al menos un motivo</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>guardarAlertainteres(false)} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>guardarAlertainteres(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertagenerosicologo} onDismiss={() => guardarAlertagenerosicologo(false)}>
-                    <Dialog.Title>Error</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertagenerosicologo} onDismiss={() => guardarAlertagenerosicologo(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Debe seleccionar preferencia de psicólogo</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Debe seleccionar preferencia de psicólogo</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>guardarAlertagenerosicologo(false)} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>guardarAlertagenerosicologo(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}}>
-                    <Dialog.Title>Éxito</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}}>
+                    <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Sus preferencias han sido guardadas correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Sus preferencias han sido guardadas correctamente</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}} color='#3c2c18'>Ok</Button>
+                                <Button onPress={()=> {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}} color={colorLetra}>Ok</Button>
                             </View>
                         </Dialog.Actions>
                 </Dialog>

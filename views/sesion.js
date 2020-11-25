@@ -121,8 +121,6 @@ const sesion = ({navigation}) =>{
         }
     }
 
-
-
     const traductorhora = (bloque) =>{
         var bloques = '';
         if(bloque==1){
@@ -451,14 +449,14 @@ const sesion = ({navigation}) =>{
             No has sido asignado a un grupo</Text> : null}
             </View>
             <Portal>
-                <Dialog visible={sinsesiones} onDismiss={() => guardarSinsesiones(false)} >
-                    <Dialog.Title>Sin sesiones agendadas</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={sinsesiones} onDismiss={() => guardarSinsesiones(false)} >
+                    <Dialog.Title style={{color: colorLetra}}>Sin sesiones agendadas</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph styles={globalStyles.textoAlerta}>No tienes ninguna sesión agendada</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>No tienes ninguna sesión agendada</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>
-                            <Button onPress={()=>guardarSinsesiones(false)} color='#3c2c18'>Ok</Button>
+                            <Button onPress={()=>guardarSinsesiones(false)} color={colorLetra}>Ok</Button>
                         </View>
                     </Dialog.Actions>
                 </Dialog>

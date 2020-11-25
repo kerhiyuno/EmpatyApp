@@ -14,7 +14,7 @@ const host = ipHost();
 
 const home = ({navigation}) =>{
 
-    const {colorb,colorTextoBoton,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
+    const {colorb,colorTextoBoton,colorTitulo,colorIcono,colorFondo,colorLetra} = useContext(EstilosContext);
 
     const { guardarChatroom } = useContext(NotificacionesContext);
 
@@ -365,7 +365,7 @@ const home = ({navigation}) =>{
         </View> : null}
         {tienesicologo===false ?
             <ScrollView>
-                <Text style={globalStyles.titulo}>Bienvenido</Text>       
+                <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Bienvenido</Text>       
                 <View style={styles.container}>
                     <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => funcion() }>
                         <View style={{flexDirection:'row',alignItems:"center"}}>
@@ -423,46 +423,46 @@ const home = ({navigation}) =>{
                         </TouchableHighlight>
                 </View>
                 <Portal>
-                    <Dialog visible={SicologoListo} >
-                        <Dialog.Title>Psicologo vinculado</Dialog.Title>
+                    <Dialog style={{backgroundColor: colorFondo}} visible={SicologoListo} >
+                        <Dialog.Title style={{color: colorLetra}}>Psicologo vinculado</Dialog.Title>
                         <Dialog.Content>
-                            <Paragraph style={globalStyles.textoAlerta}>Una de sus solicitudas de psicólogo ha sido aceptada</Paragraph>
+                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Una de sus solicitudas de psicólogo ha sido aceptada</Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=>{guardarSicologoListo(false);guardarTienesicologo(true);}} color='#3c2c18'>Ok</Button>
+                                <Button onPress={()=>{guardarSicologoListo(false);guardarTienesicologo(true);}} color={colorLetra}>Ok</Button>
                             </View>
                         </Dialog.Actions>
                     </Dialog>
                 </Portal>
                 <Portal>
-                    <Dialog visible={alertacuestionario} onDismiss={() => {guardarAlertacuestionario(false);}}>
-                        <Dialog.Title>Aviso</Dialog.Title>
+                    <Dialog style={{backgroundColor: colorFondo}} visible={alertacuestionario} onDismiss={() => {guardarAlertacuestionario(false);}}>
+                        <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
                         <Dialog.Content>
-                            <Paragraph style={globalStyles.textoAlerta}>Para continuar, debe haber respondido la Encuesta
+                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Para continuar, debe haber respondido la Encuesta
                             Personal
                             </Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=>{guardarAlertacuestionario(false);}} color='#3c2c18'>Ok</Button>
+                                <Button onPress={()=>{guardarAlertacuestionario(false);}} color={colorLetra}>Ok</Button>
                             </View>
                         </Dialog.Actions>
                     </Dialog>
                 </Portal>
                 <Portal>
-                    <Dialog visible={alertaopcionales} onDismiss={() => {guardarAlertaopcionales(false);}}>
-                        <Dialog.Title>Aviso</Dialog.Title>
+                    <Dialog style={{backgroundColor: colorFondo}} visible={alertaopcionales} onDismiss={() => {guardarAlertaopcionales(false);}}>
+                        <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
                         <Dialog.Content>
-                            <Paragraph style={globalStyles.textoAlerta}>Para obtener mejores resultados, seleccione un horario 
+                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Para obtener mejores resultados, seleccione un horario 
                             y sus preferencias de psicólogo (Opcional)</Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=>{guardarAlertaopcionales(false);navigation.navigate('Elegir Psicólogo');}} color='#3c2c18'>Continuar</Button>
+                                <Button onPress={()=>{guardarAlertaopcionales(false);navigation.navigate('Elegir Psicólogo');}} color={colorLetra}>Continuar</Button>
                             </View>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=>{guardarAlertaopcionales(false);}} color='#3c2c18'>Volver</Button>
+                                <Button onPress={()=>{guardarAlertaopcionales(false);}} color={colorLetra}>Volver</Button>
                             </View>
                         </Dialog.Actions>
                     </Dialog>

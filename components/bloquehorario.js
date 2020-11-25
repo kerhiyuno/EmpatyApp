@@ -14,7 +14,6 @@ const BloqueHorario = (props) => {
         for(var i = lista.length - 1; i >= 0; i--) {
             if(JSON.stringify(obj) === JSON.stringify(lista[i])) {
                 lista.splice(i, 1);
-                console.log("hola");
             }
         }
         await guardarDisponibles(lista);

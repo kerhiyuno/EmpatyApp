@@ -15,7 +15,7 @@ const host = ipHost();
 const Disconformidad = ({navigation}) => {
 
     const {colorb,colorLetra,colorTextoBoton,colorBordeInput,colorPlaceholderinput,
-    colorPrimaryinput,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
+    colorPrimaryinput,colorTitulo,colorIcono,colorFondo,colorFondoInput,colorTextoInput} = useContext(EstilosContext);
 
     const [alertamensaje,guardarAlertaMensaje] = useState(false);
     const [mensaje,guardarMensaje] = useState('');
@@ -109,16 +109,16 @@ const Disconformidad = ({navigation}) => {
     }
 
     return(
-        <KeyboardAwareScrollView>
         <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <KeyboardAwareScrollView>
             <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Notificar disconformidad</Text>
             <View style={{marginTop:10}}>
                 <Text style={[styles.texto,{color: colorLetra}]}>Describe el problema:</Text>
                 <TextInput
                     label="Mensaje"
                     onChangeText={(texto) => guardarMensaje(texto)}
-                    style={[globalStyles.entradaTexto,{borderColor:colorBordeInput}]}
-                    theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
+                    style={[globalStyles.entradaTexto,{borderColor:colorBordeInput,backgroundColor:colorFondoInput}]}
+                    theme={{colors: {text: colorTextoInput, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                     multiline={true}
                 />
                 <View style={{marginTop:5}}>
@@ -131,36 +131,36 @@ const Disconformidad = ({navigation}) => {
                 </View>
             </View>
             <Portal>
-                <Dialog visible={alertamensaje} onDismiss={() => guardarAlertaMensaje(false)}>
-                    <Dialog.Title>Disconformidad</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertamensaje} onDismiss={() => guardarAlertaMensaje(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Disconformidad</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>¿Estas seguro de enviar este mensaje?</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>¿Estas seguro de enviar este mensaje?</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> enviar()} color='#3c2c18'>Si</Button>
+                                <Button onPress={()=> enviar()} color={colorLetra}>Si</Button>
                             </View>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> guardarAlertaMensaje(false)} color='#3c2c18'>No</Button>
+                                <Button onPress={()=> guardarAlertaMensaje(false)} color={colorLetra}>No</Button>
                             </View>
                         </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertaexito} onDismiss={() => guardarAlertaexito(false)}>
-                    <Dialog.Title>Éxito</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => guardarAlertaexito(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>El mensaje se ha enviado correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El mensaje se ha enviado correctamente</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> volver()} color='#3c2c18'>Ok</Button>
+                                <Button onPress={()=> volver()} color={colorLetra}>Ok</Button>
                             </View>
                         </Dialog.Actions>
                 </Dialog>
             </Portal>
+            </KeyboardAwareScrollView>
         </View>
-        </KeyboardAwareScrollView>
     )
 }
 

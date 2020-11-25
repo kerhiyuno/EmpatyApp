@@ -80,7 +80,6 @@ const perfil = ({navigation,route}) => {
     }
 
     const editarperfil = () => {
-        console.log("hola");
         const datos={nombre,telefono,generodescripcion,genero};
         navigation.navigate('EditarPerfil', {datos});
     }

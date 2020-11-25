@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
@@ -161,17 +162,17 @@ const solicitudes = () =>{
                 keyExtractor={solicitudes => solicitudes.id.toString()}
             />
             <Portal>
-                <Dialog visible={alertaborrar} onDismiss={() => {eliminarCita(aborrar);guardarAlertaborrar(false);}}>
-                    <Dialog.Title>Éxito</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaborrar} onDismiss={() => {eliminarCita(aborrar);guardarAlertaborrar(false);}}>
+                    <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>¿Está seguro que desea eliminar la solicitud?</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>¿Está seguro que desea eliminar la solicitud?</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:30}}>
-                                <Button onPress={()=> {eliminarCita(aborrar);guardarAlertaborrar(false);}} color='#3c2c18'>Si</Button>
+                                <Button onPress={()=> {eliminarCita(aborrar);guardarAlertaborrar(false);}} color={colorLetra}>Si</Button>
                             </View>
                             <View style={{marginRight:10}}>
-                            <Button onPress={() => guardarAlertaborrar(false)} color='#3c2c18'>No</Button>
+                            <Button onPress={() => guardarAlertaborrar(false)} color={colorLetra}>No</Button>
                         </View>
                         </Dialog.Actions>
                 </Dialog>
@@ -189,7 +190,7 @@ const styles=StyleSheet.create({
     },
     botonC:{
         marginTop: 10,
-        height: 30,
+        height: RFPercentage(5),
         marginBottom: 5,
         marginHorizontal: 25,
         justifyContent: 'center',
@@ -200,7 +201,7 @@ const styles=StyleSheet.create({
         marginTop:2,
         marginBottom: 0,
         marginHorizontal: 25,
-        fontSize: 17,
+        fontSize: RFPercentage(2.5),
         color: 'black',
         fontFamily: 'Inter-Regular'
     },
@@ -208,7 +209,7 @@ const styles=StyleSheet.create({
         marginTop:0,
         marginBottom: 0,
         marginHorizontal: 0,
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         fontFamily:'Inter-Light'
     },

@@ -16,7 +16,7 @@ const host = ipHost();
 const Desvinculacion = ({navigation}) => {
 
     const {colorb,colorLetra,colorTextoBoton,colorBordeInput,colorPlaceholderinput,
-        colorPrimaryinput,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
+        colorPrimaryinput,colorTitulo,colorIcono,colorFondo,colorFondoInput,colorTextoInput,colorRadio} = useContext(EstilosContext);
 
     const [mensaje,guardarMensaje] = useState('');
     const [desvinculacion,guardarDesvinculacion] = useState('no');
@@ -128,8 +128,8 @@ const Desvinculacion = ({navigation}) => {
     }
 
     return(
-        <KeyboardAwareScrollView>
         <View style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <KeyboardAwareScrollView>
             <View>
                 <Text style={[globalStyles.titulo,{color: colorTitulo}]}>Solicitar Desvinculación</Text>
                 <Text style={[styles.texto,{color: colorLetra}]}>Si no selecciona la desvinculación inmediata, su psicologo debera aprobar la solicitud de desvinculación</Text>
@@ -144,7 +144,7 @@ const Desvinculacion = ({navigation}) => {
                             guardarDesvinculacion('si');
                         }
                     }}
-                    color='black'
+                    color={colorRadio}
                 />
                 <Text style={[styles.texto,{color: colorLetra}]}>Desvinculación inmediata</Text>
                 </View>
@@ -154,8 +154,8 @@ const Desvinculacion = ({navigation}) => {
                     <TextInput
                         label="Mensaje"
                         onChangeText={(texto) => guardarMensaje(texto)}
-                        style={[globalStyles.entradaTexto,{borderColor:colorBordeInput}]}
-                        theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
+                        style={[globalStyles.entradaTexto,{borderColor:colorBordeInput,backgroundColor:colorFondoInput}]}
+                        theme={{colors: {text: colorTextoInput, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                         multiline={true}
                     />
             </View>
@@ -168,52 +168,52 @@ const Desvinculacion = ({navigation}) => {
                 </TouchableHighlight >
             </View>
             <Portal>
-                <Dialog visible={desvinculacionautoenviada} onDismiss={() => guardarDesvinculacionautoenviada(false)}>
-                    <Dialog.Title>Desvinculación Automática</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={desvinculacionautoenviada} onDismiss={() => guardarDesvinculacionautoenviada(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Desvinculación Automática</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Confirmar desvinculación inmediata</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Confirmar desvinculación inmediata</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> enviarDesvinculacion()} color='#3c2c18'>Si</Button>
+                                <Button onPress={()=> enviarDesvinculacion()} color={colorLetra}>Si</Button>
                             </View>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> guardarDesvinculacionautoenviada(false)} color='#3c2c18'>No</Button>
+                                <Button onPress={()=> guardarDesvinculacionautoenviada(false)} color={colorLetra}>No</Button>
                             </View>
                         </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={enviarsolicitud} onDismiss={() => guardarEnviarSolicitud(false)}>
-                    <Dialog.Title>Desviculación</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={enviarsolicitud} onDismiss={() => guardarEnviarSolicitud(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Desviculación</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>¿Esta seguro de desvincularse de su psicólogo?</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>¿Esta seguro de desvincularse de su psicólogo?</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>
-                            <Button onPress={()=> envioDefinitivo()} color='#3c2c18'>Si</Button>
+                            <Button onPress={()=> envioDefinitivo()} color={colorLetra}>Si</Button>
                         </View>
                         <View style={{marginRight:10}}>
-                            <Button onPress={()=> guardarEnviarSolicitud()} color='#3c2c18'>No</Button>
+                            <Button onPress={()=> guardarEnviarSolicitud()} color={colorLetra}>No</Button>
                         </View>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertaexito} onDismiss={() => guardarAlertaexito(false)}>
-                    <Dialog.Title>Éxito</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => guardarAlertaexito(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>El mensaje se ha enviado correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El mensaje se ha enviado correctamente</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> volver()} color='#3c2c18'>Ok</Button>
+                                <Button onPress={()=> volver()} color={colorLetra}>Ok</Button>
                             </View>
                         </Dialog.Actions>
                 </Dialog>
             </Portal>
+            </KeyboardAwareScrollView>
         </View>
-        </KeyboardAwareScrollView>
     )
 }
 

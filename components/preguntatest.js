@@ -8,7 +8,7 @@ const PreguntaTest = (props) =>{
 
     const { pregunta,setpregunta,texto } = props;
 
-    const {colorLetra} = useContext(EstilosContext);
+    const {colorLetra,colorRadio} = useContext(EstilosContext);
 
     return(
         <View>
@@ -20,7 +20,7 @@ const PreguntaTest = (props) =>{
                         value="zero"
                         status={ pregunta === '0' ? 'checked' : 'unchecked' }
                         onPress={() => setpregunta('0')}
-                        color='black'
+                        color={colorRadio}
                     />
                 </View>
                 <View style={styles.opciones}>
@@ -29,7 +29,7 @@ const PreguntaTest = (props) =>{
                         value="first"
                         status={ pregunta === '1' ? 'checked' : 'unchecked' }
                         onPress={() => setpregunta('1')}
-                        color='black'
+                        color={colorRadio}
                     />
                 </View>
                 <View style={styles.opciones}>
@@ -38,7 +38,7 @@ const PreguntaTest = (props) =>{
                         value="second"
                         status={ pregunta === '2' ? 'checked' : 'unchecked' }
                         onPress={() => setpregunta('2')}
-                        color='black'
+                        color={colorRadio}
                     />
                 </View>
                 <View style={styles.opciones}>
@@ -47,7 +47,7 @@ const PreguntaTest = (props) =>{
                         value="third"
                         status={ pregunta === '3' ? 'checked' : 'unchecked' }
                         onPress={() => setpregunta('3')}
-                        color='black'
+                        color={colorRadio}
                     />
                 </View>
                 <View style={styles.opciones}>
@@ -56,7 +56,7 @@ const PreguntaTest = (props) =>{
                         value="fourth"
                         status={ pregunta === '4' ? 'checked' : 'unchecked' }
                         onPress={() => setpregunta('4')}
-                        color='black'
+                        color={colorRadio}
                     />
                 </View>
             </View>

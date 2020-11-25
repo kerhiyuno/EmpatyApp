@@ -1,9 +1,34 @@
 import {CAMBIAR_COLOR,CAMBIAR_COLOR_PRIMARYINPUT,CAMBIAR_COLOR_PLACEHOLDERINPUT,CAMBIAR_COLOR_TEXTOBOTON,
     CAMBIAR_COLOR_BORDEINPUT,CAMBIAR_COLOR_HEADER,CAMBIAR_COLOR_LETRA,CAMBIAR_COLOR_FONDO,
     CAMBIAR_COLOR_SALIR,CAMBIAR_COLOR_ICONO,CAMBIAR_COLOR_ERROR,CAMBIAR_COLOR_TEXTOHEADER,
-    CAMBIAR_COLOR_TITULO,CAMBIAR_COLOR_BOTONDESACTIVADO,CAMBIAR_COLOR_NOTIFICACIONESBORDER} from '../types';
+    CAMBIAR_COLOR_TITULO,CAMBIAR_COLOR_BOTONDESACTIVADO,CAMBIAR_COLOR_NOTIFICACIONESBORDER,
+    CAMBIAR_COLOR_RADIO,CAMBIAR_COLOR_ICONO_LIBRE,CAMBIAR_FONDO_INPUT,CAMBIAR_TEXTO_INPUT} from '../types';
 export default (state,action) =>{
     switch (action.type){
+        case CAMBIAR_TEXTO_INPUT:{
+            return{
+                ...state,
+                colorTextoInput: action.payload
+            }
+        }
+        case CAMBIAR_FONDO_INPUT:{
+            return{
+                ...state,
+                colorFondoInput: action.payload
+            }
+        }
+        case CAMBIAR_COLOR_ICONO_LIBRE:{
+            return{
+                ...state,
+                colorIconoLibre: action.payload
+            }
+        }
+        case CAMBIAR_COLOR_RADIO:{
+            return{
+                ...state,
+                colorRadio: action.payload
+            }
+        }
         case CAMBIAR_COLOR_ICONO:{
             return{
                 ...state,
@@ -67,7 +92,6 @@ export default (state,action) =>{
                 colorBoton: action.payload,
             }
         case CAMBIAR_COLOR_HEADER:
-            console.log("color header")
             return{
                 ...state,
                 colorHeader: action.payload,

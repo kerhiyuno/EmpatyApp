@@ -155,14 +155,14 @@ const editarperfil = ({route}) =>{
                 </View>
             </TouchableHighlight>
             <Portal>
-                <Dialog visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false)}}>
-                    <Dialog.Title>Éxito</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false)}}>
+                    <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Los cambios han sido guardados correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Los cambios han sido guardados correctamente</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> {guardarGuardadoenprogreso(false);guardarAlertaexito(false)}} color='#3c2c18'>Ok</Button>
+                                <Button onPress={()=> {guardarGuardadoenprogreso(false);guardarAlertaexito(false)}} color={colorLetra}>Ok</Button>
                             </View>
                         </Dialog.Actions>
                 </Dialog>

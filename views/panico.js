@@ -75,30 +75,30 @@ const Panico = ({navigation}) => {
                 </TouchableHighlight >
             </View>
             <Portal>
-                <Dialog visible={alertaenviar} onDismiss={() => guardarAlertaenviar(false)}>
-                    <Dialog.Title>Éxito</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaenviar} onDismiss={() => guardarAlertaenviar(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>¿Estas seguro de enviar una alerta?</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>¿Estas seguro de enviar una alerta?</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> enviar()} color='#3c2c18'>Si</Button>
+                                <Button onPress={()=> enviar()} color={colorLetra}>Si</Button>
                             </View>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> guardarAlertaenviar(false)} color='#3c2c18'>No</Button>
+                                <Button onPress={()=> guardarAlertaenviar(false)} color={colorLetra}>No</Button>
                             </View>
                         </Dialog.Actions>
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);volver()}}>
-                    <Dialog.Title>Éxito</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);volver()}}>
+                    <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>El mensaje se ha enviado correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El mensaje se ha enviado correctamente</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> {guardarAlertaexito(false);volver()}} color='#3c2c18'>Ok</Button>
+                                <Button onPress={()=> {guardarAlertaexito(false);volver()}} color={colorLetra}>Ok</Button>
                             </View>
                         </Dialog.Actions>
                 </Dialog>

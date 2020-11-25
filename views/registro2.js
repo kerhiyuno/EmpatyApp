@@ -5,7 +5,7 @@ import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EstilosContext from '../context/estilosContext';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const registro2 = ({navigation,route}) =>{
 
@@ -39,8 +39,8 @@ const registro2 = ({navigation,route}) =>{
         //limpiar formulario
     }
     return (
-        <KeyboardAwareScrollView>
         <ScrollView style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
+            <KeyboardAwareScrollView>
             <View style={{flex: 1}}>
                 <Text style={[styles.texto,styles.minTitulo,{color: colorLetra}]}>Género:</Text>
                 <View style={styles.pregunta}>
@@ -107,18 +107,18 @@ const registro2 = ({navigation,route}) =>{
             </View>
             </View>
             <Portal>
-                <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)}>
-                    <Dialog.Title>Error</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alerta} onDismiss={() => guardarAlerta(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Todos los campos son obligatorios</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>guardarAlerta(false)} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>guardarAlerta(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
-        </ScrollView>
         </KeyboardAwareScrollView>
+        </ScrollView>
     );
 }
 

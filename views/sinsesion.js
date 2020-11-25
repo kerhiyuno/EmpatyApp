@@ -17,7 +17,8 @@ const sinsesion = ({navigation}) =>{
 
     const {obtenerTokenFirebase} = useContext(NotificacionesContext);
     const {colorb,colorFondo,colorLetra,
-        colorBordeInput,colorTextoBoton,colorPlaceholderinput,colorPrimaryinput,colorIcono} = useContext(EstilosContext);
+        colorBordeInput,colorTextoBoton,colorPlaceholderinput,colorPrimaryinput,
+        colorIcono,colorFondoInput} = useContext(EstilosContext);
 
     const {width, height} = useWindowDimensions();
     const textinputsize = height*0.07;
@@ -102,7 +103,6 @@ const sinsesion = ({navigation}) =>{
                                     var name= await AsyncStorage.getItem('datosSesion');
                                     const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
                                     {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
-                                    console.log(hola);
                                     if(respuesta.data.id_psicologo== null){
                                         await AsyncStorage.setItem('tienesicologo',JSON.stringify({ tiene: 'no'}));
                                         guardarCargando(false);
@@ -147,9 +147,6 @@ const sinsesion = ({navigation}) =>{
             console.log(credenciales);
             console.log(respuesta.status);
             console.log(respuesta.data.access);
-            if (respuesta.status==200){
-                console.log("hola");
-            }
             resultadoinicio(respuesta);
         } catch (error) {
             console.log(error);
@@ -163,8 +160,8 @@ const sinsesion = ({navigation}) =>{
    }
 
     return (
-        <KeyboardAwareScrollView>
         <View style={[globalStyles.contenedor,{backgroundColor:colorFondo}]}>
+            <KeyboardAwareScrollView>
             <View style={{justifyContent:'space-around',marginTop: height/20,marginBottom: height/40}}>
                 <Image
                     style={[styles.tinyLogo,{width: width*0.35,height: 1.2*width*0.35}]}
@@ -177,14 +174,14 @@ const sinsesion = ({navigation}) =>{
                 <TextInput
                     label="Correo"
                     onChangeText={(texto) => guardarEmail(texto)}
-                    style={[globalStyles.input,{borderColor:colorBordeInput,height: textinputsize}]}
+                    style={[globalStyles.input,{borderColor:colorBordeInput,height: textinputsize,backgroundColor:colorFondoInput}]}
                     theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                 />
                 <TextInput
                     label="Contraseña"
                     secureTextEntry={true}
                     onChangeText={(texto) => guardarPassword(texto)}
-                    style={[globalStyles.input,{borderColor:colorBordeInput,height: textinputsize}]}
+                    style={[globalStyles.input,{borderColor:colorBordeInput,height: textinputsize,backgroundColor:colorFondoInput}]}
                     theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                     />
                 <TouchableHighlight  style={[styles.botonS,{backgroundColor:colorb,height: height/20}]} underlayColor = {'transparent'} onPress={()=>iniciosesion()}>
@@ -223,18 +220,18 @@ const sinsesion = ({navigation}) =>{
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog visible={alertavacio} onDismiss={() => guardarAlertaVacio(false)} >
-                    <Dialog.Title>Error</Dialog.Title>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertavacio} onDismiss={() => guardarAlertaVacio(false)} >
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Todos los campos son obligatorios</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={()=>guardarAlertaVacio(false)} color='#3c2c18'>Ok</Button>
+                        <Button onPress={()=>guardarAlertaVacio(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
+            </KeyboardAwareScrollView>
         </View>
-        </KeyboardAwareScrollView>
     );
 }
 
