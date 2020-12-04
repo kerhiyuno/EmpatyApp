@@ -5,9 +5,14 @@ import {Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
 import { RFPercentage } from "react-native-responsive-fontsize";
+import call from 'react-native-phone-call'
 
 const host = ipHost();
 
+const args = {
+    number: '+56955817855', // String value with the number to call
+    prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call 
+  }
 const Panico = ({navigation}) => {
 
     const {colorb,colorLetra,colorTextoBoton,colorBordeInput,colorPlaceholderinput,
@@ -23,6 +28,7 @@ const Panico = ({navigation}) => {
     const enviar = async () => {
         var envio = {"a":"a"};
         console.log(envio);
+        call(args).catch(console.error)
         guardarAlertaexito(true);
         /*try {
             const nombre = await AsyncStorage.getItem('datosSesion');
@@ -75,26 +81,10 @@ const Panico = ({navigation}) => {
                 </TouchableHighlight >
             </View>
             <Portal>
-                <Dialog style={{backgroundColor: colorFondo}} visible={alertaenviar} onDismiss={() => guardarAlertaenviar(false)}>
-                    <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
-                    <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>¿Estas seguro de enviar una alerta?</Paragraph>
-                    </Dialog.Content>
-                        <Dialog.Actions>
-                            <View style={{marginRight:10}}>
-                                <Button onPress={()=> enviar()} color={colorLetra}>Si</Button>
-                            </View>
-                            <View style={{marginRight:10}}>
-                                <Button onPress={()=> guardarAlertaenviar(false)} color={colorLetra}>No</Button>
-                            </View>
-                        </Dialog.Actions>
-                </Dialog>
-            </Portal>
-            <Portal>
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);volver()}}>
                     <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El mensaje se ha enviado correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La alerta ha sido enviada correctamente</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>

@@ -147,7 +147,6 @@ const PreferenciasSicologo = ({navigation}) =>{
                 }
                 return;
             }
-            console.log("aaaaaaa");
             if(terapia_grupal==='Si'){
                 if(grupoapoyo==='no' && habcomunicacion==='no' &&  mismosproblemas==='no' && otrosproblemas==='no' &&  individualincomodo==='no' &&  otro==='no' &&  nodecir==='no'){
                     guardarAlertainteres(true);

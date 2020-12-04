@@ -48,7 +48,6 @@ const sesion = ({navigation}) =>{
             if (respuesta.data.id_grupo==null){
                 guardarTienegrupo(false);
             }
-            else{console.log("·dsaasd")}
         } catch (error) {
             console.log("error");
             console.log(error);
@@ -88,7 +87,6 @@ const sesion = ({navigation}) =>{
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.get(host+'/usuarios/psicologo/perfil/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
-            console.log("asadas")
             console.log(respuesta);
             guardarNombreSicologo(respuesta.data.fullname);
         } catch (error) {
@@ -220,7 +218,6 @@ const sesion = ({navigation}) =>{
     }
     const siguienteCita = async () => {
         try {
-            console.log("df");
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.get(host +'/grupal/sesiones/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
@@ -368,29 +365,23 @@ const sesion = ({navigation}) =>{
                     else{
                         if (parseInt(mes1) < parseInt(mes2)){
                             navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
-                            console.log("sesion grupal");
                         }
                         else if (parseInt(mes2) < parseInt(mes1)){
                             navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
-                            console.log("sesion individual");
                         }
                         else{
                             if (parseInt(dia1) < parseInt(dia2)){
                                 navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
-                                console.log("sesion grupal");
                             }
                             else if (parseInt(dia2) < parseInt(dia1)){
                                 navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
-                                console.log("sesion individual");
                             }
                             else{
                                 if (hora1 < hora2){
                                     navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
-                                    console.log("sesion grupal");
                                 }
                                 else{
                                     navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
-                                    console.log("sesion individual");
                                 }
                             }
                         }

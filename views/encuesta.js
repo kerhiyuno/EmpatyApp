@@ -44,7 +44,6 @@ const encuesta = ({navigation,route}) => {
 
     const id = route.params.id;
     const fecha = route.params.fecha;
-    console.log(route.params);
 
     useEffect(() => {
         datospsicologo();
@@ -105,7 +104,6 @@ const encuesta = ({navigation,route}) => {
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.get(host+'/usuarios/psicologo/perfil/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
-            console.log("asadas")
             console.log(respuesta);
             guardarNombreSicologo(respuesta.data.fullname);
         } catch (error) {

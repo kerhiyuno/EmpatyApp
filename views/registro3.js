@@ -28,13 +28,14 @@ const registro3 = ({navigation,route}) =>{
     const gender_description = (route.params.usuario.gender_description);
     const telefono = (route.params.usuario.telefono);
     const fecha_nacimiento = (route.params.usuario.fecha_nacimiento);
+    const numemergencia = (route.params.usuario.numemergencia);
 
     const [hobbies,guardarHobbies] = useState([])
 
     const registrar = async () => {
         //hobbies
         //generar
-        const usuario={fullname,rut,email,password,telefono,genero,gender_description,hobbies,fecha_nacimiento};
+        const usuario={fullname,rut,email,password,telefono,genero,gender_description,hobbies,fecha_nacimiento,numemergencia};
         console.log(usuario);
         
         //redireccionar

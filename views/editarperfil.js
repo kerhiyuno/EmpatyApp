@@ -20,11 +20,14 @@ const editarperfil = ({route}) =>{
     const telefono = (route.params.datos.telefono);
     const generodescripcion = (route.params.datos.generodescripcion);
     const genero = (route.params.datos.genero);
+    const numemergencia = (route.params.datos.numemergencia);
 
     const [nombrecambio,guardarNombrecambio] = useState(nombre);
     const [telefonocambio,guardarTelefonocambio] = useState(telefono);
     const [generodescripcioncambio,guardarGenerodescripcioncambio] = useState(generodescripcion);
     const [generocambio,guardarGenerocambio] = useState(genero);
+    const [emergenciacambio,guardarEmergenciacambio] = useState(numemergencia);
+
 
     const [alertaexito,guardarAlertaexito] = useState(false);
     const [guardadoenprogreso,guardarGuardadoenprogreso] = useState(false);
@@ -35,7 +38,7 @@ const editarperfil = ({route}) =>{
             try {
                 const nombre = await AsyncStorage.getItem('datosSesion');
                 const respuesta = await axios.put(host+'/usuarios/paciente/perfil/',{fullname: nombrecambio,
-                genero: generocambio,gender_description: generodescripcioncambio,telefono:telefonocambio},
+                genero: generocambio,gender_description: generodescripcioncambio,telefono:telefonocambio, numemergencia: emergenciacambio},
                 {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
                 console.log(respuesta);
                 if (respuesta.status===200){
@@ -56,7 +59,7 @@ const editarperfil = ({route}) =>{
                         try {
                             var name = await AsyncStorage.getItem('datosSesion');
                             const respuesta = await axios.put(host+'/usuarios/paciente/perfil/',{fullname: nombrecambio,
-                                genero: generocambio,gender_description: generodescripcioncambio,telefono:telefonocambio},
+                                genero: generocambio,gender_description: generodescripcioncambio,telefono:telefonocambio, numemergencia: emergenciacambio},
                                 {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                             console.log(respuesta);
                             if (respuesta.status===200){
@@ -83,16 +86,24 @@ const editarperfil = ({route}) =>{
             <Text style={[styles.texto,{color: colorLetra}]}>Nombre:</Text>
             <TextInput
                 onChangeText={(texto) => guardarNombrecambio(texto)}
-                style={[globalStyles.input,{borderColor:colorBordeInput}]}
+                style={[globalStyles.input,{borderColor:colorBordeInput,height:RFPercentage(5)}]}
                 theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                 defaultValue = {nombre}
             />
             <Text style={[styles.texto,{color: colorLetra}]}>Teléfono:</Text>
             <TextInput
                 onChangeText={(texto) => guardarTelefonocambio(texto)}
-                style={[globalStyles.input,{borderColor:colorBordeInput}]}
+                style={[globalStyles.input,{borderColor:colorBordeInput,height:RFPercentage(5)}]}
                 theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                 defaultValue = {telefono}
+                keyboardType='phone-pad'
+            />
+            <Text style={[styles.texto,{color: colorLetra}]}>Teléfono de emergencia:</Text>
+            <TextInput
+                onChangeText={(texto) => guardarEmergenciacambio(texto)}
+                style={[globalStyles.input,{borderColor:colorBordeInput,height:RFPercentage(5)}]}
+                theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
+                defaultValue = {numemergencia}
                 keyboardType='phone-pad'
             />
             <Text style={[styles.texto,styles.minTitulo,{color: colorLetra}]}>Género:</Text>
@@ -144,7 +155,7 @@ const editarperfil = ({route}) =>{
             <Text style={[styles.texto,{color: colorLetra}]}>Como prefieres que te identifiquemos:</Text>
             <TextInput
                 onChangeText={(texto) => guardarGenerodescripcioncambio(texto)}
-                style={[globalStyles.input,{borderColor:colorBordeInput}]}
+                style={[globalStyles.input,{borderColor:colorBordeInput,height:RFPercentage(5)}]}
                 theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                 defaultValue = {generodescripcion}
             />

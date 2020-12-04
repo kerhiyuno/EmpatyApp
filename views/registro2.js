@@ -24,6 +24,7 @@ const registro2 = ({navigation,route}) =>{
     const password = (route.params.usuario.password);
     const telefono = (route.params.usuario.telefono);
     const fecha_nacimiento = (route.params.usuario.fecha_nacimiento);
+    const numemergencia = (route.params.usuario.numemergencia);
 
     const registrar = async () => {
         //validar
@@ -32,7 +33,7 @@ const registro2 = ({navigation,route}) =>{
             return
         }
         //generar
-        const usuario={fullname,rut,email,password,telefono,genero,gender_description,fecha_nacimiento};
+        const usuario={fullname,rut,email,password,telefono,genero,gender_description,fecha_nacimiento,numemergencia};
         console.log(usuario);
         //redireccionar
         navigation.navigate('Registro 3/7',{usuario});

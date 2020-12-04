@@ -30,6 +30,7 @@ const registro4 = ({navigation,route}) =>{
     const telefono = (route.params.usuario.telefono);
     const hobbies = (route.params.usuario.hobbies);
     const fecha_nacimiento = (route.params.usuario.fecha_nacimiento);
+    const numemergencia = (route.params.usuario.numemergencia);
 
     const registrar = async () => {
         if (registroenprogreso===false){
@@ -54,7 +55,7 @@ const registro4 = ({navigation,route}) =>{
                 tratamiento_vigente=false;
             }
             //validar
-            const usuario={fullname,rut,email,password,telefono,genero,gender_description,hobbies,psico_prev,psiquia_prev,tratamiento_vigente,fecha_nacimiento};
+            const usuario={fullname,rut,email,password,telefono,genero,gender_description,hobbies,psico_prev,psiquia_prev,tratamiento_vigente,fecha_nacimiento,numemergencia};
             //guardar en api
             try {
                 console.log(usuario);

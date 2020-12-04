@@ -82,7 +82,6 @@ const horariosicologo = ({navigation,route}) => {
             console.log(error);
             console.log(error.response);
             if(error.response.data.code === 'token_not_valid'){
-                console.log('yes');
                 try {
                     const refresh0 = await AsyncStorage.getItem('datosSesion')
                     var refresh = JSON.parse(refresh0).refresh;
@@ -115,7 +114,6 @@ const horariosicologo = ({navigation,route}) => {
 
   const horario = async ()=>{
     try {
-        console.log("df");
         const nombre = await AsyncStorage.getItem('datosSesion');
         const respuesta = await axios.get(host+'/usuarios/afinidad/',
         {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
@@ -127,7 +125,6 @@ const horariosicologo = ({navigation,route}) => {
         console.log(error);
         console.log(error.response);
         if(error.response.data.code==='token_not_valid'){
-            console.log('yes');
             try {
                 const refresh0 = await AsyncStorage.getItem('datosSesion')
                 var refresh = JSON.parse(refresh0).refresh;
@@ -259,7 +256,6 @@ const horariosicologo = ({navigation,route}) => {
                 }
             }
         }
-        console.log(elegido);
     }
 
     const fechaformateo=(fecha)=>{

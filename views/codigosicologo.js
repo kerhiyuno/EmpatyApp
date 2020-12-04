@@ -28,7 +28,6 @@ const codigosicologo = ({navigation}) =>{
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
     const enviar = async () => {
-        console.log("hgola");
         if (envioenprogreso===false){
             guardarEnvioenprogreso(true);
             if (codigo === ''){
@@ -37,8 +36,6 @@ const codigosicologo = ({navigation}) =>{
             }
             try {
                 const nombre = await AsyncStorage.getItem('datosSesion');
-                console.log(nombre);
-                console.log(codigo);
                 guardarCargando(true);
                 const respuesta = await axios.post(host+'/codigopsicologo/connect/',{codigo: codigo},
                 {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});

@@ -173,7 +173,7 @@ const traductorhora = (bloque) =>{
         navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
     }
     return (
-        <ScrollView style={[globalStyles.contenedor,{backgroundColor:colorFondo}]}>
+        <View style={[globalStyles.contenedor,{backgroundColor:colorFondo}]}>
             {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
             {cargando===false ?
             <View>
@@ -201,14 +201,14 @@ const traductorhora = (bloque) =>{
                                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>{traductorhora(item.bloque.id)}</Text>
                                     </View>
                                 </View>
-                            </View>
+                        </View>
                         </TouchableHighlight>
                     )
                 }
                     keyExtractor={item => item.id.toString()}
                 />
             </View> : null}
-        </ScrollView >
+        </View >
     );
 }
 

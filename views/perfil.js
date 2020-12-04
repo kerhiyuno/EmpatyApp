@@ -21,6 +21,7 @@ const perfil = ({navigation,route}) => {
     const [telefono,guardarTelefono] = useState('');
     const [genero,guardarGenero] = useState('');
     const [generodescripcion,guardarGenerodescripcion] = useState('');
+    const [numemergencia,guardarNumemergencia] = useState('');
     const [imagenperfil,guardarImagenperfil] = useState('');
     
     const [cargando, guardarCargando] = useState(false);
@@ -41,6 +42,7 @@ const perfil = ({navigation,route}) => {
             guardarTelefono(respuesta.data.telefono);
             guardarGenero(respuesta.data.genero);
             guardarGenerodescripcion(respuesta.data.gender_description);
+            guardarNumemergencia(respuesta.data.numemergencia);
             console.log(respuesta);
             guardarCargando(false);
         } catch (error) {
@@ -66,6 +68,7 @@ const perfil = ({navigation,route}) => {
                         guardarTelefono(respuesta.data.telefono);
                         guardarGenero(respuesta.data.genero);
                         guardarGenerodescripcion(respuesta.data.gender_description);
+                        guardarNumemergencia(respuesta.data.numemergencia);
                         guardarCargando(false);
                     } catch (error) {
                         console.log(error.response);
@@ -80,7 +83,7 @@ const perfil = ({navigation,route}) => {
     }
 
     const editarperfil = () => {
-        const datos={nombre,telefono,generodescripcion,genero};
+        const datos={nombre,telefono,generodescripcion,genero,numemergencia};
         navigation.navigate('EditarPerfil', {datos});
     }
 
@@ -118,6 +121,10 @@ const perfil = ({navigation,route}) => {
                         <View style={{flexDirection: 'row',marginHorizontal: 10}}>
                             <Icon name="phone" color="#515254" size={RFPercentage(3)}></Icon>
                             <Text style={[styles.textoS,{color: colorLetra}]}>Teléfono: {telefono}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row',marginHorizontal: 10}}>
+                            <Icon name="phone" color="#515254" size={RFPercentage(3)}></Icon>
+                            <Text style={[styles.textoS,{color: colorLetra}]}>Teléfono de emergencia: {numemergencia}</Text>
                         </View>
                         <View style={{flexDirection: 'row',marginHorizontal: 10}}>
                             <Icon name="rhombus-outline" color="#515254" size={RFPercentage(3)}></Icon>

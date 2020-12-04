@@ -225,18 +225,15 @@ const cita = ({route}) =>{
             );
             console.log(respuesta);
             if(respuesta.data.vacio===true){
-                console.log("0");
                 guardarNosubgrupo(true);
             }
             else{
-                console.log("1");
               openLink(respuesta.data.link_meet);}
         } catch (error){
             console.log("error");
             console.log(error);
             console.log(error.response);
             if (error.response.status===400){
-                console.log("400-1");
                 guardarSesionfinalizada(true);
                 return
             }
@@ -264,9 +261,7 @@ const cita = ({route}) =>{
                       else{
                           openLink(respuesta.data.link_meet);}
                     } catch (error) {
-                        console.log("error-2");
                         if (error.response.status===400){
-                            console.log("400-2");
                             guardarSesionfinalizada(true);
                             return
                         }

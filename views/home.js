@@ -9,12 +9,21 @@ import {ipHost} from '../components/hosts.js';
 import NotificacionesContext from '../context/notificacionesContext'
 import EstilosContext from '../context/estilosContext';
 import { RFPercentage } from "react-native-responsive-fontsize";
+import call from 'react-native-phone-call'
 
 const host = ipHost();
 
+
+
 const home = ({navigation}) =>{
 
-    const {colorb,colorTextoBoton,colorTitulo,colorIcono,colorFondo,colorLetra} = useContext(EstilosContext);
+
+    const {colorb,colorTextoBoton,colorTitulo,colorIcono,colorFondo,colorLetra,
+        cambiarColorBoton,cambiarColorHeader,cambiarColorLetra,cambiarColorFondo,cambiarColorSalir,
+        cambiarColorBordeInput,cambiarColorTextoBoton,cambiarColorPlaceholderinput,cambiarColorPrimaryinput,
+        cambiarColorIcono,cambiarColorError,cambiarColorTextoHeader,cambiarColorTitulo,
+        cambiarColorBotonDesactivado,cambiarColorNotificacionesBorder,cambiarColorRadio,
+        cambiarColorIconoLibre,cambiarFondoInput,cambiarTextoInput} = useContext(EstilosContext);
 
     const { guardarChatroom } = useContext(NotificacionesContext);
 
@@ -25,7 +34,8 @@ const home = ({navigation}) =>{
 
     const [alertacuestionario,guardarAlertacuestionario] = useState(false);
     const [alertaopcionales,guardarAlertaopcionales] = useState(false);
-    const {width, height} = useWindowDimensions();
+    const [alertaenviar,guardarAlertaenviar] = useState(false);
+    const [alertaexito,guardarAlertaexito] = useState(false);
 
     var timer;
 
@@ -36,8 +46,157 @@ const home = ({navigation}) =>{
 
     useEffect(() => {
         revision();
+        estilos();
       },[]);
 
+      const original = () => {
+        cambiarColorBoton("#e35d17");
+        cambiarColorHeader('#f58b2f');
+        cambiarColorLetra('black');
+        cambiarColorFondo('white');
+        cambiarColorSalir('#d15311');
+        cambiarColorBordeInput('#357870');
+        cambiarColorTextoBoton('white');
+        cambiarColorPlaceholderinput('#3c2c18');
+        cambiarColorPrimaryinput('#3c2c18');
+        cambiarColorNotificacionesBorder('#828282');
+        cambiarColorBotonDesactivado('#5e5e5e');
+        cambiarColorTitulo('#141414');
+        cambiarColorTextoHeader('white');
+        cambiarColorError('#a12b2b');
+        cambiarColorIcono('white');
+        cambiarColorRadio('black');
+        cambiarColorIconoLibre('black');
+        cambiarFondoInput('white');
+        cambiarTextoInput('black');
+    }
+    
+    const estilo2 = () => {
+        cambiarColorBoton("#d53c3c");
+        cambiarColorHeader('#8d2d56');
+        cambiarColorLetra('black');
+        cambiarColorFondo('white');
+        cambiarColorSalir('#a3445d');
+        cambiarColorBordeInput('#357870');
+        cambiarColorTextoBoton('white');
+        cambiarColorPlaceholderinput('#3c2c18');
+        cambiarColorPrimaryinput('#3c2c18');
+        cambiarColorNotificacionesBorder('#828282');
+        cambiarColorBotonDesactivado('#5e5e5e');
+        cambiarColorTitulo('#141414');
+        cambiarColorTextoHeader('white');
+        cambiarColorError('#a12b2b');
+        cambiarColorIcono('white');
+        cambiarColorRadio('black');
+    }
+    const estilo3 = () => {
+        cambiarColorBoton("#5e758a");
+        cambiarColorHeader('#73c0f4');
+        cambiarColorLetra('black');
+        cambiarColorFondo('#f3e4c6');
+        cambiarColorSalir('#5e758a');
+        cambiarColorBordeInput('#357870');
+        cambiarColorTextoBoton('white');
+        cambiarColorPlaceholderinput('#3c2c18');
+        cambiarColorPrimaryinput('#3c2c18');
+        cambiarColorNotificacionesBorder('#828282');
+        cambiarColorBotonDesactivado('#5e5e5e');
+        cambiarColorTitulo('#141414');
+        cambiarColorTextoHeader('white');
+        cambiarColorError('#a12b2b');
+        cambiarColorIcono('white');
+        cambiarColorRadio('black');
+    }
+    const estilo4 = () => {
+        cambiarColorBoton("#688045");
+        cambiarColorHeader('#d17b54');
+        cambiarColorLetra('black');
+        cambiarColorFondo('white');
+        cambiarColorSalir('#688045');
+        cambiarColorBordeInput('#357870');
+        cambiarColorTextoBoton('white');
+        cambiarColorPlaceholderinput('#3c2c18');
+        cambiarColorPrimaryinput('#3c2c18');
+        cambiarColorNotificacionesBorder('#828282');
+        cambiarColorBotonDesactivado('#5e5e5e');
+        cambiarColorTitulo('#141414');
+        cambiarColorTextoHeader('white');
+        cambiarColorError('#a12b2b');
+        cambiarColorIcono('white');
+        cambiarColorRadio('black');
+    }
+    const estilo5 = () => {
+        cambiarColorBoton("#52733b");
+        cambiarColorHeader('#84a45a');
+        cambiarColorLetra('black');
+        cambiarColorFondo('#edebf2');
+        cambiarColorSalir('#715e4e');
+        cambiarColorBordeInput('#357870');
+        cambiarColorTextoBoton('white');
+        cambiarColorPlaceholderinput('#3c2c18');
+        cambiarColorPrimaryinput('#3c2c18');
+        cambiarColorNotificacionesBorder('#828282');
+        cambiarColorBotonDesactivado('#5e5e5e');
+        cambiarColorTitulo('#141414');
+        cambiarColorTextoHeader('white');
+        cambiarColorError('#a12b2b');
+        cambiarColorIcono('white');
+        cambiarColorRadio('black');
+    }
+    const estilo6 = () => {
+        cambiarColorBoton("#a3586d");
+        cambiarColorHeader('#f4874b');
+        cambiarColorLetra('black');
+        cambiarColorFondo('white');
+        cambiarColorSalir('#a3586d');
+        cambiarColorBordeInput('#357870');
+        cambiarColorTextoBoton('white');
+        cambiarColorPlaceholderinput('#3c2c18');
+        cambiarColorPrimaryinput('#3c2c18');
+        cambiarColorNotificacionesBorder('#828282');
+        cambiarColorBotonDesactivado('#5e5e5e');
+        cambiarColorTitulo('#141414');
+        cambiarColorTextoHeader('white');
+        cambiarColorError('#a12b2b');
+        cambiarColorIcono('white');
+        cambiarColorRadio('black');
+    }
+    const estilo7 = () => {
+        cambiarColorBoton("#1e56a0");
+        cambiarColorHeader('#284ca1');
+        cambiarColorLetra('black');
+        cambiarColorFondo('#d6e9f0');
+        cambiarColorSalir('#113461');
+        cambiarColorBordeInput('#357870');
+        cambiarColorTextoBoton('white');
+        cambiarColorPlaceholderinput('#3c2c18');
+        cambiarColorPrimaryinput('#3c2c18');
+        cambiarColorNotificacionesBorder('#828282');
+        cambiarColorBotonDesactivado('#5e5e5e');
+        cambiarColorTitulo('#141414');
+        cambiarColorTextoHeader('white');
+        cambiarColorError('#a12b2b');
+        cambiarColorIcono('white');
+        cambiarColorRadio('black');
+    }
+    const estilo8 = () => {
+        cambiarColorBoton("#40464f");
+        cambiarColorHeader('#1979a9');
+        cambiarColorLetra('black');
+        cambiarColorFondo('#cce7e8');
+        cambiarColorSalir('#393e46');
+        cambiarColorBordeInput('#357870');
+        cambiarColorTextoBoton('white');
+        cambiarColorPlaceholderinput('#3c2c18');
+        cambiarColorPrimaryinput('#3c2c18');
+        cambiarColorNotificacionesBorder('#828282');
+        cambiarColorBotonDesactivado('#5e5e5e');
+        cambiarColorTitulo('#141414');
+        cambiarColorTextoHeader('white');
+        cambiarColorError('#a12b2b');
+        cambiarColorIcono('white');
+        cambiarColorRadio('black');
+    }
     const funcion = async () =>{
         var tienehorario='';
         var tienepreferencias='';
@@ -220,7 +379,6 @@ const home = ({navigation}) =>{
                 guardarTienesicologo(true);
                 clearInterval(timer);
             }
-            guardarCargando2(false);
         } catch (error) {
             console.log(error);
             console.log(error.response);
@@ -242,7 +400,107 @@ const home = ({navigation}) =>{
                             guardarTienesicologo(true);
                             clearInterval(timer);
                         }
-                        guardarCargando2(false);
+                    } catch (error) {
+                        console.log(error.response);
+                        console.log("error acaa");
+                    }  
+                } catch (error) {
+                    console.log("error aqui");
+                    console.log(error.response);
+                }
+            }
+        }
+    }
+    const estilos = async () => {
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            if (respuesta.data.estiloapp==1){
+                original();
+            }
+            else if (respuesta.data.estiloapp==2){
+                estilo2();
+            }
+            else if (respuesta.data.estiloapp==3){
+                estilo3();
+            }
+            else if (respuesta.data.estiloapp==4){
+                estilo4();
+            }
+            else if (respuesta.data.estiloapp==5){
+                estilo5();
+            }
+            else if (respuesta.data.estiloapp==6){
+                estilo6();
+            }
+            else if (respuesta.data.estiloapp==7){
+                estilo7();
+            }
+            else if (respuesta.data.estiloapp==8){
+                estilo8();
+            }
+        } catch (error) {
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh = JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name = await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                       
+                    } catch (error) {
+                        console.log(error.response);
+                    }  
+                } catch (error) {
+                    console.log(error.response);
+                }
+            }
+        }
+        guardarCargando2(false);
+    }
+    const enviar = async () => {
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            console.log(respuesta);
+            const args = {
+                number: respuesta.data.numemergencia,
+                prompt: false
+            }
+            call(args).catch(console.error)
+            guardarAlertaexito(true);
+        } catch (error) {
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                console.log('token_not_valid');
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh=JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name= await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        console.log(respuesta);
+                        const args = {
+                            numer: respuesta.data.numemergencia,
+                            prompt: false
+                        }
+                        call(args).catch(console.error)
+                        guardarAlertaexito(true);
                     } catch (error) {
                         console.log(error.response);
                         console.log("error acaa");
@@ -345,13 +603,13 @@ const home = ({navigation}) =>{
                 </TouchableHighlight>
                 <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate("Desvinculacion") }>
                     <View style={{flexDirection:'row',alignItems:"center"}}>
-                        <Icon name="close" color={colorIcono}  size={RFPercentage(3)}></Icon>
+                        <Icon name="exit-run" color={colorIcono}  size={RFPercentage(3)}></Icon>
                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Desvincularse de Psicólogo</Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate("Panico") }>
+                <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => guardarAlertaenviar(true) }>
                     <View style={{flexDirection:'row',alignItems:"center"}}>
-                        <Icon name="close" color={colorIcono}  size={RFPercentage(3)}></Icon>
+                        <Icon name="exclamation" color={colorIcono}  size={RFPercentage(3)}></Icon>
                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Botón de pánico</Text>
                     </View>
                 </TouchableHighlight>
@@ -362,6 +620,35 @@ const home = ({navigation}) =>{
                     </View>
                 </TouchableHighlight>
             </View>
+            <Portal>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaenviar} onDismiss={() => guardarAlertaenviar(false)}>
+                    <Dialog.Title style={{color: colorLetra}}>Botón de pánico</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>¿Estás seguro de realizar una llamada a tu telefono de emergencia?</Paragraph>
+                    </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=> {guardarAlertaenviar(false);enviar()}} color={colorLetra}>Si</Button>
+                            </View>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=> guardarAlertaenviar(false)} color={colorLetra}>No</Button>
+                            </View>
+                        </Dialog.Actions>
+                </Dialog>
+            </Portal>
+            <Portal>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarAlertaexito(false)}}>
+                    <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La alerta ha sido enviada correctamente</Paragraph>
+                    </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=> {guardarAlertaexito(false)}} color={colorLetra}>Ok</Button>
+                            </View>
+                        </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </View> : null}
         {tienesicologo===false ?
             <ScrollView>

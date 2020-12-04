@@ -22,7 +22,6 @@ const encuestas = ({navigation}) => {
     const encuestas = async () =>{
         guardarCargando(true);
         try {
-            console.log("df");
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.get(host+'/feedback/disponibles/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
@@ -62,7 +61,6 @@ const encuestas = ({navigation}) => {
         }
     }
     const irEncuesta = (item,fecha) =>{
-        console.log(item);
         navigation.navigate('Encuesta',{id: item, fecha: fecha});
     }
     const mespalabra = (fecha)=>{

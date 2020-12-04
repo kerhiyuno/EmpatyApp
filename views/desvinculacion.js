@@ -37,7 +37,6 @@ const Desvinculacion = ({navigation}) => {
             const respuesta = await axios.get(host+'/usuarios/psicologo/perfil/',
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             guardarCorreopsicologo(respuesta.data.email);
-            console.log(respuesta);
         } catch (error) {
             console.log(error.response);
             if(error.response.data.code==='token_not_valid'){
@@ -53,7 +52,6 @@ const Desvinculacion = ({navigation}) => {
                         const respuesta = await axios.get(host+'/usuarios/psicologo/perfil/',
                          {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         guardarCorreopsicologo(respuesta.data.email);
-                        console.log(respuesta);
                     } catch (error) {
                         console.log(error.response);
                     }  

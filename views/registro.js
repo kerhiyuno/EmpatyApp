@@ -23,6 +23,7 @@ const registro = ({navigation}) =>{
     const [password,guardarPassword] = useState('');
     const [password2,guardarPassword2] = useState('');
     const [fecha_nacimiento,guardarFecha] = useState('-');
+    const [numemergencia,guardarNumemergencia] = useState('');
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     
@@ -203,12 +204,11 @@ const registro = ({navigation}) =>{
     //registra el cliente
     const registrar= async () =>{
         //validar
-        if (fullname === '' || rut === '' || email === '' || telefono === '' || fecha_nacimiento ==='-'|| password === '' || password2 === ''){
+        if (fullname === '' || rut === '' || email === '' || telefono === '' || fecha_nacimiento ==='-'|| password === '' || password2 === '' || numemergencia === ''){
             guardarAlerta(true);
             if(errorContraseña==true){
                 guardarAlertacontra(true);
                 if (mayor18(año,mes,dia)==='no'){
-                    console.log("debe ser mayor de 18 años");
                     guardarAlertaedad(true);
                     if (erroremail==true){
                         guardarAlertaEmail(true);
@@ -243,7 +243,6 @@ const registro = ({navigation}) =>{
                 return
             }
             if (mayor18(año,mes,dia)==='no'){
-                console.log("debe ser mayor de 18 años");
                 guardarAlertaedad(true);
                 if (erroremail==true){
                     guardarAlertaEmail(true);
@@ -276,7 +275,6 @@ const registro = ({navigation}) =>{
         if(errorContraseña==true){
             guardarAlertacontra(true);
             if (mayor18(año,mes,dia)==='no'){
-                console.log("debe ser mayor de 18 años");
                 guardarAlertaedad(true);
                 if (erroremail==true){
                     guardarAlertaEmail(true);
@@ -291,7 +289,6 @@ const registro = ({navigation}) =>{
             return
         }
         if (mayor18(año,mes,dia)==='no'){
-            console.log("debe ser mayor de 18 años");
             guardarAlertaedad(true);
             if (erroremail==true){
                 guardarAlertaEmail(true);
@@ -305,7 +302,7 @@ const registro = ({navigation}) =>{
         }
 
         //generar
-        const usuario={fullname,rut,email,telefono,password,fecha_nacimiento};
+        const usuario={fullname,rut,email,telefono,password,fecha_nacimiento,numemergencia};
         console.log(usuario)
         //redireccionar
         navigation.navigate('Registro 2/7',{usuario});
@@ -333,7 +330,7 @@ const registro = ({navigation}) =>{
                 onCancel={hideDatePicker}
                 date={new Date(año+"-"+mes+"-"+dia+"T10:00:00.000Z")}
             />
-            <Text style={{marginBottom:5,marginLeft:13,fontSize:15,marginLeft:15,fontFamily:'Inter-Regular',color: colorLetra}}>Fecha seleccionada: {fechaformateo(fecha_nacimiento)}</Text>
+            <Text style={{marginBottom:RFPercentage(0.5),marginLeft:13,fontSize:15,marginLeft:15,fontFamily:'Inter-Regular',color: colorLetra}}>Fecha seleccionada: {fechaformateo(fecha_nacimiento)}</Text>
             <TextInput
                 label="rut (Ej:12345678-9)"
                 onChangeText={(texto) => {guardarRut(texto);verificarRut(texto);}}
@@ -355,6 +352,13 @@ const registro = ({navigation}) =>{
             <TextInput
                 label="Teléfono"
                 onChangeText={(texto) => guardarTelefono(texto) }
+                style={[globalStyles.input,{borderColor: colorBorderInput,height: textinputsize}]}
+                theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
+                keyboardType='phone-pad'
+            />
+            <TextInput
+                label="Teléfono de emergencia"
+                onChangeText={(texto) => guardarNumemergencia(texto) }
                 style={[globalStyles.input,{borderColor: colorBorderInput,height: textinputsize}]}
                 theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                 keyboardType='phone-pad'

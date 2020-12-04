@@ -74,8 +74,8 @@ const TabScreen =  () => {
          }
         })}
         tabBarOptions={{
-        activeTintColor: 'white',
-        inactiveTintColor: 'black',
+        activeTintColor: 'black',
+        inactiveTintColor: 'white',
         labelStyle: {
           fontSize: RFPercentage(2.4),
         },

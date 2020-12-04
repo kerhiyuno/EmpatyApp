@@ -25,7 +25,6 @@ import encuestas from '../views/encuestas';
 import encuesta from '../views/encuesta';
 import Sentimiento from '../views/sentimiento';
 import Personalizar from '../views/personalizar';
-import Panico from '../views/panico';
 import EstilosContext from '../context/estilosContext'
 
 import BotonLogout from '../components/botonlogout';
@@ -336,21 +335,11 @@ const StackScreen = () => {
       >
       </Stack.Screen>
       <Stack.Screen
-        name= 'Panico'
-        component={Panico}
-        options={ ({navigation,route}) => ({
-          headerRight: (props)=>
-            <View style={{flexDirection:'row'}}>
-              <BotonInfo {...props} navigation={navigation} route={route}/>
-              <BotonLogout {...props} navigation={navigation} route={route}/>
-            </View>,
-            headerTitle: 'Botón de pánico'
-        })}
-      >
-      </Stack.Screen>
-      <Stack.Screen
         name= 'Informacion'
         component={Informacion}
+        options={ () => ({
+            headerTitle: 'Información'
+        })}
       ></Stack.Screen>
     </Stack.Navigator>
      );

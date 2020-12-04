@@ -23,7 +23,6 @@ const Chat = () => {
   const {obtenerChatroom, nuevomensaje,aforeground} = useContext(NotificacionesContext);
 
   useEffect( () => {
-    console.log("nuevo mensajexD");
     if(nuevomensaje==1){
     pedirnuevomensaje();
     }
@@ -36,9 +35,7 @@ const Chat = () => {
   ,[aforeground])
 
   const pedirnuevomensaje = async () => {
-    console.log("entrado");
     var chatRoom = obtenerChatroom();
-    console.log(chatRoom);
         try {
           const nombre = await AsyncStorage.getItem('datosSesion');
           const respuesta = await axios.post(host+'/chat/fetch/',{chatroom:chatRoom,cantidad:1,offset:0},
