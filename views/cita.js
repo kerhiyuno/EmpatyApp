@@ -15,6 +15,7 @@ const cita = ({route}) =>{
     const {colorb,colorLetra,colorTextoBoton,colorTitulo,colorFondo} = useContext(EstilosContext);
 
     const [nolink,guardarNolink] = useState(false);
+    const [nolink2,guardarNolink2] = useState(false);
     const [nosubgrupo,guardarNosubgrupo] = useState(false);
     const [sesionfinalizada,guardarSesionfinalizada] = useState(false);
     
@@ -22,16 +23,20 @@ const cita = ({route}) =>{
     const [mes,guardarMes] = useState('');
     const [hora,guardarHora] = useState('');
     const [id,guardarId] = useState('');
+    const [urlpago,guardarPago] = useState('');
 
     useEffect( () => {
         guardarDia(route.params.dia);
         guardarHora(route.params.hora);
         guardarId(route.params.id);
         guardarMes(route.params.mes);
+        guardarPago(route.params.url_pago)
+        console.log(route.params.url_pago);
    },[]
    )
 
     const openLink=async(link) =>{
+        console.log(link);
         try {
           const url = link;
           if (await InAppBrowser.isAvailable()) {
@@ -72,10 +77,7 @@ const cita = ({route}) =>{
         }
       }
 
-
-    const funcion = async (id) =>{
-        var sesion=id;
-        const postdata={sesion}
+    const asistencia = async (postdata)=>{
         try {
             var name = await AsyncStorage.getItem('datosSesion');
             var respuesta = await axios.post(host+'/grupal/asistencia/',postdata,
@@ -119,6 +121,10 @@ const cita = ({route}) =>{
           }
         }
 
+    }
+    const funcion = async (id) =>{
+        var sesion=id;
+        const postdata={sesion}
         try {
           var name = await AsyncStorage.getItem('datosSesion');
           var respuesta =await axios.post(host+'/videoconf/urlMeet/',postdata,
@@ -132,7 +138,11 @@ const cita = ({route}) =>{
           if(respuesta.data.url==='No existe url para la sesion aun.'){
            guardarNolink(true);
           }
+          else if(respuesta.data.url==='Pago Pendiente.'){
+            guardarNolink2(true);
+           }
           else{
+            asistencia(postdata);
             openLink(respuesta.data.url);}
       } catch (error){
           console.log("error");
@@ -171,49 +181,7 @@ const cita = ({route}) =>{
       }
     }
 
-    const funcion2 = async (id) =>{
-        var sesion=id;
-        const postdata={sesion}
-        try {
-            var name = await AsyncStorage.getItem('datosSesion');
-            var respuesta = await axios.post(host+'/grupal/asistencia/',postdata,
-                {
-                    headers: {
-                        'Authorization': 'Bearer ' +(JSON.parse(name).access),
-                        },
-                }
-            );
-        }catch{
-          console.log(error);
-          console.log(error.response);
-          if(error.response.data.code==='token_not_valid'){
-              console.log('token_not_valid');
-              try {
-                  const refresh0 = await AsyncStorage.getItem('datosSesion')
-                  var refresh = JSON.parse(refresh0).refresh;
-                  refresh = {refresh}
-                  var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
-                  refresh=JSON.parse(refresh0).refresh;
-                  await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
-                  try {
-                      var name= await AsyncStorage.getItem('datosSesion');
-                      var respuesta = await axios.post(host+'/grupal/asistencia/',postdata,
-                        {
-                            headers: {
-                                'Authorization': 'Bearer ' +(JSON.parse(name).access),
-                                },
-                        }
-                    );
-                  } catch (error) {
-                      console.log(error.response);
-                      console.log("error acaa");
-                  }
-              } catch (error) {
-                  console.log("error aqui");
-                  console.log(error.response);
-              }
-          }
-        }
+    const funcion2 = async () =>{
         try {
             var name = await AsyncStorage.getItem('datosSesion');
             var respuesta =await axios.get(host+'/grupal/subgrupos/',
@@ -295,6 +263,11 @@ const cita = ({route}) =>{
                         <Text style={[styles.texto,{color: colorTextoBoton}]}>Unirse al sub-grupo</Text>
                         </View>
             </TouchableHighlight>
+            <TouchableHighlight onPress={  () => openLink(urlpago)} style={[styles.botonC,{backgroundColor: colorb}]} >
+                        <View>
+                        <Text style={[styles.texto,{color: colorTextoBoton}]}>Ir a pagar (khipu)</Text>
+                        </View>
+            </TouchableHighlight>
 
             <Portal>
                 <Dialog style={{backgroundColor: colorFondo}} visible={nolink} onDismiss={() => guardarNolink(false)} >
@@ -304,6 +277,17 @@ const cita = ({route}) =>{
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarNolink(false)} color={colorLetra}>Ok</Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+            <Portal>
+                <Dialog style={{backgroundColor: colorFondo}} visible={nolink2} onDismiss={() => guardarNolink2(false)} >
+                    <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Debes realizar el pago antes de ingresar.</Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={()=>guardarNolink2(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

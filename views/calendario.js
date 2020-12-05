@@ -164,14 +164,15 @@ const traductorhora = (bloque) =>{
             }
         }
     }
-    const irCita = (item,fecha_sesion,bloque) =>{
+    const irCita = (item,fecha_sesion,bloque,urlpago) =>{
         console.log(item);
         var dia= extraerdia(fecha_sesion) ;
         var mes= mespalabra(fecha_sesion);
         console.log(dia,mes);
         var hora=traductorhora(bloque);
-        navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
+        navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora, url_pago: urlpago});
     }
+
     return (
         <View style={[globalStyles.contenedor,{backgroundColor:colorFondo}]}>
             {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
@@ -183,9 +184,9 @@ const traductorhora = (bloque) =>{
                     data={sesiones}
                     style={{marginBottom: 10}}
                     renderItem={({item,index}) => (
-                        <TouchableHighlight underlayColor = {'transparent'} onPress={ () => irCita(item.id,item.fecha_sesion,item.bloque.id) } style={[styles.botonC,{backgroundColor: colorb}]}>
+                        <TouchableHighlight underlayColor = {'transparent'} onPress={ () => irCita(item.id,item.fecha_sesion,item.bloque.id,item.url_pago) } style={[styles.botonC,{backgroundColor: colorb}]}>
                         <View style={{flex:1,flexDirection: 'column'}}>
-                                <View style={{flex:1,flexDirection: 'row',marginTop:5}}>
+                                <View style={{flex:0.3,flexDirection: 'row'}}>
                                     <View style={{flex:0.3}}>
                                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Día:  </Text>
                                     </View>
@@ -193,12 +194,20 @@ const traductorhora = (bloque) =>{
                                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>{extraerdia(item.fecha_sesion)} de {mespalabra(item.fecha_sesion)}</Text>
                                     </View>
                                 </View>
-                                <View style={{flex:1,flexDirection: 'row'}}>
+                                <View style={{flex:0.3,flexDirection: 'row'}}>
                                     <View style={{flex:0.3}}>
                                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Hora:  </Text>
                                     </View>
                                     <View style={{flex:0.7}}>
                                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>{traductorhora(item.bloque.id)}</Text>
+                                    </View>
+                                </View>
+                                <View style={{flex:0.3,flexDirection: 'row'}}>
+                                    <View style={{flex:0.3}}>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Pago:  </Text>
+                                    </View>
+                                    <View style={{flex:0.7}}>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>{item.estado_pago ==='done' ? 'Realizado' : 'Pendiente'}</Text>
                                     </View>
                                 </View>
                         </View>

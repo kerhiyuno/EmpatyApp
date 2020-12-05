@@ -239,7 +239,7 @@ const sesion = ({navigation}) =>{
                 var fecha=respuesta.data[0]['fecha_sesion'];
                 var dia= extraerdia(fecha) ;
                 var mes= mespalabra(fecha);
-                var hora=traductorhora(respuesta2.data[0].bloque.id);
+                var hora=traductorhora(respuesta.data[0].bloque.id);
                 navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
             }
             else if (respuesta.data.length > 0 && respuesta2.data.length > 0){

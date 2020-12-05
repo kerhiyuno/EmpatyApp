@@ -36,6 +36,7 @@ const home = ({navigation}) =>{
     const [alertaopcionales,guardarAlertaopcionales] = useState(false);
     const [alertaenviar,guardarAlertaenviar] = useState(false);
     const [alertaexito,guardarAlertaexito] = useState(false);
+    const [alertanonumero,guardarAlertanonumero] = useState(false);
 
     var timer;
 
@@ -466,12 +467,51 @@ const home = ({navigation}) =>{
         }
         guardarCargando2(false);
     }
+    const AlertarSicologo = async () => {
+        try {
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            const respuesta = await axios.post(host+'/usuarios/panico/',{},
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            console.log(respuesta);
+        } catch (error) {
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                console.log('token_not_valid');
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh=JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name= await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.post(host+'/usuarios/panico/',{},
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        console.log(respuesta);
+                    } catch (error) {
+                        console.log(error.response);
+                        console.log("error acaa");
+                    }  
+                } catch (error) {
+                    console.log("error aqui");
+                    console.log(error.response);
+                }
+            }
+        }
+    }
     const enviar = async () => {
+        AlertarSicologo();
         try {
             const nombre = await AsyncStorage.getItem('datosSesion');
             const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta);
+            if (respuesta.data.numemergencia===''){
+                guardarAlertanonumero(true);
+                return
+            }
             const args = {
                 number: respuesta.data.numemergencia,
                 prompt: false
@@ -495,6 +535,10 @@ const home = ({navigation}) =>{
                         const respuesta = await axios.post(host+'/usuarios/paciente/perfil/',{},
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta);
+                        if (respuesta.data.numemergencia===''){
+                            guardarAlertanonumero(true);
+                            return
+                        }
                         const args = {
                             numer: respuesta.data.numemergencia,
                             prompt: false
@@ -645,6 +689,19 @@ const home = ({navigation}) =>{
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
                                 <Button onPress={()=> {guardarAlertaexito(false)}} color={colorLetra}>Ok</Button>
+                            </View>
+                        </Dialog.Actions>
+                </Dialog>
+            </Portal>
+            <Portal>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertanonumero} onDismiss={() => {guardarAlertanonumero(false)}}>
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>No has ingresado un número de emergencia. Agrégalo en Editar Perfil</Paragraph>
+                    </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=> {guardarAlertanonumero(false)}} color={colorLetra}>Ok</Button>
                             </View>
                         </Dialog.Actions>
                 </Dialog>
