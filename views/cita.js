@@ -165,10 +165,14 @@ const cita = ({route}) =>{
                       });
                       console.log(respuesta);
                       if(respuesta.data.url==='No existe url para la sesion aun.'){
-                            guardarNolink(true);
+                        guardarNolink(true);
+                       }
+                       else if(respuesta.data.url==='Pago Pendiente.'){
+                         guardarNolink2(true);
                         }
-                    else{
-                        openLink(respuesta.data.url);}
+                       else{
+                         asistencia(postdata);
+                         openLink(respuesta.data.url);}
                   } catch (error) {
                       console.log(error.response);
                       console.log("error acaa");
@@ -181,7 +185,57 @@ const cita = ({route}) =>{
       }
     }
 
-    const funcion2 = async () =>{
+    const funcion2 = async (id) =>{
+        var sesion=id;
+        const postdata={sesion}
+        try {
+            var name = await AsyncStorage.getItem('datosSesion');
+            var respuesta =await axios.post(host+'/videoconf/urlMeet/',postdata,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' +(JSON.parse(name).access),
+                    },
+            }
+            );
+            console.log(respuesta);
+            if(respuesta.data.url==='Pago Pendiente.'){
+              guardarNolink2(true);
+              return
+            }
+        } catch (error){
+            console.log("error");
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                console.log('token_not_valid');
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion')
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh=JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name= await AsyncStorage.getItem('datosSesion');
+                        var respuesta =await axios.post(host+'/videoconf/urlMeet/',postdata,
+                        {
+                            headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),},
+                        });
+                        console.log(respuesta);
+                        if(respuesta.data.url==='Pago Pendiente.'){
+                            guardarNolink2(true);
+                            return
+                        }
+                    } catch (error) {
+                        console.log(error.response);
+                        console.log("error acaa");
+                    }
+                } catch (error) {
+                    console.log("error aqui");
+                    console.log(error.response);
+                }
+            }
+        }
         try {
             var name = await AsyncStorage.getItem('datosSesion');
             var respuesta =await axios.get(host+'/grupal/subgrupos/',
@@ -202,7 +256,7 @@ const cita = ({route}) =>{
             console.log(error);
             console.log(error.response);
             if (error.response.status===400){
-                guardarSesionfinalizada(true);
+                guardarNolink(true);
                 return
             }
 
@@ -230,7 +284,7 @@ const cita = ({route}) =>{
                           openLink(respuesta.data.link_meet);}
                     } catch (error) {
                         if (error.response.status===400){
-                            guardarSesionfinalizada(true);
+                            guardarNolink(true);
                             return
                         }
                         console.log(error.response);
