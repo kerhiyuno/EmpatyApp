@@ -24,18 +24,24 @@ const cita = ({route}) =>{
     const [hora,guardarHora] = useState('');
     const [id,guardarId] = useState('');
     const [urlpago,guardarPago] = useState('');
+    const [problemapago,guardarProblemapago] = useState('');
 
     useEffect( () => {
         guardarDia(route.params.dia);
         guardarHora(route.params.hora);
         guardarId(route.params.id);
         guardarMes(route.params.mes);
-        guardarPago(route.params.url_pago)
+        guardarPago(route.params.url_pago);
+        console.log(route.params);
         console.log(route.params.url_pago);
    },[]
    )
 
     const openLink=async(link) =>{
+        if (link === undefined){
+            guardarProblemapago(true);
+            return
+        }
         console.log(link);
         try {
           const url = link;
@@ -364,6 +370,17 @@ const cita = ({route}) =>{
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarSesionfinalizada(false)} color={colorLetra}>Ok</Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+            <Portal>
+                <Dialog style={{backgroundColor: colorFondo}} visible={problemapago} onDismiss={() => guardarProblemapago(false)} >
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Se ha producido un error generando el pago. Contacta a tu psicólogo</Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={()=>guardarProblemapago(false)} color={colorLetra}>Ok</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

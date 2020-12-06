@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useContext} from 'react';
-import {View,Text,TouchableHighlight,StyleSheet,ActivityIndicator,ScrollView,useWindowDimensions} from 'react-native';
+import {View,Text,TouchableHighlight,StyleSheet,ActivityIndicator,ScrollView} from 'react-native';
 import {Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -23,14 +23,17 @@ const home = ({navigation}) =>{
         cambiarColorBordeInput,cambiarColorTextoBoton,cambiarColorPlaceholderinput,cambiarColorPrimaryinput,
         cambiarColorIcono,cambiarColorError,cambiarColorTextoHeader,cambiarColorTitulo,
         cambiarColorBotonDesactivado,cambiarColorNotificacionesBorder,cambiarColorRadio,
-        cambiarColorIconoLibre,cambiarFondoInput,cambiarTextoInput} = useContext(EstilosContext);
+        cambiarColorIconoLibre,cambiarFondoInput,cambiarTextoInput,
+        } = useContext(EstilosContext);
 
-    const { guardarChatroom } = useContext(NotificacionesContext);
+    const { guardarChatroom,tienesicologo,tienegrupo,guardarTienesicologo,
+        nuevosicologo,desvinculado,guardarDesvinculado,guardarNuevosicologo,
+        primeracarga,guardarPrimeracarga} = useContext(NotificacionesContext);
 
     const [SicologoListo,guardarSicologoListo] = useState(false);
-    const [cargando2,guardarCargando2] = useState(true);
+    const [alertadesvinculado,guardarAlertadesvinculado] = useState(false);
 
-    const [tienesicologo,guardarTienesicologo] = useState(false);
+    const [cargando2,guardarCargando2] = useState(true);
 
     const [alertacuestionario,guardarAlertacuestionario] = useState(false);
     const [alertaopcionales,guardarAlertaopcionales] = useState(false);
@@ -40,15 +43,35 @@ const home = ({navigation}) =>{
 
     var timer;
 
-    useEffect(() => {
+
+    /*useEffect(() => {
         timer = setInterval(async() => consultar(), 20000);
         return () => clearInterval(timer);
-      });
+      });*/
 
     useEffect(() => {
-        revision();
-        estilos();
+        if (primeracarga===true){
+            revision();
+            estilos();
+            guardarPrimeracarga(false);
+        }
+        else {
+            guardarCargando2(false);
+        }
       },[]);
+
+    useEffect(() => {
+        console.log(tienesicologo);
+        if (nuevosicologo===true){
+            console.log("ahora se conecto el sicologo")
+            guardarNuevosicologo(false);
+            guardarSicologoListo(true);
+        }
+        if (desvinculado===true){
+            guardarAlertadesvinculado(true);
+            guardarDesvinculado(false)
+        }
+      },[tienesicologo]);
 
       const original = () => {
         cambiarColorBoton("#e35d17");
@@ -564,6 +587,7 @@ const home = ({navigation}) =>{
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta);
             if(respuesta.data.id_psicologo !== null){
+                console.log("se hizo en a")
                 guardarSicologoListo(true);
                 clearInterval(timer);
             }
@@ -598,6 +622,14 @@ const home = ({navigation}) =>{
                 }
             }
         }
+    }
+    const resolverAlertavinculacion = () => {
+        navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});
+        guardarSicologoListo(false);
+    }
+    const ManejarDesvinculacion = () => {
+        navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});
+        guardarAlertadesvinculado(false);
     }
     return (
         <View style={[globalStyles.contenedor,{backgroundColor:colorFondo}]}>
@@ -639,12 +671,12 @@ const home = ({navigation}) =>{
                     </View>
                 </TouchableHighlight >
                 
-                <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate("Disconformidad") }>
+                {tienegrupo===true ? <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate("Disconformidad") }>
                     <View style={{flexDirection:'row',alignItems:"center"}}>
                         <Icon name="account-alert-outline" color={colorIcono}  size={RFPercentage(3)}></Icon>
                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>Disconformidad con el grupo</Text>
                     </View>
-                </TouchableHighlight>
+                </TouchableHighlight> : null}
                 <TouchableHighlight style={[styles.botonS,{backgroundColor: colorb}]} underlayColor = {'transparent'} onPress={() => navigation.navigate("Desvinculacion") }>
                     <View style={{flexDirection:'row',alignItems:"center"}}>
                         <Icon name="exit-run" color={colorIcono}  size={RFPercentage(3)}></Icon>
@@ -767,19 +799,6 @@ const home = ({navigation}) =>{
                         </TouchableHighlight>
                 </View>
                 <Portal>
-                    <Dialog style={{backgroundColor: colorFondo}} visible={SicologoListo} >
-                        <Dialog.Title style={{color: colorLetra}}>Psicologo vinculado</Dialog.Title>
-                        <Dialog.Content>
-                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Una de sus solicitudas de psicólogo ha sido aceptada</Paragraph>
-                        </Dialog.Content>
-                        <Dialog.Actions>
-                            <View style={{marginRight:10}}>
-                                <Button onPress={()=>{guardarSicologoListo(false);guardarTienesicologo(true);}} color={colorLetra}>Ok</Button>
-                            </View>
-                        </Dialog.Actions>
-                    </Dialog>
-                </Portal>
-                <Portal>
                     <Dialog style={{backgroundColor: colorFondo}} visible={alertacuestionario} onDismiss={() => {guardarAlertacuestionario(false);}}>
                         <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
                         <Dialog.Content>
@@ -814,6 +833,33 @@ const home = ({navigation}) =>{
             </ScrollView>
         : null}
             </View> : null }
+            <Portal>
+                    <Dialog style={{backgroundColor: colorFondo}} visible={SicologoListo} >
+                        <Dialog.Title style={{color: colorLetra}}>Psicologo vinculado</Dialog.Title>
+                        <Dialog.Content>
+                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Una de sus solicitudas de psicólogo ha sido aceptada</Paragraph>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=>{resolverAlertavinculacion()}} color={colorLetra}>Ok</Button>
+                            </View>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
+                <Portal>
+                    <Dialog style={{backgroundColor: colorFondo}} visible={alertadesvinculado} onDismiss={() => {ManejarDesvinculacion()}}>
+                        <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
+                        <Dialog.Content>
+                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Tu psicólogo ha aceptado tu solicitud de desvinculación
+                            </Paragraph>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <View style={{marginRight:10}}>
+                                <Button onPress={()=>{ManejarDesvinculacion()}} color={colorLetra}>Ok</Button>
+                            </View>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
         </View>
     );
 }

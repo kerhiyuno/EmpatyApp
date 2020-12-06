@@ -18,17 +18,7 @@ const sesion = ({navigation}) =>{
     const [nombresicologo,guardarNombreSicologo] = useState('Juan');
     const [tienegrupo,guardarTienegrupo] = useState(true);
     const [sinsesiones,guardarSinsesiones] = useState(false);
-   /* const pedirDatos = async() => {
-        const datosSesion = AsyncStorage.getItem(datosSesion);
-        try {
-            const datos = await axios.get('link.com', JSON.parse(datosSesion).token );
-            guardarDescripcion(JSON.stringify(datos.descripcion));
-            guardarTitulo(JSON.stringify(datos.titulo));
-        } catch (error) {
-            console.log(error)
-        }
-    }
-*/
+
     useEffect( () => {
          datospsicologo();
          consultar();
@@ -232,7 +222,7 @@ const sesion = ({navigation}) =>{
                 var dia= extraerdia(fecha) ;
                 var mes= mespalabra(fecha);
                 var hora=traductorhora(respuesta2.data[0].bloque.id);
-                navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
+                navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora,url_pago:respuesta2.data.url_pago});
             }
             else if (respuesta.data.length > 0 && respuesta2.data.length < 1){
                 var item= respuesta.data[0]['id'];
@@ -240,7 +230,7 @@ const sesion = ({navigation}) =>{
                 var dia= extraerdia(fecha) ;
                 var mes= mespalabra(fecha);
                 var hora=traductorhora(respuesta.data[0].bloque.id);
-                navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
+                navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora,url_pago:respuesta.data.url_pago});
             }
             else if (respuesta.data.length > 0 && respuesta2.data.length > 0){
                 var item1 = respuesta.data[0]['id'];
@@ -258,44 +248,45 @@ const sesion = ({navigation}) =>{
                 var hora2 = traductorhora(respuesta2.data[0].bloque.id);
 
                 if (parseInt(anio1) < parseInt(anio2)){
-                    navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
                     console.log("sesion grupal");
+                    navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1,url_pago:respuesta.data.url_pago});
                 }
                 else if (parseInt(anio2) < parseInt(anio1)){
-                    navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
                     console.log("sesion individual");
+                    navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2,url_pago:respuesta2.data.url_pago});
                 }
                 else{
                     if (parseInt(mes1) < parseInt(mes2)){
-                        navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
                         console.log("sesion grupal");
+                        navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1,url_pago:respuesta.data.url_pago});
                     }
                     else if (parseInt(mes2) < parseInt(mes1)){
-                        navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
                         console.log("sesion individual");
+                        navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2,url_pago:respuesta2.data.url_pago});
                     }
                     else{
                         if (parseInt(dia1) < parseInt(dia2)){
-                            navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
                             console.log("sesion grupal");
+                            navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1,url_pago:respuesta.data.url_pago});
+    
                         }
                         else if (parseInt(dia2) < parseInt(dia1)){
-                            navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
                             console.log("sesion individual");
+                            navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2,url_pago:respuesta2.data.url_pago});
                         }
                         else{
                             if (hora1 < hora2){
-                                navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1});
                                 console.log("sesion grupal");
+                                navigation.navigate('Cita',{id: item1,dia:dia1,mes:mes1,hora:hora1,url_pago:respuesta.data.url_pago});
                             }
                             else{
-                                navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2});
                                 console.log("sesion individual");
+                                navigation.navigate('Cita',{id: item2,dia:dia2,mes:mes2,hora:hora2,url_pago:respuesta2.data.url_pago});
                             }
                         }
                     }
                 }
-                navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
+               // navigation.navigate('Cita',{id: item,dia:dia,mes:mes,hora:hora});
             }
             else{
                 guardarSinsesiones(true);
@@ -438,6 +429,8 @@ const sesion = ({navigation}) =>{
             <View>
             {tienegrupo===false ? <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}> 
             No has sido asignado a un grupo</Text> : null}
+            {tienegrupo===true ? <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}> 
+            Estás asignado a un grupo</Text> : null}
             </View>
             <Portal>
                 <Dialog style={{backgroundColor: colorFondo}} visible={sinsesiones} onDismiss={() => guardarSinsesiones(false)} >

@@ -10,14 +10,17 @@ import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import NotificacionesContext from '../context/notificacionesContext';
 
 const host = ipHost();
 
 const Desvinculacion = ({navigation}) => {
 
     const {colorb,colorLetra,colorTextoBoton,colorBordeInput,colorPlaceholderinput,
-        colorPrimaryinput,colorTitulo,colorIcono,colorFondo,colorFondoInput,colorTextoInput,colorRadio} = useContext(EstilosContext);
+        colorPrimaryinput,colorTitulo,colorIcono,colorFondo,colorFondoInput,colorTextoInput,colorRadio
+        } = useContext(EstilosContext);
 
+    const {guardarTienesicologo} = useContext(NotificacionesContext)
     const [mensaje,guardarMensaje] = useState('');
     const [desvinculacion,guardarDesvinculacion] = useState('no');
     const [desvinculacionautoenviada,guardarDesvinculacionautoenviada] = useState(false);
@@ -63,6 +66,7 @@ const Desvinculacion = ({navigation}) => {
     }
 
     const volver = () =>{
+        guardarAlertaexito(false);
         navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});
     }
 
@@ -85,6 +89,7 @@ const Desvinculacion = ({navigation}) => {
         var desAutomatica = false;
         if (desvinculacion==='si') {
             desAutomatica = true;
+            guardarTienesicologo(false);
         }
         var envio = {mensaje: mensaje, motivo: "Desvinculacion",forzosa: desAutomatica,psicologo:correopsicologo};
         console.log(envio);
@@ -198,7 +203,7 @@ const Desvinculacion = ({navigation}) => {
                 </Dialog>
             </Portal>
             <Portal>
-                <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => guardarAlertaexito(false)}>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => volver()}>
                     <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
                         <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El mensaje se ha enviado correctamente</Paragraph>

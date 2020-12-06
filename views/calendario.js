@@ -204,7 +204,7 @@ const traductorhora = (bloque) =>{
                                 </View>
                                 <View style={{flex:0.3,flexDirection: 'row'}}>
                                     <View style={{flex:0.3}}>
-                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Pago:  </Text>
+                                        <Text style={[styles.textoC,{color: colorTextoBoton}]}>Pago: </Text>
                                     </View>
                                     <View style={{flex:0.7}}>
                                         <Text style={[styles.textoC,{color: colorTextoBoton}]}>{item.estado_pago ==='done' ? 'Realizado' : 'Pendiente'}</Text>

@@ -1,5 +1,7 @@
 import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,REINICIAR_CONTENIDO,
-    GUARDAR_TOKEN_FIREBASE,GUARDAR_MENSAJES,GUARDAR_CHATROOM,NUEVO_MENSAJE,A_FOREGROUND} from '../types';
+    GUARDAR_TOKEN_FIREBASE,GUARDAR_MENSAJES,GUARDAR_CHATROOM,NUEVO_MENSAJE,A_FOREGROUND,
+    GUARDAR_TIENESICOLOGO,GUARDAR_TIENEGRUPO,GUARDAR_NUEVOSICOLOGO,GUARDAR_DESVINCULADO,
+    GUARDAR_PRIMERACARGA} from '../types';
 export default (state,action) =>{
     switch (action.type){
         case A_FOREGROUND:
@@ -13,6 +15,31 @@ export default (state,action) =>{
             return{
                 ...state,
                 aforeground: cambio
+            }
+        case GUARDAR_PRIMERACARGA:
+            return{
+                ...state,
+                primeracarga: action.payload
+            }
+        case GUARDAR_DESVINCULADO:
+            return{
+                ...state,
+                desvinculado: action.payload
+            }
+        case GUARDAR_NUEVOSICOLOGO:
+            return{
+                ...state,
+                nuevosicologo: action.payload
+            }
+        case GUARDAR_TIENESICOLOGO:
+            return{
+                ...state,
+                tienesicologo: action.payload
+            }
+        case GUARDAR_TIENEGRUPO:
+            return{
+                ...state,
+                tienegrupo: action.payload
             }
         case NUEVO_MENSAJE:
             return{

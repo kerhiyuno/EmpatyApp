@@ -78,7 +78,7 @@ const registro4 = ({navigation,route}) =>{
     return (
         <ScrollView style={[globalStyles.contenedor,{backgroundColor: colorFondo}]}>
             <Text style={[styles.texto,{fontFamily: "Inter-SemiBold",color: colorLetra}]}>Para dar información preliminar de utilidad a su psicólogo o psicóloga, responda las siguientes preguntas:</Text>
-            <Text style={[styles.texto,{color: colorLetra}]}>¿Haz recibido tratamiento psicológico con anterioridad?</Text>
+            <Text style={[styles.texto,{color: colorLetra}]}>¿Has recibido tratamiento psicológico con anterioridad?</Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
                     <Text style={[styles.sino,{color: colorLetra}]}>Si</Text>
@@ -99,7 +99,7 @@ const registro4 = ({navigation,route}) =>{
                     />
                 </View>
             </View>
-            <Text style={[styles.texto,{color: colorLetra}]}>¿Haz recibido tratamiento psiquiátrico con anterioridad?</Text>
+            <Text style={[styles.texto,{color: colorLetra}]}>¿Has recibido tratamiento psiquiátrico con anterioridad?</Text>
             <View style={styles.pregunta}>
                 <View style={styles.opciones}>
                     <Text style={[styles.sino,{color: colorLetra}]}>Si</Text>

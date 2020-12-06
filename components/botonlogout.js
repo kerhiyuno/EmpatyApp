@@ -17,8 +17,34 @@ const BotonLogout = ({navigation}) => {
     const { reiniciarContenido } = useContext(NotificacionesContext);
     const [alertaseguro,guardarAlertaseguro] = useState(false);
 
-    const {colorTextoBoton,colorSalir,colorIcono,colorLetra,colorFondo} = useContext(EstilosContext);
+    const {colorTextoBoton,colorSalir,colorIcono,colorLetra,colorFondo,
+        cambiarColorBoton,cambiarColorHeader,cambiarColorLetra,cambiarColorFondo,cambiarColorSalir,
+        cambiarColorBordeInput,cambiarColorTextoBoton,cambiarColorPlaceholderinput,cambiarColorPrimaryinput,
+        cambiarColorIcono,cambiarColorError,cambiarColorTextoHeader,cambiarColorTitulo,
+        cambiarColorBotonDesactivado,cambiarColorNotificacionesBorder,cambiarColorRadio,
+        cambiarColorIconoLibre,cambiarFondoInput,cambiarTextoInput} = useContext(EstilosContext);
 
+    const Original = async () => {
+        cambiarColorBoton("#e35d17");
+        cambiarColorHeader('#f58b2f');
+        cambiarColorLetra('black');
+        cambiarColorFondo('white');
+        cambiarColorSalir('#d15311');
+        cambiarColorBordeInput('#357870');
+        cambiarColorTextoBoton('white');
+        cambiarColorPlaceholderinput('#3c2c18');
+        cambiarColorPrimaryinput('#3c2c18');
+        cambiarColorNotificacionesBorder('#828282');
+        cambiarColorBotonDesactivado('#5e5e5e');
+        cambiarColorTitulo('#141414');
+        cambiarColorTextoHeader('white');
+        cambiarColorError('#a12b2b');
+        cambiarColorIcono('white');
+        cambiarColorRadio('black');
+        cambiarColorIconoLibre('black');
+        cambiarFondoInput('white');
+        cambiarTextoInput('black');
+    }
 
     const Logout = async () => {
         try {
@@ -29,6 +55,7 @@ const BotonLogout = ({navigation}) => {
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access)}});
             await AsyncStorage.removeItem('datosSesion');
             reiniciarContenido();
+            Original();
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'Iniciar Sesion' }],

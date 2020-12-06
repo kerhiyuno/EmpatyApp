@@ -71,7 +71,6 @@ const AppScreens = () => {
             options={ ({navigation,route}) => ({
               headerRight: (props)=>
                 <View style={{flexDirection:'row'}}>
-                  <BotonInfo {...props} navigation={navigation} route={route}/>
                   <BotonSalir {...props} navigation={navigation} route={route}/>
                 </View>,
                 headerTitle: 'Registro 1/4'
@@ -84,7 +83,6 @@ const AppScreens = () => {
           options={ ({navigation,route}) => ({
             headerRight: (props)=>
               <View style={{flexDirection:'row'}}>
-                <BotonInfo {...props} navigation={navigation} route={route}/>
                 <BotonSalir {...props} navigation={navigation} route={route}/>
               </View>,
               headerTitle: 'Registro 2/4'
@@ -97,7 +95,6 @@ const AppScreens = () => {
           options={ ({navigation,route}) => ({
             headerRight: (props)=>
               <View style={{flexDirection:'row'}}>
-                <BotonInfo {...props} navigation={navigation} route={route}/>
                 <BotonSalir {...props} navigation={navigation} route={route}/>
               </View>,
               headerTitle: 'Registro 3/4'
@@ -110,7 +107,6 @@ const AppScreens = () => {
           options={ ({navigation,route}) => ({
             headerRight: (props)=>
               <View style={{flexDirection:'row'}}>
-                <BotonInfo {...props} navigation={navigation} route={route}/>
                 <BotonSalir {...props} navigation={navigation} route={route}/>
               </View>,
               headerTitle: 'Registro 4/4'
