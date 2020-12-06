@@ -78,7 +78,8 @@ const registro4 = ({navigation,route}) =>{
             if (error.response.status===400 && error.response.data.message==="No se pudo registrar al paciente"){
                 guardarCargando(false);
                 console.log(error.response.data.errors)
-                guardarMensajeerror(error.response.data.errors.email);
+              //  guardarMensajeerror(error.response.data.errors.email);
+              guardarMensajeerror('No se pudo registrar debido a un error');
                 guardarAlertaerror(true);
             }
             else if(error.response.status===400){

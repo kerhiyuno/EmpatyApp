@@ -1,17 +1,18 @@
-import React,{useState,useContext} from 'react';
+import React,{useContext} from 'react';
 import {Text,StyleSheet, View} from 'react-native';
 import globalStyles from '../styles/global';
 import EstilosContext from '../context/estilosContext';
 import {ExpandableListView} from 'react-native-expandable-listview';
- import { RFPercentage } from "react-native-responsive-fontsize";
+import { RFPercentage } from "react-native-responsive-fontsize";
+import NotificacionesContext from '../context/notificacionesContext'
 
 
  
 
 const Informacion = () => {
 
-    const {colorb,colorTextoBoton,colorTitulo,colorIcono,colorFondo,colorBordeInput} = useContext(EstilosContext);
-
+    const {colorb,colorTextoBoton,colorFondo} = useContext(EstilosContext);
+    const {tienesicologo} = useContext(NotificacionesContext)
       function handleItemClick({index}) {
         console.log(index);
       };
@@ -27,7 +28,7 @@ const Informacion = () => {
           subCategory: [
             {
               customInnerItem: (
-                  <Text style={styles.textoC}>Ve tus datos personales</Text>
+                  <Text style={styles.textoC}>Ve tus datos personales.</Text>
               ),
               id: '1',
               name:
@@ -127,22 +128,10 @@ const Informacion = () => {
         {
           id: '95',
           categoryName: 'Encuesta personal',
-          subCategory: [{customInnerItem: (
-            <View>
-              <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
-                <Text style={[styles.textoC,{marginVertical:0,marginTop:2.5}]}>Al responder este cuestionario, tendrás</Text>
-              </View>
-              <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
-                <Text style={[styles.textoC,{marginVertical:0,marginBottom:2.5}]}>disponible la sección </Text>
-                <Text style={[styles.textoC,{marginLeft:0,fontWeight:'bold',marginVertical:0,marginBottom:2.5}]}>Buscar Psicólogo</Text>
-                <Text style={[styles.textoC,{marginLeft:0,marginVertical:0,marginBottom: 2.5}]}>.</Text>
-              </View>
-            </View>
-          ),id: '1', name: ''
-          },
+          subCategory: [
           {customInnerItem: (
             <Text style={styles.textoC}>Ayuda a tu psicólogo a conocer tu estado psicológico.</Text>
-        ),id: '2', name: ''
+        ),id: '1', name: ''
         }],
         },
         {
@@ -200,8 +189,133 @@ const Informacion = () => {
         }
           ,
       ];
+      const CONTENT2 = [
+        {
+          id: '90',
+          categoryName: 'Mi perfil',
+          subCategory: [
+            {
+              customInnerItem: (
+                  <Text style={styles.textoC}>Ve tus datos personales.</Text>
+              ),
+              id: '1',
+              name:
+                "",
+            },
+            {customInnerItem: (
+              <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                <Text style={styles.textoC}>Edita tus datos personales en </Text>
+                <Text style={[styles.textoC,{marginLeft:0,fontWeight:'bold'}]}>Editar Perfil</Text>
+                <Text style={[styles.textoC,{marginLeft:0}]}>.</Text>
+              </View>
+            ),id: '2', name: ''},
+          ],
+        },
+        {
+          id: '95',
+          categoryName: 'Encuesta personal',
+          subCategory: [{customInnerItem: (
+            <View>
+              <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                <Text style={[styles.textoC,{marginVertical:0,marginTop:2.5}]}>Al responder este cuestionario, tendrás</Text>
+              </View>
+              <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                <Text style={[styles.textoC,{marginVertical:0,marginBottom:2.5}]}>disponible la sección </Text>
+                <Text style={[styles.textoC,{marginLeft:0,fontWeight:'bold',marginVertical:0,marginBottom:2.5}]}>Buscar Psicólogo</Text>
+                <Text style={[styles.textoC,{marginLeft:0,marginVertical:0,marginBottom: 2.5}]}>.</Text>
+              </View>
+            </View>
+          ),id: '1', name: ''
+          },],
+        },
+        {
+            id: '96',
+            categoryName: 'Personalizar',
+            subCategory: [{customInnerItem: (
+              <Text style={styles.textoC}>Elige un conjunto de colores para personalizar la aplicación.</Text>
+          ),id: '1', name: ''}],
+        },
+          {
+            id: '97',
+            categoryName: 'Buscar psicólogo',
+            subCategory: [{customInnerItem: (
+              <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                <Text style={styles.textoC}>Elige en una lista creada según tus preferencias.</Text>
+                <Text style={[styles.textoC,{marginLeft:0}]}>.</Text>
+              </View>
+            ),id: '1', name: ''},
+            {customInnerItem: (
+              <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                <Text style={styles.textoC}>Debes haber contestado la  </Text>
+                <Text style={[styles.textoC,{marginLeft:0,fontWeight:'bold'}]}>Encuesta personal</Text>
+                <Text style={[styles.textoC,{marginLeft:0}]}>.</Text>
+              </View>
+            ),id: '2', name: ''},
+            {customInnerItem: (
+              <View>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                  <Text style={[styles.textoC,{marginVertical:0,marginTop:2.5}]}>Si no ingresas </Text>
+                  <Text style={[styles.textoC,{marginLeft:0,fontWeight:'bold',marginVertical:0,marginTop:2.5}]}>Preferencias de Psicólogo y Horario</Text>
+                  <Text style={[styles.textoC,{marginLeft:0,marginVertical:0,marginTop:2.5,marginRight:0}]}>, </Text>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                  <Text style={[styles.textoC,{marginBottom: 2.5,marginVertical:0}]}>los resultados serán menos precisos</Text>
+                  <Text style={[styles.textoC,{marginLeft:0,marginVertical:0,marginBottom: 2.5}]}>.</Text>
+                </View>
+              </View>
+            ),id: '3', name: ''}],
+          },
+          {
+            id: '98',
+            categoryName: 'Ver solicitudes',
+            subCategory: [
+            {customInnerItem: (
+              <View>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                  <Text style={[styles.textoC,{marginVertical:0,marginTop:2.5}]}>Revisa las solicitudes de vinculación que</Text>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                  <Text style={[styles.textoC,{marginBottom: 2.5,marginVertical:0}]}>hiciste en  </Text>
+                  <Text style={[styles.textoC,{marginLeft:0,fontWeight:'bold',marginVertical:0,marginBottom:2.5}]}>Buscar psicólogo</Text>
+                  <Text style={[styles.textoC,{marginLeft:0,marginVertical:0,marginBottom: 2.5}]}>.</Text>
+                </View>
+              </View>
+            ),id: '3', name: ''}],
+          },
+          {
+            id: '99',
+            categoryName: 'Preferencias',
+            subCategory: [
+            {customInnerItem: (
+              <View>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                  <Text style={styles.textoC}>Ingresa tus preferencias de horario y psicólogo.</Text>
+                </View>
+              </View>
+            ),id: '3', name: ''}],
+          },
+          {
+            id: '99',
+            categoryName: 'Ingresar código',
+            subCategory: [
+            {customInnerItem: (
+              <View>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                  <Text style={[styles.textoC,{marginVertical:0,marginTop:2.5}]}>Si tu psicólogo usa Empaty, puedes pedirle</Text>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                  <Text style={[styles.textoC,{marginVertical:0}]}>un código e ingresarlo aquí para vincularte</Text>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                  <Text style={[styles.textoC,{marginBottom: 2.5,marginVertical:0}]}>con él en la aplicación.</Text>
+                </View>
+              </View>
+            ),id: '3', name: ''}],
+          },
+      ];
     return(
         <View style={[globalStyles.contenedor,{backgroundColor:colorFondo}]} underlayColor = {'transparent'}>
+        {tienesicologo === true ?
         <ExpandableListView
                 data={CONTENT} // required
                 onInnerItemClick={handleInnerItemClick}
@@ -211,6 +325,17 @@ const Informacion = () => {
                 innerItemContainerStyle={{marginBottom:RFPercentage(1),fontSize:10,borderRadius:10,marginHorizontal:RFPercentage(3),backgroundColor:colorb}}
                 innerItemLabelStyle={{fontSize:RFPercentage(2),color:colorTextoBoton,marginVertical:5}}
             />
+        : 
+        <ExpandableListView
+                data={CONTENT2} // required
+                onInnerItemClick={handleInnerItemClick}
+                onItemClick={handleItemClick}
+                animated={false}
+                itemContainerStyle={{backgroundColor:'transparent'}}
+                innerItemContainerStyle={{marginBottom:RFPercentage(1),fontSize:10,borderRadius:10,marginHorizontal:RFPercentage(3),backgroundColor:colorb}}
+                innerItemLabelStyle={{fontSize:RFPercentage(2),color:colorTextoBoton,marginVertical:5}}
+            />
+        }
         </View>
     )
 }
@@ -230,7 +355,7 @@ const styles=StyleSheet.create({
     textoC: {
       marginLeft: 7,
       marginVertical:5,
-      fontSize: RFPercentage(2),
+      fontSize: RFPercentage(1.8),
       color: 'white',
       fontFamily: 'Inter-Light',
   }
