@@ -1,5 +1,5 @@
 import React, {useState,useContext} from 'react';
-import {View,StyleSheet,Text,ScrollView,TouchableHighlight } from 'react-native';
+import {View,StyleSheet,Text,ScrollView,TouchableHighlight,ActivityIndicator} from 'react-native';
 import {Button, Paragraph, Dialog, Portal, RadioButton} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -20,6 +20,10 @@ const registro4 = ({navigation,route}) =>{
     const [alerta,guardarAlerta] = useState(false);
     const [registrolisto,guardarRegistrolisto] = useState(false);
     const [registroenprogreso,guardarRegistroenprogreso] = useState(false);
+    const [cargando,guardarCargando] = useState(false);
+    const [mensajeError,guardarMensajeerror] = useState(false);
+    const [alertaError,guardarAlertaerror] = useState(false);
+
     
     const fullname = (route.params.usuario.fullname);
     const rut = (route.params.usuario.rut);
@@ -33,6 +37,7 @@ const registro4 = ({navigation,route}) =>{
     const numemergencia = (route.params.usuario.numemergencia);
 
     const registrar = async () => {
+        guardarCargando(true);
         if (registroenprogreso===false){
             guardarRegistroenprogreso(true);
             var psico_prev = true;
@@ -63,10 +68,24 @@ const registro4 = ({navigation,route}) =>{
                 if (respuesta.status===200){
                     guardarRegistrolisto(true);
                 }
+                guardarCargando(false);
             }
              catch (error){
+                guardarCargando(false);
+                guardarRegistroenprogreso(false);
             console.log(error);
             console.log(error.response);
+            if (error.response.status===400 && error.response.data.message==="No se pudo registrar al paciente"){
+                guardarCargando(false);
+                console.log(error.response.data.errors)
+                guardarMensajeerror(error.response.data.errors.email);
+                guardarAlertaerror(true);
+            }
+            else if(error.response.status===400){
+                guardarCargando(false);
+                guardarMensajeerror('No se pudo registrar debido a un error desconocido');
+                guardarAlertaerror(true);
+            }
             }
             //limpiar formulario
         }
@@ -171,6 +190,25 @@ const registro4 = ({navigation,route}) =>{
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
+            <Portal>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaError} onDismiss={() => {guardarAlertaerror(false)}}>
+                    <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>{mensajeError}</Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={()=>{guardarAlertaerror(false)}} color={colorLetra}>Ok</Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+            <Portal>
+                <Dialog style={{backgroundColor: colorFondo}} visible={cargando}>
+                    <Dialog.Title style={{color: colorLetra}}>Registrando</Dialog.Title>
+                    <Dialog.Content>
+                        <ActivityIndicator  size = "large" animating = {cargando} style = {styles.cargando}/>
+                    </Dialog.Content>
+                </Dialog>
+            </Portal>
         </ScrollView>
     );
 }
@@ -213,6 +251,14 @@ const styles=StyleSheet.create({
         backgroundColor: "#e35d17",
         borderRadius: 8,
         marginTop: 15
+    },
+    cargando: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 0,
+        alignContent: 'center',
+        alignSelf:'center',
+        marginVertical: 10
     }
 })
 
