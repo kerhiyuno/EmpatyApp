@@ -41,14 +41,6 @@ const home = ({navigation}) =>{
     const [alertaexito,guardarAlertaexito] = useState(false);
     const [alertanonumero,guardarAlertanonumero] = useState(false);
 
-    var timer;
-
-
-    /*useEffect(() => {
-        timer = setInterval(async() => consultar(), 20000);
-        return () => clearInterval(timer);
-      });*/
-
     useEffect(() => {
         if (primeracarga===true){
             revision();
@@ -401,7 +393,6 @@ const home = ({navigation}) =>{
             if(respuesta.data.id_psicologo !== null){
                 pedirChatroom();
                 guardarTienesicologo(true);
-                clearInterval(timer);
             }
         } catch (error) {
             console.log(error);
@@ -422,7 +413,6 @@ const home = ({navigation}) =>{
                         console.log(respuesta);
                         if(respuesta.data.id_psicologo !== null){
                             guardarTienesicologo(true);
-                            clearInterval(timer);
                         }
                     } catch (error) {
                         console.log(error.response);
@@ -589,7 +579,6 @@ const home = ({navigation}) =>{
             if(respuesta.data.id_psicologo !== null){
                 console.log("se hizo en a")
                 guardarSicologoListo(true);
-                clearInterval(timer);
             }
         } catch (error) {
             console.log(error);
@@ -610,7 +599,6 @@ const home = ({navigation}) =>{
                         console.log(respuesta);
                         if(respuesta.data.id_psicologo !== null){
                             guardarSicologoListo(true);
-                            clearInterval(timer);
                         }
                     } catch (error) {
                         console.log(error.response);

@@ -9,6 +9,7 @@ import {TextInput} from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EstilosContext from '../context/estilosContext';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const host = ipHost();
 
@@ -459,7 +460,7 @@ const encuesta = ({navigation,route}) => {
                 <TextInput
                     label="Comentarios adicionales"
                     onChangeText={(texto) => guardarMensaje(texto)}
-                    style={[globalStyles.input,{borderColor:colorBordeInput}]}
+                    style={[globalStyles.input,{borderColor:colorBordeInput,marginTop:RFPercentage(1)}]}
                     theme={{colors: {text: colorLetra, primary: colorPrimaryinput,placeholder: colorPlaceholderinput}}}
                     multiline={true}
                 />
@@ -511,7 +512,7 @@ const styles=StyleSheet.create({
         borderStyle: 'solid',
         borderColor: '#357870',
         borderWidth: 1,
-        height: 90,
+        height: RFPercentage(5),
         marginHorizontal: 8
     },
     botonC:{
@@ -527,7 +528,7 @@ const styles=StyleSheet.create({
     textoS:{
         marginHorizontal: 0,
         marginLeft: 1,
-        fontSize: 15,
+        fontSize: RFPercentage(2.5),
         color: 'black',
         fontFamily: 'Inter-Regular'
     },
@@ -542,7 +543,7 @@ const styles=StyleSheet.create({
         borderRadius: 8
     },
     textoC:{
-        fontSize: 15,
+        fontSize: RFPercentage(2.5),
         color: 'white',
         alignSelf: 'center',
         fontFamily: 'Inter-Light'
@@ -551,7 +552,7 @@ const styles=StyleSheet.create({
         marginLeft:5
     },
     texto: {
-        fontSize: 15,
+        fontSize: RFPercentage(2.5),
         marginLeft:5,
         marginRight:10,
         marginVertical:7,
@@ -578,14 +579,14 @@ const styles=StyleSheet.create({
         marginHorizontal:10
     },
     boton: {
-        height: 30,
+        height: RFPercentage(3.5),
         marginHorizontal: 2,
         backgroundColor: '#e35d17',
         justifyContent: 'center',
         alignItems: 'center',
     },
     botonno: {
-        height: 30,
+        height: RFPercentage(3.5),
         marginHorizontal: 2,
         backgroundColor: '#5e5e5e',
         justifyContent: 'center',

@@ -14,7 +14,7 @@ const host = ipHost();
 
 const BotonLogout = ({navigation}) => {
 
-    const { reiniciarContenido } = useContext(NotificacionesContext);
+    const { reiniciarContenido,guardarPrimeracarga} = useContext(NotificacionesContext);
     const [alertaseguro,guardarAlertaseguro] = useState(false);
 
     const {colorTextoBoton,colorSalir,colorIcono,colorLetra,colorFondo,
@@ -47,6 +47,7 @@ const BotonLogout = ({navigation}) => {
     }
 
     const Logout = async () => {
+        guardarPrimeracarga(true);
         try {
             const name = await AsyncStorage.getItem('datosSesion');
             const Bearer = JSON.parse(name).refresh;

@@ -52,9 +52,45 @@ const ManejarNotificaciones = () => {
           guardarDesvinculado(true);
           guardarTienesicologo(false);
         }
+        else if(remoteMessage.notification.title == "Cambio de Grupo"){
+          guardarTienegrupo(true);
+        }
+        else if(remoteMessage.notification.title == "Removido del Grupo"){
+          guardarTienegrupo(false);
+        }
+        else if(remoteMessage.notification.title == "Grupo Disuelto"){
+          guardarTienegrupo(false);
+        }
         obtenerNotificaciones(remoteMessage.notification);
         aumentarCantidad(remoteMessage.notification);
       });
+      messaging().setBackgroundMessageHandler(async remoteMessage => {
+        console.log('Message handled in the background!', remoteMessage);
+        if(remoteMessage.notification.title == "Mensaje Nuevo"){
+          hayNuevomensaje(1);
+          hayNuevomensaje(0);
+        }
+        else if(remoteMessage.notification.title == "Psicólogo se conectó contigo"){
+          guardarNuevosicologo(true);
+          guardarTienesicologo(true);
+        }
+        else if(remoteMessage.notification.title == "Solicitud de Desvinculación Aceptada"){
+          guardarDesvinculado(true);
+          guardarTienesicologo(false);
+        }
+        else if(remoteMessage.notification.title == "Cambio de Grupo"){
+          guardarTienegrupo(true);
+        }
+        else if(remoteMessage.notification.title == "Removido del Grupo"){
+          guardarTienegrupo(false);
+        }
+        else if(remoteMessage.notification.title == "Grupo Disuelto"){
+          guardarTienegrupo(false);
+        }
+        obtenerNotificaciones(remoteMessage.notification);
+        aumentarCantidad(remoteMessage.notification);
+      });
+    
       return unsubscribe;
     }, []);
     
