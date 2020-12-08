@@ -493,7 +493,7 @@ const encuesta = ({navigation,route}) => {
                     <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);navigation.navigate('Iniciar Sesion')}}>
                         <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                         <Dialog.Content>
-                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Las respuestas han sido guardadas correctamente</Paragraph>
+                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Las respuestas han sido guardadas correctamente.</Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
                             <Button onPress={()=>{guardarAlertaexito(false);navigation.reset({index: 1,routes: [{ name: 'Inicio' },{name: 'Sesion'}],});}} color={colorLetra}>Ok</Button>

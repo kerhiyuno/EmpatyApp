@@ -3,13 +3,12 @@ import {View,Alert,AppState} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app';
 import NotificacionesContext from '../context/notificacionesContext'
-import { GUARDAR_CHATROOM } from '../types';
 
 const ManejarNotificaciones = () => {
 
     const { aumentarCantidad,obtenerNotificaciones, guardarTokenFirebase,
       hayNuevomensaje,cambioaForeground,guardarTienesicologo,
-      guardarTienegrupo,guardarNuevosicologo,guardarDesvinculado} = useContext(NotificacionesContext);
+      guardarTienegrupo,guardarNuevosicologo,guardarDesvinculado,guardarCambiopago,guardarActualizaragenda} = useContext(NotificacionesContext);
 
     const appState = useRef(AppState.currentState);
     const [appStateVisible, guardarAppStateVisible] = useState(appState.current);
@@ -21,12 +20,14 @@ const ManejarNotificaciones = () => {
       };
     }, []);
 
+
     const _handleAppStateChange = (nextAppState) => {
       if (
         appState.current.match(/inactive|background/) &&
         nextAppState === "active"
       ) {
         console.log("Cambio a foreground!");
+        guardarCambiopago(Math.random());
         cambioaForeground(0);
       }
       appState.current = nextAppState;
@@ -60,6 +61,9 @@ const ManejarNotificaciones = () => {
         }
         else if(remoteMessage.notification.title == "Grupo Disuelto"){
           guardarTienegrupo(false);
+        }
+        else if(remoteMessage.notification.title == "Sesión Individual Agendada" ||remoteMessage.notification.title == "Sesión Grupal Agendada"){
+          guardarActualizaragenda(true);
         }
         obtenerNotificaciones(remoteMessage.notification);
         aumentarCantidad(remoteMessage.notification);

@@ -1,7 +1,7 @@
 import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,REINICIAR_CONTENIDO,
     GUARDAR_TOKEN_FIREBASE,GUARDAR_MENSAJES,GUARDAR_CHATROOM,NUEVO_MENSAJE,A_FOREGROUND,
     GUARDAR_TIENESICOLOGO,GUARDAR_TIENEGRUPO,GUARDAR_NUEVOSICOLOGO,GUARDAR_DESVINCULADO,
-    GUARDAR_PRIMERACARGA} from '../types';
+    GUARDAR_PRIMERACARGA,GUARDAR_CAMBIOPAGO,GUARDAR_REUNIONES,GUARDAR_ACTUALIZARAGENDA} from '../types';
 export default (state,action) =>{
     switch (action.type){
         case A_FOREGROUND:
@@ -15,6 +15,22 @@ export default (state,action) =>{
             return{
                 ...state,
                 aforeground: cambio
+            }
+        case GUARDAR_ACTUALIZARAGENDA:
+            return{
+                ...state,
+                actualizaragenda: action.payload
+            }
+        case GUARDAR_REUNIONES:
+            return{
+                ...state,
+                reuniones: action.payload
+            }
+        case GUARDAR_CAMBIOPAGO:
+            console.log(action.payload)
+            return{
+                ...state,
+                cambiopago: action.payload
             }
         case GUARDAR_PRIMERACARGA:
             return{

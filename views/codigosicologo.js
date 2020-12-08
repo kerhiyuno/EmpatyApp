@@ -8,6 +8,7 @@ import axios from 'axios';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
 import { RFPercentage } from "react-native-responsive-fontsize";
+import NotificacionesContext from '../context/notificacionesContext';
 
 const host = ipHost();
 
@@ -15,6 +16,8 @@ const codigosicologo = ({navigation}) =>{
 
     const {colorb,colorLetra,colorTextoBoton,colorBorderInput,colorPrimaryinput,
         colorPlaceholderinput,colorIcono,colorFondo,colorTextoInput,colorFondoInput} = useContext(EstilosContext);
+
+    const {guardarTienesicologo} = useContext(NotificacionesContext)
 
     const [codigo,guardarCodigo] = useState('');
     const [alertacodigo,guardarAlertacodigo] = useState('');
@@ -41,6 +44,7 @@ const codigosicologo = ({navigation}) =>{
                 {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
                 guardarCargando(false);
                 if (respuesta.status===200){
+                    guardarTienesicologo(true);
                     guardarAlertasicologo(true);
                 }
             } catch (error) {
@@ -61,6 +65,7 @@ const codigosicologo = ({navigation}) =>{
                             const respuesta = await axios.post(host+'/codigopsicologo/connect/',codigo,
                             {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                             if (respuesta.status===200){
+                                guardarTienesicologo(true);
                                 guardarAlertasicologo(true);
                             }
                             console.log(respuesta);
@@ -127,7 +132,7 @@ const codigosicologo = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertasicologo} onDismiss={() => encontrado()}>
                  <Dialog.Title style={{color: colorLetra}}>Psicólogo encontrado</Dialog.Title>
                  <Dialog.Content>
-                     <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Ha sido vinculado con su psicólogo</Paragraph>
+                     <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Ha sido vinculado con su psicólogo.</Paragraph>
                  </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>

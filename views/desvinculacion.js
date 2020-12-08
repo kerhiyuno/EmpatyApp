@@ -174,7 +174,7 @@ const Desvinculacion = ({navigation}) => {
                 <Dialog style={{backgroundColor: colorFondo}} visible={desvinculacionautoenviada} onDismiss={() => guardarDesvinculacionautoenviada(false)}>
                     <Dialog.Title style={{color: colorLetra}}>Desvinculación Automática</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Confirmar desvinculación inmediata</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Confirmar desvinculación inmediata.</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
@@ -206,7 +206,7 @@ const Desvinculacion = ({navigation}) => {
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => volver()}>
                     <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El mensaje se ha enviado correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El mensaje se ha enviado correctamente.</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>

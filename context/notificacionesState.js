@@ -5,7 +5,7 @@ import NotificacionesReducer from './notificacionesReducer';
 import {OBTENER_NOTIFICACIONES,AUMENTAR_CANTIDAD,REINICIAR_CANTIDAD,REINICIAR_CONTENIDO,
     GUARDAR_TOKEN_FIREBASE,GUARDAR_MENSAJES,GUARDAR_CHATROOM,NUEVO_MENSAJE,A_FOREGROUND,
     GUARDAR_TIENESICOLOGO,GUARDAR_TIENEGRUPO,GUARDAR_NUEVOSICOLOGO,GUARDAR_DESVINCULADO,
-    GUARDAR_PRIMERACARGA} from '../types';
+    GUARDAR_PRIMERACARGA,GUARDAR_CAMBIOPAGO,GUARDAR_REUNIONES,GUARDAR_ACTUALIZARAGENDA} from '../types';
 
 const NotificacionesState = (props) => {
 
@@ -21,7 +21,10 @@ const NotificacionesState = (props) => {
         tienegrupo: false,
         nuevosicologo: false,
         desvinculado: false,
-        primeracarga: true
+        primeracarga: true,
+        cambiopago: 0,
+        reuniones: [],
+        actualizaragenda: false
     }
 
     const [state,dispatch] = useReducer(NotificacionesReducer,initialState);
@@ -40,6 +43,34 @@ const NotificacionesState = (props) => {
             type: NUEVO_MENSAJE,
             payload: numero
         })
+    }
+    const guardarReuniones = (Reuniones) => {
+        console.log(Reuniones);
+      //  let guardar= !cambiopago
+      //  console.log(guardar);
+        dispatch({
+            type: GUARDAR_REUNIONES,
+            payload: Reuniones
+        })
+    }
+    const guardarActualizaragenda = (actualizar) => {
+        dispatch({
+            type: GUARDAR_ACTUALIZARAGENDA,
+            payload: actualizar
+        })
+    }
+    const guardarCambiopago = (cambiopago) => {
+        console.log(cambiopago);
+      //  let guardar= !cambiopago
+      //  console.log(guardar);
+        dispatch({
+            type: GUARDAR_CAMBIOPAGO,
+            payload: cambiopago
+        })
+    }
+    const obtenerCambiopago = () => {
+        console.log(state.cambiopago);
+        return(state.cambiopago)
     }
     const guardarNuevosicologo = (nuevosicologo) => {
         console.log(nuevosicologo);
@@ -156,13 +187,19 @@ const NotificacionesState = (props) => {
                 guardarNuevosicologo,
                 guardarDesvinculado,
                 guardarPrimeracarga,
+                guardarCambiopago,
+                guardarReuniones,
+                guardarActualizaragenda,
                 primeracarga: state.primeracarga,
                 nuevomensaje: state.nuevomensaje,
                 aforeground: state.aforeground,
                 tienesicologo: state.tienesicologo,
                 tienegrupo: state.tienegrupo,
                 nuevosicologo: state.nuevosicologo,
-                desvinculado: state.desvinculado
+                desvinculado: state.desvinculado,
+                cambiopago: state.cambiopago,
+                reuniones: state.reuniones,
+                actualizaragenda: state.actualizaragenda
             }}
         >
             {props.children}

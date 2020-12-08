@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useContext} from 'react';
-import {StyleSheet,View,Text,TouchableHighlight} from 'react-native';
+import {StyleSheet,View,Text,TouchableHighlight,ActivityIndicator} from 'react-native';
 import {Headline, Button,Paragraph, Dialog, Portal} from 'react-native-paper';
 import globalStyles from '../styles/global';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -8,20 +8,23 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
 import { RFPercentage } from "react-native-responsive-fontsize";
+import NotificacionesContext from '../context/notificacionesContext'
 
 const host = ipHost();
 
 const sesion = ({navigation}) =>{
 
     const {colorb,colorTextoBoton,colorLetra,colorTitulo,colorIcono,colorFondo} = useContext(EstilosContext);
- 
+    const {tienegrupo,guardarTienegrupo} = useContext(NotificacionesContext);
+
     const [nombresicologo,guardarNombreSicologo] = useState('Juan');
-    const [tienegrupo,guardarTienegrupo] = useState(true);
     const [sinsesiones,guardarSinsesiones] = useState(false);
+    const [cargando,guardarCargando] = useState(false)
 
     useEffect( () => {
-         datospsicologo();
-         consultar();
+        guardarCargando(true);
+        datospsicologo();
+        consultar();
     },[]
     )
 
@@ -37,6 +40,9 @@ const sesion = ({navigation}) =>{
             console.log(respuesta);
             if (respuesta.data.id_grupo==null){
                 guardarTienegrupo(false);
+            }
+            else{
+                guardarTienegrupo(true);
             }
         } catch (error) {
             console.log("error");
@@ -79,6 +85,7 @@ const sesion = ({navigation}) =>{
             {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
             console.log(respuesta);
             guardarNombreSicologo(respuesta.data.fullname);
+            guardarCargando(false);
         } catch (error) {
             console.log(error);
             console.log(error.response);
@@ -97,6 +104,7 @@ const sesion = ({navigation}) =>{
                          {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         guardarNombreSicologo(respuesta.data.fullname);
                         console.log(respuesta);
+                        guardarCargando(false);
                     } catch (error) {
                         console.log(error.response);
                         console.log("error acaa");
@@ -422,10 +430,12 @@ const sesion = ({navigation}) =>{
                     </View>
                 </TouchableHighlight >
             </View>
+            {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
+            {cargando===false ?
             <View style={{marginTop:20,flexDirection:'row'}}>
                 <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}>Mi Psicólogo: </Text>
                 <Text style={[styles.textoS,{color: colorLetra}]}>{nombresicologo}</Text>
-            </View>
+            </View>: null }
             <View>
             {tienegrupo===false ? <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}> 
             No has sido asignado a un grupo</Text> : null}
@@ -436,7 +446,7 @@ const sesion = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={sinsesiones} onDismiss={() => guardarSinsesiones(false)} >
                     <Dialog.Title style={{color: colorLetra}}>Sin sesiones agendadas</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>No tienes ninguna sesión agendada</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>No tienes ninguna sesión agendada.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>

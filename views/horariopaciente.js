@@ -690,7 +690,7 @@ const HorarioPaciente = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}}>
                     <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El horario ha sido guardado correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El horario ha sido guardado correctamente.</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>

@@ -374,7 +374,7 @@ const horariosicologo = ({navigation,route}) => {
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);navigation.reset({index: 0,routes: [{ name: 'Inicio' }],});}}>
                     <Dialog.Title style={{color: colorLetra}}>Elegir horario</Dialog.Title>
                     <Dialog.Content>
-                    <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La solicitud ha sido enviada correctamente</Paragraph>
+                    <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La solicitud ha sido enviada correctamente.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <View style={{marginRight:10}}>

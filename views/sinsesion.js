@@ -1,4 +1,4 @@
-import React, {useState,useContext} from 'react';
+import React, {useState,useContext,useEffect} from 'react';
 import {View,StyleSheet,Text,TouchableHighlight,ActivityIndicator,Image,useWindowDimensions } from 'react-native';
 import {TextInput, Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -15,10 +15,14 @@ const host = ipHost();
 
 const sinsesion = ({navigation}) =>{
 
-    const {obtenerTokenFirebase} = useContext(NotificacionesContext);
+    const {obtenerTokenFirebase,guardarPrimeracarga} = useContext(NotificacionesContext);
     const {colorb,colorFondo,colorLetra,
         colorBordeInput,colorTextoBoton,colorPlaceholderinput,colorPrimaryinput,
         colorIcono,colorFondoInput} = useContext(EstilosContext);
+
+    useEffect(() => {
+        guardarPrimeracarga(true);
+    }, [])
 
     const {width, height} = useWindowDimensions();
     const textinputsize = height*0.07;
@@ -201,7 +205,7 @@ const sinsesion = ({navigation}) =>{
                 <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)} >
                     <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlerta(false)} color='#3c2c18'>Ok</Button>
@@ -212,7 +216,7 @@ const sinsesion = ({navigation}) =>{
                 <Dialog visible={inicioFallido} onDismiss={() => guardarInicioFallido(false)} >
                     <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Los datos son incorrectos</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Los datos son incorrectos.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarInicioFallido(false)} color='#3c2c18'>Ok</Button>
@@ -223,7 +227,7 @@ const sinsesion = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertavacio} onDismiss={() => guardarAlertaVacio(false)} >
                     <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Todos los campos son obligatorios</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Todos los campos son obligatorios.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlertaVacio(false)} color={colorLetra}>Ok</Button>

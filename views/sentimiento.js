@@ -116,7 +116,7 @@ const Sentimiento = ({navigation}) => {
                     <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarAlertaexito(false);volver()}}>
                         <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                         <Dialog.Content>
-                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Se ha enviado correctamente
+                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Se ha enviado correctamente.
                             </Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>

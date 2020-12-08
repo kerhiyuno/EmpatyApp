@@ -11,7 +11,7 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 
 const host = ipHost();
 
-const editarperfil = ({route}) =>{
+const editarperfil = ({navigation,route}) =>{
 
     const {colorb,colorLetra,colorTextoBoton,colorBordeInput,
         colorPrimaryinput,colorPlaceholderinput,colorIcono,colorFondo} = useContext(EstilosContext);
@@ -27,7 +27,6 @@ const editarperfil = ({route}) =>{
     const [generodescripcioncambio,guardarGenerodescripcioncambio] = useState(generodescripcion);
     const [generocambio,guardarGenerocambio] = useState(genero);
     const [emergenciacambio,guardarEmergenciacambio] = useState(numemergencia);
-
 
     const [alertaexito,guardarAlertaexito] = useState(false);
     const [guardadoenprogreso,guardarGuardadoenprogreso] = useState(false);
@@ -166,14 +165,14 @@ const editarperfil = ({route}) =>{
                 </View>
             </TouchableHighlight>
             <Portal>
-                <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false)}}>
+                <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.reset({index: 1,routes: [{ name: 'Inicio' },{name: 'Perfil'}],})}}>
                     <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Los cambios han sido guardados correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Los cambios han sido guardados correctamente.</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
-                                <Button onPress={()=> {guardarGuardadoenprogreso(false);guardarAlertaexito(false)}} color={colorLetra}>Ok</Button>
+                                <Button onPress={()=> {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.reset({index: 1,routes: [{ name: 'Inicio' },{name: 'Perfil'}],})}} color={colorLetra}>Ok</Button>
                             </View>
                         </Dialog.Actions>
                 </Dialog>

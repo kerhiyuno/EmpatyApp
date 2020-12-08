@@ -150,7 +150,7 @@ const Disconformidad = ({navigation}) => {
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => guardarAlertaexito(false)}>
                     <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El mensaje se ha enviado correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El mensaje se ha enviado correctamente.</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>

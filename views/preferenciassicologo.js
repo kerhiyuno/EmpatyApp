@@ -475,7 +475,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                 <Dialog visible={alertasigrupal} onDismiss={() => guardarAlertasigrupal(false)}>
                     <Dialog.Title>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Debe indicar su interes sobre las terapias grupales</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Debe indicar su interes sobre las terapias grupales.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlertasigrupal(false)} color='#3c2c18'>Ok</Button>
@@ -486,7 +486,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertainteres} onDismiss={() => guardarAlertainteres(false)}>
                     <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Debe seleccionar al menos un motivo</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Debe seleccionar al menos un motivo.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlertainteres(false)} color={colorLetra}>Ok</Button>
@@ -497,7 +497,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertagenerosicologo} onDismiss={() => guardarAlertagenerosicologo(false)}>
                     <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Debe seleccionar preferencia de psicólogo</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Debe seleccionar preferencia de psicólogo.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlertagenerosicologo(false)} color={colorLetra}>Ok</Button>
@@ -508,7 +508,7 @@ const PreferenciasSicologo = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarGuardadoenprogreso(false);guardarAlertaexito(false);navigation.goBack();}}>
                     <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Sus preferencias han sido guardadas correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Sus preferencias han sido guardadas correctamente.</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>

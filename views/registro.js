@@ -388,7 +388,7 @@ const registro = ({navigation}) =>{
                 <Dialog visible={alerta} onDismiss={() => guardarAlerta(false)}>
                     <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Todos los campos son obligatorios.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlerta(false)} color='#3c2c18'>Ok</Button>
@@ -399,7 +399,7 @@ const registro = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertaedad} onDismiss={() => guardarAlertaedad(false)}>
                     <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={globalStyles.textoAlerta}>Debes ser mayor de 18 años</Paragraph>
+                        <Paragraph style={globalStyles.textoAlerta}>Debes ser mayor de 18 años.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlertaedad(false)} color='#3c2c18'>Ok</Button>
@@ -410,7 +410,7 @@ const registro = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertacontra} onDismiss={() => guardarAlertacontra(false)}>
                     <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Las contraseñas deben ser iguales</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Las contraseñas deben ser iguales.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlertacontra(false)} color={colorLetra}>Ok</Button>
@@ -421,7 +421,7 @@ const registro = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertaemail} onDismiss={() => guardarAlertaEmail(false)}>
                     <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El correo ingresado no es válido</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El correo ingresado no es válido.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlertaEmail(false)} color={colorLetra}>Ok</Button>
@@ -432,7 +432,7 @@ const registro = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertarut} onDismiss={() => guardarAlertaRut(false)}>
                     <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El rut ingresado no es válido</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>El rut ingresado no es válido.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarAlertaRut(false)} color={colorLetra}>Ok</Button>

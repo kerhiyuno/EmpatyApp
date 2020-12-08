@@ -704,7 +704,7 @@ const home = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertaexito} onDismiss={() => {guardarAlertaexito(false)}}>
                     <Dialog.Title style={{color: colorLetra}}>Éxito</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La alerta ha sido enviada correctamente</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La alerta ha sido enviada correctamente.</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
@@ -717,7 +717,7 @@ const home = ({navigation}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={alertanonumero} onDismiss={() => {guardarAlertanonumero(false)}}>
                     <Dialog.Title style={{color: colorLetra}}>Error</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>No has ingresado un número de emergencia. Agrégalo en Editar Perfil</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>No has ingresado un número de emergencia. Agrégalo en Editar Perfil.</Paragraph>
                     </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
@@ -791,7 +791,7 @@ const home = ({navigation}) =>{
                         <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
                         <Dialog.Content>
                             <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Para continuar, debe haber respondido la Encuesta
-                            Personal
+                            Personal.
                             </Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
@@ -806,7 +806,7 @@ const home = ({navigation}) =>{
                         <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
                         <Dialog.Content>
                             <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Para obtener mejores resultados, seleccione un horario 
-                            y sus preferencias de psicólogo (Opcional)</Paragraph>
+                            y sus preferencias de psicólogo (Opcional).</Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
@@ -825,7 +825,7 @@ const home = ({navigation}) =>{
                     <Dialog style={{backgroundColor: colorFondo}} visible={SicologoListo} >
                         <Dialog.Title style={{color: colorLetra}}>Psicologo vinculado</Dialog.Title>
                         <Dialog.Content>
-                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Una de sus solicitudas de psicólogo ha sido aceptada</Paragraph>
+                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Una de sus solicitudas de psicólogo ha sido aceptada.</Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
                             <View style={{marginRight:10}}>
@@ -838,7 +838,7 @@ const home = ({navigation}) =>{
                     <Dialog style={{backgroundColor: colorFondo}} visible={alertadesvinculado} onDismiss={() => {ManejarDesvinculacion()}}>
                         <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
                         <Dialog.Content>
-                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Tu psicólogo ha aceptado tu solicitud de desvinculación
+                            <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>Tu psicólogo ha aceptado tu solicitud de desvinculación.
                             </Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>

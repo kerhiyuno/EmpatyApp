@@ -240,7 +240,7 @@ const Informacion = () => {
             categoryName: 'Buscar psicólogo',
             subCategory: [{customInnerItem: (
               <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
-                <Text style={styles.textoC}>Elige en una lista creada según tus preferencias.</Text>
+                <Text style={styles.textoC}>Elige en una lista creada según tus preferencias</Text>
                 <Text style={[styles.textoC,{marginLeft:0}]}>.</Text>
               </View>
             ),id: '1', name: ''},

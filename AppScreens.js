@@ -8,7 +8,6 @@ import registro from './views/registro';
 import registro2 from './views/registro2';
 import registro3 from './views/registro3';
 import registro4 from './views/registro4';
-import BotonInfo from './components/botoninfo';
 import BotonSalir from './components/botonsalir';
 import Informacion from './views/informacion';
 import {createStackNavigator} from '@react-navigation/stack';

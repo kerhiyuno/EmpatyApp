@@ -6,22 +6,30 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext'
 import moment from 'moment';
+import NotificacionesContext from '../context/notificacionesContext';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const host = ipHost();
 
 const calendario = ({navigation}) =>{
 
     const {colorb,colorTextoBoton,colorTitulo,colorFondo} = useContext(EstilosContext);
-
-    const prueba = [{id: '1',grupo: '1',bloque:'1', fecha_sesion: '2002-07-11',linkmeet:'google.com',ha_terminado:true},{id: '2',grupo: '1',bloque:'3', fecha_sesion: '2002-07-15',linkmeet:'google.com',ha_terminado:true}]
-    const [sesiones,guardarSesiones] = useState([]);
+    const {reuniones,guardarReuniones,actualizaragenda,guardarActualizaragenda} = useContext(NotificacionesContext);
 
     const [cargando, guardarCargando] = useState(false);
 
   useEffect( () => {
     agenda();
+    console.log(navigation);
 }
 ,[])
+useEffect(() => {
+    if (actualizaragenda===true){
+        console.log("actualizaragenda")
+        agenda();
+        guardarActualizaragenda(false)
+    }
+}, [actualizaragenda])
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 const mespalabra = (fecha)=>{
@@ -129,7 +137,7 @@ const traductorhora = (bloque) =>{
             let sesiones = respuesta.data;
             sesiones = [...sesiones,...respuesta2.data]
             sesiones = sesiones.sort((a,b)=> (moment(a.fecha_sesion)-moment(b.fecha_sesion)));
-            guardarSesiones(sesiones);
+            guardarReuniones(sesiones);
             console.log(sesiones);
             guardarCargando(false);
         } catch (error){
@@ -150,7 +158,7 @@ const traductorhora = (bloque) =>{
                         const respuesta = await axios.get(host+'/grupal/sesiones/',
                         {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
                         console.log(respuesta.data); 
-                        guardarSesiones(respuesta.data);
+                        guardarReuniones(respuesta.data);
                         guardarCargando(false);       
                     } catch (error) {
                         console.log(error.response);
@@ -179,10 +187,10 @@ const traductorhora = (bloque) =>{
             {cargando===false ?
             <View>
                 <Text style={[globalStyles.titulo,{marginBottom:0,color:colorTitulo}]}> Agenda de sesiones</Text>
-                {sesiones.length>0 ? <Text></Text> : <View style={{alignItems:'center',marginTop:20}}><Text style={{fontSize:17,fontFamily: "Inter-Regular"}}> No tienes sesiones agendadas </Text></View>}
+                {reuniones.length>0 ? <Text></Text> : <View style={{alignItems:'center',marginTop:20}}><Text style={{fontSize:17,fontFamily: "Inter-Regular"}}> No tienes sesiones agendadas </Text></View>}
                 <FlatList
-                    data={sesiones}
-                    style={{marginBottom: 10}}
+                    data={reuniones}
+                    style={{marginBottom: RFPercentage(10)}}
                     renderItem={({item,index}) => (
                         <TouchableHighlight underlayColor = {'transparent'} onPress={ () => irCita(item.id,item.fecha_sesion,item.bloque.id,item.url_pago) } style={[styles.botonC,{backgroundColor: colorb}]}>
                         <View style={{flex:1,flexDirection: 'column'}}>

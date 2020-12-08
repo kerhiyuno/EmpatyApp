@@ -7,12 +7,16 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ipHost} from '../components/hosts.js';
 import EstilosContext from '../context/estilosContext';
+import NotificacionesContext from '../context/notificacionesContext';
+import { GUARDAR_CAMBIOPAGO } from '../types';
+import moment from 'moment';
 
 const host = ipHost();
 
-const cita = ({route}) =>{
+const cita = ({navigation,route}) =>{
 
     const {colorb,colorLetra,colorTextoBoton,colorTitulo,colorFondo} = useContext(EstilosContext);
+    const {cambiopago,guardarCambiopago,guardarReuniones} = useContext(NotificacionesContext);
 
     const [nolink,guardarNolink] = useState(false);
     const [nolink2,guardarNolink2] = useState(false);
@@ -26,6 +30,58 @@ const cita = ({route}) =>{
     const [urlpago,guardarPago] = useState('');
     const [problemapago,guardarProblemapago] = useState('');
 
+    useEffect(() => {
+        if(cambiopago!==0){
+            console.log("volvi de pago");
+            //navigation.reset({index: 2,routes: [{ name: 'Inicio' },{name: 'Sesion'},{name:'Calendario'}],})
+            guardarCambiopago(0);
+            agenda();
+        }
+    }, [cambiopago])
+    const agenda = async () =>{
+        try {
+            console.log("df");
+            const nombre = await AsyncStorage.getItem('datosSesion');
+            const respuesta = await axios.get(host+'/grupal/sesiones/',
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            const respuesta2 = await axios.get(host+'/grupal/individuales/',
+            {headers: {'Authorization': 'Bearer ' +(JSON.parse(nombre).access),}});
+            let sesiones = respuesta.data;
+            sesiones = [...sesiones,...respuesta2.data]
+            sesiones = sesiones.sort((a,b)=> (moment(a.fecha_sesion)-moment(b.fecha_sesion)));
+            guardarReuniones(sesiones);
+            console.log(sesiones);
+        } catch (error){
+            console.log("error");
+            console.log(error);
+            console.log(error.response);
+            if(error.response.data.code==='token_not_valid'){
+                console.log('token_not_valid');
+                try {
+                    const refresh0 = await AsyncStorage.getItem('datosSesion');
+                    var refresh = JSON.parse(refresh0).refresh;
+                    refresh = {refresh}
+                    var respuesta = await axios.post(host+'/account/token/refresh/',refresh);
+                    refresh=JSON.parse(refresh0).refresh;
+                    await AsyncStorage.setItem('datosSesion',JSON.stringify({ access: respuesta.data.access,refresh: refresh}));
+                    try {
+                        var name= await AsyncStorage.getItem('datosSesion');
+                        const respuesta = await axios.get(host+'/grupal/sesiones/',
+                        {headers: {'Authorization': 'Bearer ' +(JSON.parse(name).access),}});
+                        console.log(respuesta.data); 
+                        guardarReuniones(respuesta.data);
+                    } catch (error) {
+                        console.log(error.response);
+                        console.log("error acaa");
+                        //navigation.navigate('Home');
+                    }  
+                } catch (error) {
+                    console.log("error aqui");
+                    console.log(error.response);
+                }
+            }
+        }
+    }
     useEffect( () => {
         guardarDia(route.params.dia);
         guardarHora(route.params.hora);
@@ -333,7 +389,7 @@ const cita = ({route}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={nolink} onDismiss={() => guardarNolink(false)} >
                     <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La sesión no se encuentra disponible</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La sesión no se encuentra disponible.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarNolink(false)} color={colorLetra}>Ok</Button>
@@ -355,7 +411,7 @@ const cita = ({route}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={nosubgrupo} onDismiss={() => guardarNosubgrupo(false)} >
                     <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>No has sido asignado a un sub-grupo</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>No has sido asignado a un sub-grupo.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarNosubgrupo(false)} color={colorLetra}>Ok</Button>
@@ -366,7 +422,7 @@ const cita = ({route}) =>{
                 <Dialog style={{backgroundColor: colorFondo}} visible={sesionfinalizada} onDismiss={() => guardarSesionfinalizada(false)} >
                     <Dialog.Title style={{color: colorLetra}}>Aviso</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La sesión ha finalizado</Paragraph>
+                        <Paragraph style={[globalStyles.textoAlerta,{color: colorLetra}]}>La sesión ha finalizado.</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={()=>guardarSesionfinalizada(false)} color={colorLetra}>Ok</Button>
