@@ -430,18 +430,21 @@ const sesion = ({navigation}) =>{
                     </View>
                 </TouchableHighlight >
             </View>
-            {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {globalStyles.cargando}/> : null}
+            {cargando === true ? <ActivityIndicator  size = "large" animating = {cargando} style = {[globalStyles.cargando,styles.cargando]}/> : null}
             {cargando===false ?
-            <View style={{marginTop:20,flexDirection:'row'}}>
-                <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}>Mi Psicólogo: </Text>
-                <Text style={[styles.textoS,{color: colorLetra}]}>{nombresicologo}</Text>
-            </View>: null }
             <View>
-            {tienegrupo===false ? <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}> 
-            No has sido asignado a un grupo</Text> : null}
-            {tienegrupo===true ? <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}> 
-            Estás asignado a un grupo</Text> : null}
+                <View style={{marginTop:20,flexDirection:'row'}}>
+                    <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}>Mi Psicólogo: </Text>
+                    <Text style={[styles.textoS,{color: colorLetra}]}>{nombresicologo}</Text>
+                </View>
+                <View>
+                {tienegrupo===false ? <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}> 
+                No has sido asignado a un grupo</Text> : null}
+                {tienegrupo===true ? <Text style={[styles.textoS,{fontFamily: 'Inter-Bold',color: colorLetra}]}> 
+                Estás asignado a un grupo</Text> : null}
+                </View>
             </View>
+            : null }
             <Portal>
                 <Dialog style={{backgroundColor: colorFondo}} visible={sinsesiones} onDismiss={() => guardarSinsesiones(false)} >
                     <Dialog.Title style={{color: colorLetra}}>Sin sesiones agendadas</Dialog.Title>
@@ -485,6 +488,14 @@ const styles=StyleSheet.create({
         fontSize: RFPercentage(2.5),
         color: 'white',
         fontFamily: 'Inter-Light'
+    },
+    cargando: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 0,
+        alignContent: 'center',
+        alignSelf:'center',
+        marginVertical: RFPercentage(5)
     }
 })
 
